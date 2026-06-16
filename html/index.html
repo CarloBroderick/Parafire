@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Parafire · Datos meteorológicos del Paraguay</title>
+<style>
+  :root { --fire:#B22222; --ember:#E07B39; --sun:#F2C14E; --ink:#222; --muted:#6b6b6b; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Helvetica,Arial,sans-serif; color:var(--ink); background:#faf8f5; }
+  header { background:linear-gradient(135deg,#7a1f1f,#B22222 45%,#E07B39); color:#fff; padding:48px 24px 40px; }
+  header .wrap { max-width:1080px; margin:0 auto; }
+  header h1 { margin:0; font-size:40px; letter-spacing:-.5px; }
+  header .en { color:#ffe9d6; font-weight:400; }
+  header p { margin:10px 0 0; font-size:16px; color:#ffe9d6; max-width:760px; }
+  header .sub { font-size:13px; opacity:.85; margin-top:14px; }
+  main { max-width:1080px; margin:0 auto; padding:8px 24px 64px; }
+  section h2 { font-size:24px; margin:34px 0 8px; border-bottom:3px solid var(--sun); padding-bottom:6px; }
+  section h2 .en { font-size:15px; color:var(--muted); font-weight:400; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px; margin-top:14px; }
+  .card { display:flex; gap:14px; padding:16px; background:#fff; border:1px solid #ece3da; border-radius:14px;
+           text-decoration:none; color:inherit; transition:transform .12s, box-shadow .12s; }
+  .card:hover { transform:translateY(-3px); box-shadow:0 8px 22px rgba(178,34,34,.14); border-color:var(--ember); }
+  .card-emoji { font-size:30px; }
+  .card h3 { margin:0; font-size:17px; }
+  .card h4 { margin:1px 0 7px; font-size:12px; color:var(--muted); font-weight:500; }
+  .card p { margin:0; font-size:13px; color:#444; line-height:1.45; }
+  .card .en { color:var(--muted); font-size:12px; }
+  footer { max-width:1080px; margin:0 auto; padding:24px; color:var(--muted); font-size:12.5px; border-top:1px solid #ece3da; }
+  footer code { background:#f0eae3; padding:1px 5px; border-radius:4px; }
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>Parafire <span class="en">· Datos meteorológicos del Paraguay</span></h1>
+  <p>Visualizaciones interactivas de las redes de la DMH-DINAC para los modelos de riesgo y comportamiento de incendios de INFONA.</p>
+  <p class="en" style="margin-top:4px">Interactive visualizations of Paraguay's DMH-DINAC weather networks for INFONA fire-risk and fire-behavior models.</p>
+  <div class="sub">MCH histórico (1900s–2022) &nbsp;·&nbsp; EMAs en tiempo casi real &nbsp;·&nbsp; actualizado 2026-06-16 12:31 PDT</div>
+</div></header>
+<main>
+  <section>
+    <h2>Mapas interactivos <span class="en">/ Interactive maps</span></h2>
+    <div class="grid">
+      <a class="card" href="mapa_combinado.html">
+        <div class="card-emoji">🗺️</div>
+        <div class="card-body">
+          <h3>Dos redes: histórica vs. tiempo real</h3>
+          <h4>Two networks: historical vs near-real-time</h4>
+          <p>Capas conmutables MCH (histórico) y EMAs (actual): la brecha de ~4 años, en el espacio.<br><span class="en">Toggleable MCH (historical) and EMAs (current) layers: the ~4-year gap, spatially.</span></p>
+        </div></a>
+      <a class="card" href="mapa_estaciones_emas.html">
+        <div class="card-emoji">🗺️</div>
+        <div class="card-body">
+          <h3>Estaciones automáticas (EMAs)</h3>
+          <h4>Automatic stations (EMAs)</h4>
+          <p>Red en tiempo casi real coloreada por frescura de la última lectura.<br><span class="en">Near-real-time network colored by latest-reading freshness.</span></p>
+        </div></a>
+      <a class="card" href="mapa_estaciones_mch.html">
+        <div class="card-emoji">🗺️</div>
+        <div class="card-body">
+          <h3>Estaciones históricas (MCH)</h3>
+          <h4>Historical stations (MCH)</h4>
+          <p>Red histórica coloreada por antigüedad del registro y nº de variables de incendio.<br><span class="en">Historical network colored by record recency and number of fire variables.</span></p>
+        </div></a>
+    </div>
+  </section>
+  <section>
+    <h2>Series temporales <span class="en">/ Time series</span></h2>
+    <div class="grid">
+      <a class="card" href="cobertura_temporal_mch.html">
+        <div class="card-emoji">📈</div>
+        <div class="card-body">
+          <h3>Cobertura temporal (MCH)</h3>
+          <h4>Temporal coverage (MCH)</h4>
+          <p>Línea de tiempo por estación y variable: qué tenemos y qué falta.<br><span class="en">Per-station, per-variable timeline: what we have and what is missing.</span></p>
+        </div></a>
+      <a class="card" href="dispersion_obs_emas.html">
+        <div class="card-emoji">📈</div>
+        <div class="card-body">
+          <h3>Dispersión de observaciones (EMAs)</h3>
+          <h4>Observation spread (EMAs)</h4>
+          <p>Mezcla de lecturas actuales y estancadas en el feed en vivo.<br><span class="en">Mix of current and stale readings in the live feed.</span></p>
+        </div></a>
+      <a class="card" href="serie_diaria_asuncion.html">
+        <div class="card-emoji">📈</div>
+        <div class="card-body">
+          <h3>Serie diaria — Asunción</h3>
+          <h4>Daily series — Asunción</h4>
+          <p>Temperatura máx/mín y precipitación diaria (~3 años) con control de rango.<br><span class="en">Daily max/min temperature and precipitation (~3 yr) with range slider.</span></p>
+        </div></a>
+    </div>
+  </section>
+  <section>
+    <h2>Histogramas <span class="en">/ Histograms</span></h2>
+    <div class="grid">
+      <a class="card" href="histograma_anios_fin_mch.html">
+        <div class="card-emoji">📊</div>
+        <div class="card-body">
+          <h3>Año de fin de registro (MCH)</h3>
+          <h4>Record end-year (MCH)</h4>
+          <p>Distribución del último año observado: el archivo se corta en 2021–2022.<br><span class="en">Distribution of last observed year: the archive stops in 2021–2022.</span></p>
+        </div></a>
+      <a class="card" href="histograma_edad_lecturas_emas.html">
+        <div class="card-emoji">📊</div>
+        <div class="card-body">
+          <h3>Antigüedad de lecturas (EMAs)</h3>
+          <h4>Reading age (EMAs)</h4>
+          <p>Qué tan actual es el feed en vivo (la mayoría < 1 día; una cola estancada).<br><span class="en">How current the live feed is (most < 1 day; a stale tail).</span></p>
+        </div></a>
+      <a class="card" href="histograma_longitud_registro_mch.html">
+        <div class="card-emoji">📊</div>
+        <div class="card-body">
+          <h3>Longitud del registro (MCH)</h3>
+          <h4>Record length (MCH)</h4>
+          <p>Cuántos años abarca cada serie (mediana ≈ 49 años).<br><span class="en">How many years each series spans (median ≈ 49 years).</span></p>
+        </div></a>
+    </div>
+  </section>
+</main>
+<footer>
+  Fuente / Source: Dirección de Meteorología e Hidrología (DMH-DINAC), Paraguay ·
+  Feeds: <code>/emas/data.json</code> (EMAs) &amp; <code>mch-api.meteorologia.gov.py</code> (MCH).
+  Gráficos generados con Plotly y Folium. &nbsp;|&nbsp; <span class="en">Charts built with Plotly &amp; Folium.</span>
+</footer>
+</body>
+</html>

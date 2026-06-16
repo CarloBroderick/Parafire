@@ -1,0 +1,1814 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_cb8fcca3fd5558715ac14d873deb9c00 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+<div style="position:fixed;top:10px;left:50px;z-index:9999;background:rgba(255,255,255,.9);
+            padding:8px 14px;border-radius:8px;font-family:Helvetica,Arial,sans-serif;
+            box-shadow:0 1px 4px rgba(0,0,0,.2)">
+  <div style="font-size:20px;font-weight:700;color:#7a1f1f">Estaciones históricas MCH — DMH-DINAC</div>
+  <div style="font-size:13px;color:#666">MCH historical stations · record coverage</div>
+</div>
+    
+<div style="position:fixed;bottom:24px;left:24px;z-index:9999;background:rgba(255,255,255,.92);
+            padding:10px 14px;border-radius:8px;font-family:Helvetica,Arial,sans-serif;
+            font-size:12px;box-shadow:0 1px 4px rgba(0,0,0,.2);line-height:1.6">
+  <div style="font-size:13px;font-weight:700;color:#7a1f1f">Últimos datos de incendio</div>
+  <div style="font-size:11px;color:#888;margin-bottom:6px">Latest fire-relevant data</div>
+  <div><span style="color:#2e7d32;font-size:16px">●</span> 2022+ <span style="color:#999">(reciente / recent)</span></div>
+  <div><span style="color:#ef6c00;font-size:16px">●</span> 2021</div>
+  <div><span style="color:#d32f2f;font-size:16px">●</span> 2018–2020</div>
+  <div><span style="color:#8b1a1a;font-size:16px">●</span> &lt;2018 <span style="color:#999">(antiguo / old)</span></div>
+  <div><span style="color:#9e9e9e;font-size:16px">●</span> sin variables / none</div>
+  <div style="margin-top:6px;color:#666">Tamaño = nº variables de incendio<br>
+     <span style="color:#999">Size = number of fire-relevant variables</span></div>
+</div>
+    
+            <div class="folium-map" id="map_cb8fcca3fd5558715ac14d873deb9c00" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_cb8fcca3fd5558715ac14d873deb9c00 = L.map(
+                "map_cb8fcca3fd5558715ac14d873deb9c00",
+                {
+                    center: [-23.3, -58.4],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 6,
+  "zoomControl": true,
+  "preferCanvas": false,
+  "dragging": true,
+  "scrollWheelZoom": true,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_cb8fcca3fd5558715ac14d873deb9c00);
+
+            
+
+        
+    
+            var tile_layer_a6d0032bdda2185b1e108cbc76ee2849 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_a6d0032bdda2185b1e108cbc76ee2849.addTo(map_cb8fcca3fd5558715ac14d873deb9c00);
+        
+    
+            var feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_14540cd315743ab1052e9b088b4f61e9 = L.circleMarker(
+                [-26.16985556, -56.359875],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13.8, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_17336af437f878bb171b8da72b395b40 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_f01bc7c6ecda22aa6a928422448e2d15 = $(`<div id="html_f01bc7c6ecda22aa6a928422448e2d15" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Caazapa, Dpto de Caazapa</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>6000268</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">139.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">13</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">direccion_viento, temperatura_aire, temperatura_minima, velocidad_viento</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">1912 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>195.4</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>direccion_viento</td><td style='padding:1px 6px;text-align:right'>1973–2022</td></tr><tr><td style='padding:1px 6px'>insolacion</td><td style='padding:1px 6px;text-align:right'>1974–2022</td></tr><tr><td style='padding:1px 6px'>nubosidad</td><td style='padding:1px 6px;text-align:right'>1973–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_estacion</td><td style='padding:1px 6px;text-align:right'>1998–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_mar</td><td style='padding:1px 6px;text-align:right'>1997–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>1973–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_bulbo_humedo</td><td style='padding:1px 6px;text-align:right'>1973–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_minima</td><td style='padding:1px 6px;text-align:right'>1973–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_punto_rocio</td><td style='padding:1px 6px;text-align:right'>1973–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_pasado</td><td style='padding:1px 6px;text-align:right'>1912–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_presente</td><td style='padding:1px 6px;text-align:right'>1912–2022</td></tr><tr><td style='padding:1px 6px'>velocidad_viento</td><td style='padding:1px 6px;text-align:right'>1973–2022</td></tr><tr><td style='padding:1px 6px'>visibilidad</td><td style='padding:1px 6px;text-align:right'>1912–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_17336af437f878bb171b8da72b395b40.setContent(html_f01bc7c6ecda22aa6a928422448e2d15);
+            
+        
+
+        circle_marker_14540cd315743ab1052e9b088b4f61e9.bindPopup(popup_17336af437f878bb171b8da72b395b40)
+        ;
+
+        
+    
+    
+            circle_marker_14540cd315743ab1052e9b088b4f61e9.bindTooltip(
+                `<div>
+                     Caazapa, Dpto de Caazapa · 2022
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_086f781209d62aed1324499c3c866d14 = L.circleMarker(
+                [-25.754125, -56.43790556],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13.8, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_1eb4c0783d112449c88d173cd42acc84 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_184cc66ad873e40dd75f4f27446571d9 = $(`<div id="html_184cc66ad873e40dd75f4f27446571d9" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Villarrica, Dpto. del  Guaira</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>4000233</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">163.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">12</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">direccion_viento, temperatura_aire, temperatura_minima, velocidad_viento</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">1915 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>262.4</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>direccion_viento</td><td style='padding:1px 6px;text-align:right'>1945–2022</td></tr><tr><td style='padding:1px 6px'>nubosidad</td><td style='padding:1px 6px;text-align:right'>1945–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_estacion</td><td style='padding:1px 6px;text-align:right'>1946–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_mar</td><td style='padding:1px 6px;text-align:right'>1946–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>1945–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_bulbo_humedo</td><td style='padding:1px 6px;text-align:right'>1945–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_minima</td><td style='padding:1px 6px;text-align:right'>1956–2021</td></tr><tr><td style='padding:1px 6px'>temperatura_punto_rocio</td><td style='padding:1px 6px;text-align:right'>1945–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_pasado</td><td style='padding:1px 6px;text-align:right'>1915–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_presente</td><td style='padding:1px 6px;text-align:right'>1915–2022</td></tr><tr><td style='padding:1px 6px'>velocidad_viento</td><td style='padding:1px 6px;text-align:right'>1945–2022</td></tr><tr><td style='padding:1px 6px'>visibilidad</td><td style='padding:1px 6px;text-align:right'>1915–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_1eb4c0783d112449c88d173cd42acc84.setContent(html_184cc66ad873e40dd75f4f27446571d9);
+            
+        
+
+        circle_marker_086f781209d62aed1324499c3c866d14.bindPopup(popup_1eb4c0783d112449c88d173cd42acc84)
+        ;
+
+        
+    
+    
+            circle_marker_086f781209d62aed1324499c3c866d14.bindTooltip(
+                `<div>
+                     Villarrica, Dpto. del  Guaira · 2022
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_138bd8ef7043f447165c160ab2263b26 = L.circleMarker(
+                [-26.88123889, -58.31838333],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13.8, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_2ebeacf1ec62b3812ba523a1526b19fa = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_b33195bf89de10c994fc00ce34d07ae7 = $(`<div id="html_b33195bf89de10c994fc00ce34d07ae7" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Pilar, Dpto. de Ñeembucú</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>12000255</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">58.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">12</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">direccion_viento, temperatura_aire, temperatura_minima, velocidad_viento</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">1908 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>258.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>direccion_viento</td><td style='padding:1px 6px;text-align:right'>1958–2022</td></tr><tr><td style='padding:1px 6px'>nubosidad</td><td style='padding:1px 6px;text-align:right'>1958–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_estacion</td><td style='padding:1px 6px;text-align:right'>1958–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_mar</td><td style='padding:1px 6px;text-align:right'>1958–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>1958–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_bulbo_humedo</td><td style='padding:1px 6px;text-align:right'>1958–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_minima</td><td style='padding:1px 6px;text-align:right'>1958–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_punto_rocio</td><td style='padding:1px 6px;text-align:right'>1958–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_pasado</td><td style='padding:1px 6px;text-align:right'>1908–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_presente</td><td style='padding:1px 6px;text-align:right'>1908–2022</td></tr><tr><td style='padding:1px 6px'>velocidad_viento</td><td style='padding:1px 6px;text-align:right'>1958–2022</td></tr><tr><td style='padding:1px 6px'>visibilidad</td><td style='padding:1px 6px;text-align:right'>1908–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_2ebeacf1ec62b3812ba523a1526b19fa.setContent(html_b33195bf89de10c994fc00ce34d07ae7);
+            
+        
+
+        circle_marker_138bd8ef7043f447165c160ab2263b26.bindPopup(popup_2ebeacf1ec62b3812ba523a1526b19fa)
+        ;
+
+        
+    
+    
+            circle_marker_138bd8ef7043f447165c160ab2263b26.bindTooltip(
+                `<div>
+                     Pilar, Dpto. de Ñeembucú · 2022
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_704ae398a45c2532455b7a2a80a0f0fb = L.circleMarker(
+                [-27.30582778, -55.88695278],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13.8, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_404063d386e9f60ebe742b4c02f3d9e4 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_08a05c090efd9179b77f98afe14ef3c0 = $(`<div id="html_08a05c090efd9179b77f98afe14ef3c0" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Encarnación, Dpto. de  Itapua</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>7000297</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">125.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">13</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">direccion_viento, temperatura_aire, temperatura_minima, velocidad_viento</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">1908 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>286.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>direccion_viento</td><td style='padding:1px 6px;text-align:right'>1951–2022</td></tr><tr><td style='padding:1px 6px'>insolacion</td><td style='padding:1px 6px;text-align:right'>1974–2022</td></tr><tr><td style='padding:1px 6px'>nubosidad</td><td style='padding:1px 6px;text-align:right'>1951–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_estacion</td><td style='padding:1px 6px;text-align:right'>1951–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_mar</td><td style='padding:1px 6px;text-align:right'>1951–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>1951–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_bulbo_humedo</td><td style='padding:1px 6px;text-align:right'>1951–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_minima</td><td style='padding:1px 6px;text-align:right'>1951–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_punto_rocio</td><td style='padding:1px 6px;text-align:right'>1951–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_pasado</td><td style='padding:1px 6px;text-align:right'>1908–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_presente</td><td style='padding:1px 6px;text-align:right'>1908–2022</td></tr><tr><td style='padding:1px 6px'>velocidad_viento</td><td style='padding:1px 6px;text-align:right'>1951–2022</td></tr><tr><td style='padding:1px 6px'>visibilidad</td><td style='padding:1px 6px;text-align:right'>1908–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_404063d386e9f60ebe742b4c02f3d9e4.setContent(html_08a05c090efd9179b77f98afe14ef3c0);
+            
+        
+
+        circle_marker_704ae398a45c2532455b7a2a80a0f0fb.bindPopup(popup_404063d386e9f60ebe742b4c02f3d9e4)
+        ;
+
+        
+    
+    
+            circle_marker_704ae398a45c2532455b7a2a80a0f0fb.bindTooltip(
+                `<div>
+                     Encarnación, Dpto. de  Itapua · 2022
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4bd06b7d6fb5b3d5b273c481c5abf8be = L.circleMarker(
+                [-22.03053889, -60.61896111],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 18.200000000000003, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_5f68085ebea5d77a145fe30a11ceb4ed = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_45148571f41e28fb635cdb86f9aa5ccf = $(`<div id="html_45148571f41e28fb635cdb86f9aa5ccf" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Mcal. Estigarribia, Dpto. de Boquerón</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>19000068</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">167.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">15</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">direccion_viento, precipitacion, temperatura_aire, temperatura_maxima, temperatura_minima, velocidad_viento</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">1911 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>153.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>direccion_viento</td><td style='padding:1px 6px;text-align:right'>1950–2022</td></tr><tr><td style='padding:1px 6px'>insolacion</td><td style='padding:1px 6px;text-align:right'>1975–2022</td></tr><tr><td style='padding:1px 6px'>nubosidad</td><td style='padding:1px 6px;text-align:right'>1950–2022</td></tr><tr><td style='padding:1px 6px'>precipitacion</td><td style='padding:1px 6px;text-align:right'>1997–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_estacion</td><td style='padding:1px 6px;text-align:right'>1950–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_mar</td><td style='padding:1px 6px;text-align:right'>1950–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>1950–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_bulbo_humedo</td><td style='padding:1px 6px;text-align:right'>1950–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_maxima</td><td style='padding:1px 6px;text-align:right'>1950–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_minima</td><td style='padding:1px 6px;text-align:right'>1950–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_punto_rocio</td><td style='padding:1px 6px;text-align:right'>1950–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_pasado</td><td style='padding:1px 6px;text-align:right'>1911–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_presente</td><td style='padding:1px 6px;text-align:right'>1911–2022</td></tr><tr><td style='padding:1px 6px'>velocidad_viento</td><td style='padding:1px 6px;text-align:right'>1950–2022</td></tr><tr><td style='padding:1px 6px'>visibilidad</td><td style='padding:1px 6px;text-align:right'>1911–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_5f68085ebea5d77a145fe30a11ceb4ed.setContent(html_45148571f41e28fb635cdb86f9aa5ccf);
+            
+        
+
+        circle_marker_4bd06b7d6fb5b3d5b273c481c5abf8be.bindPopup(popup_5f68085ebea5d77a145fe30a11ceb4ed)
+        ;
+
+        
+    
+    
+            circle_marker_4bd06b7d6fb5b3d5b273c481c5abf8be.bindTooltip(
+                `<div>
+                     Mcal. Estigarribia, Dpto. de Boquerón · 2022
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_18fee85e2ca373ae34bc41ae490ef33e = L.circleMarker(
+                [-26.83411667, -55.33166111],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13.8, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_b2c9e4b7808ced77606bee36831a84b7 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_3f4267c651e507c1bbb4a0ef33ee8f95 = $(`<div id="html_3f4267c651e507c1bbb4a0ef33ee8f95" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Cap. Meza, Dpto. de Itapua</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>7000285</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">263.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">13</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">direccion_viento, temperatura_aire, temperatura_minima, velocidad_viento</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">1911 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>186.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>direccion_viento</td><td style='padding:1px 6px;text-align:right'>1976–2022</td></tr><tr><td style='padding:1px 6px'>insolacion</td><td style='padding:1px 6px;text-align:right'>1996–2022</td></tr><tr><td style='padding:1px 6px'>nubosidad</td><td style='padding:1px 6px;text-align:right'>1975–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_estacion</td><td style='padding:1px 6px;text-align:right'>1996–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_mar</td><td style='padding:1px 6px;text-align:right'>1996–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>1975–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_bulbo_humedo</td><td style='padding:1px 6px;text-align:right'>1975–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_minima</td><td style='padding:1px 6px;text-align:right'>1975–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_punto_rocio</td><td style='padding:1px 6px;text-align:right'>1975–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_pasado</td><td style='padding:1px 6px;text-align:right'>1911–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_presente</td><td style='padding:1px 6px;text-align:right'>1911–2022</td></tr><tr><td style='padding:1px 6px'>velocidad_viento</td><td style='padding:1px 6px;text-align:right'>1976–2022</td></tr><tr><td style='padding:1px 6px'>visibilidad</td><td style='padding:1px 6px;text-align:right'>1911–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_b2c9e4b7808ced77606bee36831a84b7.setContent(html_3f4267c651e507c1bbb4a0ef33ee8f95);
+            
+        
+
+        circle_marker_18fee85e2ca373ae34bc41ae490ef33e.bindPopup(popup_b2c9e4b7808ced77606bee36831a84b7)
+        ;
+
+        
+    
+    
+            circle_marker_18fee85e2ca373ae34bc41ae490ef33e.bindTooltip(
+                `<div>
+                     Cap. Meza, Dpto. de Itapua · 2022
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b3810cbd86878d95a8313374208a90fd = L.circleMarker(
+                [-25.45583889, -54.83894722],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_761dccef9cfdd86a616767d926b29879 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_fb056e39561a00c6ce3635be1aef136e = $(`<div id="html_fb056e39561a00c6ce3635be1aef136e" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Aeropuerto Guarani, Dpto. de  Alto Parana</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>10000246</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">247.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">14</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">direccion_viento, temperatura_aire, temperatura_maxima, temperatura_minima, velocidad_viento</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">1913 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>124.6</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>direccion_viento</td><td style='padding:1px 6px;text-align:right'>1997–2022</td></tr><tr><td style='padding:1px 6px'>insolacion</td><td style='padding:1px 6px;text-align:right'>2007–2022</td></tr><tr><td style='padding:1px 6px'>nubosidad</td><td style='padding:1px 6px;text-align:right'>1997–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_estacion</td><td style='padding:1px 6px;text-align:right'>1998–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_mar</td><td style='padding:1px 6px;text-align:right'>1997–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>1997–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_bulbo_humedo</td><td style='padding:1px 6px;text-align:right'>1998–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_maxima</td><td style='padding:1px 6px;text-align:right'>1997–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_minima</td><td style='padding:1px 6px;text-align:right'>1997–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_punto_rocio</td><td style='padding:1px 6px;text-align:right'>1997–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_pasado</td><td style='padding:1px 6px;text-align:right'>1913–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_presente</td><td style='padding:1px 6px;text-align:right'>1913–2022</td></tr><tr><td style='padding:1px 6px'>velocidad_viento</td><td style='padding:1px 6px;text-align:right'>1997–2022</td></tr><tr><td style='padding:1px 6px'>visibilidad</td><td style='padding:1px 6px;text-align:right'>1913–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_761dccef9cfdd86a616767d926b29879.setContent(html_fb056e39561a00c6ce3635be1aef136e);
+            
+        
+
+        circle_marker_b3810cbd86878d95a8313374208a90fd.bindPopup(popup_761dccef9cfdd86a616767d926b29879)
+        ;
+
+        
+    
+    
+            circle_marker_b3810cbd86878d95a8313374208a90fd.bindTooltip(
+                `<div>
+                     Aeropuerto Guarani, Dpto. de  Alto Parana · 2022
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8dfd0c46774a0c44b09a740dc0bf7525 = L.circleMarker(
+                [-22.283025, -57.94130833],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 18.200000000000003, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_4245f4aa00607a77e4cf1dc2844e62ac = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_a3c7af1971e5e303ec6358eaead30308 = $(`<div id="html_a3c7af1971e5e303ec6358eaead30308" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Puerto Casado (La Victoria), Dpto. del Alto Paraguay</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>16000086</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">78.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">15</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">direccion_viento, precipitacion, temperatura_aire, temperatura_maxima, temperatura_minima, velocidad_viento</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">1913 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>153.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>direccion_viento</td><td style='padding:1px 6px;text-align:right'>1947–2022</td></tr><tr><td style='padding:1px 6px'>insolacion</td><td style='padding:1px 6px;text-align:right'>?–2022</td></tr><tr><td style='padding:1px 6px'>nubosidad</td><td style='padding:1px 6px;text-align:right'>1947–2022</td></tr><tr><td style='padding:1px 6px'>precipitacion</td><td style='padding:1px 6px;text-align:right'>1997–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_estacion</td><td style='padding:1px 6px;text-align:right'>1947–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_mar</td><td style='padding:1px 6px;text-align:right'>1947–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>1947–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_bulbo_humedo</td><td style='padding:1px 6px;text-align:right'>1947–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_maxima</td><td style='padding:1px 6px;text-align:right'>?–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_minima</td><td style='padding:1px 6px;text-align:right'>1947–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_punto_rocio</td><td style='padding:1px 6px;text-align:right'>1947–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_pasado</td><td style='padding:1px 6px;text-align:right'>1913–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_presente</td><td style='padding:1px 6px;text-align:right'>1913–2022</td></tr><tr><td style='padding:1px 6px'>velocidad_viento</td><td style='padding:1px 6px;text-align:right'>1947–2022</td></tr><tr><td style='padding:1px 6px'>visibilidad</td><td style='padding:1px 6px;text-align:right'>1913–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_4245f4aa00607a77e4cf1dc2844e62ac.setContent(html_a3c7af1971e5e303ec6358eaead30308);
+            
+        
+
+        circle_marker_8dfd0c46774a0c44b09a740dc0bf7525.bindPopup(popup_4245f4aa00607a77e4cf1dc2844e62ac)
+        ;
+
+        
+    
+    
+            circle_marker_8dfd0c46774a0c44b09a740dc0bf7525.bindTooltip(
+                `<div>
+                     Puerto Casado (La Victoria), Dpto. del Alto Paraguay · 2022
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_506af1eba6f5b00bcb6935909c0b5630 = L.circleMarker(
+                [-25.046557, -57.053708],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7.2, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_aedb0898a2fff6f876fb1fdf3427894b = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_0e0fd41fbea3738a2da21beefa7b9423 = $(`<div id="html_0e0fd41fbea3738a2da21beefa7b9423" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Arroyos y Esteros - Rio Yhahuy</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086226</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">0.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">3</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">temperatura_aire</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2016 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>1.1</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel</td><td style='padding:1px 6px;text-align:right'>2022–2022</td></tr><tr><td style='padding:1px 6px'>nivel_agua</td><td style='padding:1px 6px;text-align:right'>2016–2020</td></tr><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>2019–2020</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_aedb0898a2fff6f876fb1fdf3427894b.setContent(html_0e0fd41fbea3738a2da21beefa7b9423);
+            
+        
+
+        circle_marker_506af1eba6f5b00bcb6935909c0b5630.bindPopup(popup_aedb0898a2fff6f876fb1fdf3427894b)
+        ;
+
+        
+    
+    
+            circle_marker_506af1eba6f5b00bcb6935909c0b5630.bindTooltip(
+                `<div>
+                     Arroyos y Esteros - Rio Yhahuy · 2020
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f3669900a94d63695ae7115d87712479 = L.circleMarker(
+                [-24.08523611, -57.08754722],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_36c56b7e6e6c047553797cc38318c4d6 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_22b2f763e5564e9b12d041f8bc3843aa = $(`<div id="html_22b2f763e5564e9b12d041f8bc3843aa" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">San Pedro, Dpto. de San Pedro del Ycuamandiyú</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000185</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">81.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">14</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">direccion_viento, temperatura_aire, temperatura_maxima, temperatura_minima, velocidad_viento</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">1915 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>139.6</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>direccion_viento</td><td style='padding:1px 6px;text-align:right'>1994–2022</td></tr><tr><td style='padding:1px 6px'>insolacion</td><td style='padding:1px 6px;text-align:right'>1994–2022</td></tr><tr><td style='padding:1px 6px'>nubosidad</td><td style='padding:1px 6px;text-align:right'>1994–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_estacion</td><td style='padding:1px 6px;text-align:right'>1994–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_mar</td><td style='padding:1px 6px;text-align:right'>1994–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>1994–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_bulbo_humedo</td><td style='padding:1px 6px;text-align:right'>1994–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_maxima</td><td style='padding:1px 6px;text-align:right'>1994–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_minima</td><td style='padding:1px 6px;text-align:right'>1994–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_punto_rocio</td><td style='padding:1px 6px;text-align:right'>1994–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_pasado</td><td style='padding:1px 6px;text-align:right'>1915–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_presente</td><td style='padding:1px 6px;text-align:right'>1915–2022</td></tr><tr><td style='padding:1px 6px'>velocidad_viento</td><td style='padding:1px 6px;text-align:right'>1994–2022</td></tr><tr><td style='padding:1px 6px'>visibilidad</td><td style='padding:1px 6px;text-align:right'>1915–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_36c56b7e6e6c047553797cc38318c4d6.setContent(html_22b2f763e5564e9b12d041f8bc3843aa);
+            
+        
+
+        circle_marker_f3669900a94d63695ae7115d87712479.bindPopup(popup_36c56b7e6e6c047553797cc38318c4d6)
+        ;
+
+        
+    
+    
+            circle_marker_f3669900a94d63695ae7115d87712479.bindTooltip(
+                `<div>
+                     San Pedro, Dpto. de San Pedro del Ycuamandiyú · 2022
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_38d6860a8e6c11bdca575a771c4b7d86 = L.circleMarker(
+                [-22.558425, -61.56011111],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "darkred", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 18.200000000000003, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_9c162d5fe7e7b629d92848798490adf9 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_c61aa454f3c0958b969f1d6beea57b79 = $(`<div id="html_c61aa454f3c0958b969f1d6beea57b79" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Prats Gill, Dpto. de Boquerón</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>18000065</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">206.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">15</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">direccion_viento, precipitacion, temperatura_aire, temperatura_maxima, temperatura_minima, velocidad_viento</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">1972 → 2016</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>104.8</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>direccion_viento</td><td style='padding:1px 6px;text-align:right'>1972–2014</td></tr><tr><td style='padding:1px 6px'>insolacion</td><td style='padding:1px 6px;text-align:right'>1972–2014</td></tr><tr><td style='padding:1px 6px'>nubosidad</td><td style='padding:1px 6px;text-align:right'>1972–2014</td></tr><tr><td style='padding:1px 6px'>precipitacion</td><td style='padding:1px 6px;text-align:right'>1997–2016</td></tr><tr><td style='padding:1px 6px'>presion_nivel_estacion</td><td style='padding:1px 6px;text-align:right'>1972–2014</td></tr><tr><td style='padding:1px 6px'>presion_nivel_mar</td><td style='padding:1px 6px;text-align:right'>1972–2014</td></tr><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>1972–2014</td></tr><tr><td style='padding:1px 6px'>temperatura_bulbo_humedo</td><td style='padding:1px 6px;text-align:right'>1972–2014</td></tr><tr><td style='padding:1px 6px'>temperatura_maxima</td><td style='padding:1px 6px;text-align:right'>1972–2014</td></tr><tr><td style='padding:1px 6px'>temperatura_minima</td><td style='padding:1px 6px;text-align:right'>1972–2014</td></tr><tr><td style='padding:1px 6px'>temperatura_punto_rocio</td><td style='padding:1px 6px;text-align:right'>1972–2014</td></tr><tr><td style='padding:1px 6px'>tiempo_pasado</td><td style='padding:1px 6px;text-align:right'>1995–2016</td></tr><tr><td style='padding:1px 6px'>tiempo_presente</td><td style='padding:1px 6px;text-align:right'>1995–2016</td></tr><tr><td style='padding:1px 6px'>velocidad_viento</td><td style='padding:1px 6px;text-align:right'>1972–2014</td></tr><tr><td style='padding:1px 6px'>visibilidad</td><td style='padding:1px 6px;text-align:right'>1995–2014</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_9c162d5fe7e7b629d92848798490adf9.setContent(html_c61aa454f3c0958b969f1d6beea57b79);
+            
+        
+
+        circle_marker_38d6860a8e6c11bdca575a771c4b7d86.bindPopup(popup_9c162d5fe7e7b629d92848798490adf9)
+        ;
+
+        
+    
+    
+            circle_marker_38d6860a8e6c11bdca575a771c4b7d86.bindTooltip(
+                `<div>
+                     Prats Gill, Dpto. de Boquerón · 2016
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3cc58d4b01dd5fdfe22c2365c60fbed8 = L.circleMarker(
+                [-20.22736667, -58.16912778],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_ff62b22e2627d0aa9632136fb1bf8780 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_4c858e71929bbf3f46108e957c3e9f80 = $(`<div id="html_4c858e71929bbf3f46108e957c3e9f80" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Bahía Negra, Dpto. de Alto Paraguay</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>16000033</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">82.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">14</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">direccion_viento, temperatura_aire, temperatura_maxima, temperatura_minima, velocidad_viento</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">1956 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>332.5</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>direccion_viento</td><td style='padding:1px 6px;text-align:right'>1956–2022</td></tr><tr><td style='padding:1px 6px'>insolacion</td><td style='padding:1px 6px;text-align:right'>1974–2022</td></tr><tr><td style='padding:1px 6px'>nubosidad</td><td style='padding:1px 6px;text-align:right'>1956–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_estacion</td><td style='padding:1px 6px;text-align:right'>1956–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_mar</td><td style='padding:1px 6px;text-align:right'>1956–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>1956–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_bulbo_humedo</td><td style='padding:1px 6px;text-align:right'>1956–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_maxima</td><td style='padding:1px 6px;text-align:right'>?–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_minima</td><td style='padding:1px 6px;text-align:right'>1956–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_punto_rocio</td><td style='padding:1px 6px;text-align:right'>1956–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_pasado</td><td style='padding:1px 6px;text-align:right'>1995–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_presente</td><td style='padding:1px 6px;text-align:right'>1995–2022</td></tr><tr><td style='padding:1px 6px'>velocidad_viento</td><td style='padding:1px 6px;text-align:right'>1956–2022</td></tr><tr><td style='padding:1px 6px'>visibilidad</td><td style='padding:1px 6px;text-align:right'>1995–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_ff62b22e2627d0aa9632136fb1bf8780.setContent(html_4c858e71929bbf3f46108e957c3e9f80);
+            
+        
+
+        circle_marker_3cc58d4b01dd5fdfe22c2365c60fbed8.bindPopup(popup_ff62b22e2627d0aa9632136fb1bf8780)
+        ;
+
+        
+    
+    
+            circle_marker_3cc58d4b01dd5fdfe22c2365c60fbed8.bindTooltip(
+                `<div>
+                     Bahía Negra, Dpto. de Alto Paraguay · 2022
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ea2fde1298312137ab97205d676ecf25 = L.circleMarker(
+                [-23.49773333, -58.79036389],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_cedbb8f78985455769e88cdf719ccda2 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_50bd073a7cf3feb9872e501a9d0c63ae = $(`<div id="html_50bd073a7cf3feb9872e501a9d0c63ae" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Pozo Colorado, Dpto. de Pdte. Hayes</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>15000128</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">98.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">14</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">direccion_viento, temperatura_aire, temperatura_maxima, temperatura_minima, velocidad_viento</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">1912 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>137.5</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>direccion_viento</td><td style='padding:1px 6px;text-align:right'>1995–2022</td></tr><tr><td style='padding:1px 6px'>insolacion</td><td style='padding:1px 6px;text-align:right'>1995–2022</td></tr><tr><td style='padding:1px 6px'>nubosidad</td><td style='padding:1px 6px;text-align:right'>1995–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_estacion</td><td style='padding:1px 6px;text-align:right'>1995–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_mar</td><td style='padding:1px 6px;text-align:right'>1995–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>1995–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_bulbo_humedo</td><td style='padding:1px 6px;text-align:right'>1995–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_maxima</td><td style='padding:1px 6px;text-align:right'>1990–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_minima</td><td style='padding:1px 6px;text-align:right'>1990–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_punto_rocio</td><td style='padding:1px 6px;text-align:right'>1995–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_pasado</td><td style='padding:1px 6px;text-align:right'>1912–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_presente</td><td style='padding:1px 6px;text-align:right'>1912–2022</td></tr><tr><td style='padding:1px 6px'>velocidad_viento</td><td style='padding:1px 6px;text-align:right'>1995–2022</td></tr><tr><td style='padding:1px 6px'>visibilidad</td><td style='padding:1px 6px;text-align:right'>1912–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_cedbb8f78985455769e88cdf719ccda2.setContent(html_50bd073a7cf3feb9872e501a9d0c63ae);
+            
+        
+
+        circle_marker_ea2fde1298312137ab97205d676ecf25.bindPopup(popup_cedbb8f78985455769e88cdf719ccda2)
+        ;
+
+        
+    
+    
+            circle_marker_ea2fde1298312137ab97205d676ecf25.bindTooltip(
+                `<div>
+                     Pozo Colorado, Dpto. de Pdte. Hayes · 2022
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2022e17d0af440d089933fcf010b082b = L.circleMarker(
+                [-26.1667, -58.15],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.4, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_545e60e4bb58174f67c92676a8f19979 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_07fde7a8b4c8e9d7f9fa92e18b078530 = $(`<div id="html_07fde7a8b4c8e9d7f9fa92e18b078530" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Alberdi</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086254</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">1.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">3</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">precipitacion, temperatura_aire</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2019 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>5.4</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel_agua</td><td style='padding:1px 6px;text-align:right'>2019–2022</td></tr><tr><td style='padding:1px 6px'>precipitacion</td><td style='padding:1px 6px;text-align:right'>2019–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>2019–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_545e60e4bb58174f67c92676a8f19979.setContent(html_07fde7a8b4c8e9d7f9fa92e18b078530);
+            
+        
+
+        circle_marker_2022e17d0af440d089933fcf010b082b.bindPopup(popup_545e60e4bb58174f67c92676a8f19979)
+        ;
+
+        
+    
+    
+            circle_marker_2022e17d0af440d089933fcf010b082b.bindTooltip(
+                `<div>
+                     Alberdi · 2022
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2b7e4ad7b14c56040995d78f4f3c0959 = L.circleMarker(
+                [-19.53335833, -59.36666667],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "darkred", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 18.200000000000003, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_81cbd0a7c940fa2e107e3fb68f0f9235 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_d647144f42875eceb221bdea11310b6b = $(`<div id="html_d647144f42875eceb221bdea11310b6b" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Adrián Jara, Dpto. del Alto Paraguay</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>17000011</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">143.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">15</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">direccion_viento, precipitacion, temperatura_aire, temperatura_maxima, temperatura_minima, velocidad_viento</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">1910 → 2016</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>96.8</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>direccion_viento</td><td style='padding:1px 6px;text-align:right'>1973–2013</td></tr><tr><td style='padding:1px 6px'>insolacion</td><td style='padding:1px 6px;text-align:right'>1973–2013</td></tr><tr><td style='padding:1px 6px'>nubosidad</td><td style='padding:1px 6px;text-align:right'>1973–2013</td></tr><tr><td style='padding:1px 6px'>precipitacion</td><td style='padding:1px 6px;text-align:right'>1997–2016</td></tr><tr><td style='padding:1px 6px'>presion_nivel_estacion</td><td style='padding:1px 6px;text-align:right'>1973–2013</td></tr><tr><td style='padding:1px 6px'>presion_nivel_mar</td><td style='padding:1px 6px;text-align:right'>1973–2013</td></tr><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>1973–2013</td></tr><tr><td style='padding:1px 6px'>temperatura_bulbo_humedo</td><td style='padding:1px 6px;text-align:right'>1973–2013</td></tr><tr><td style='padding:1px 6px'>temperatura_maxima</td><td style='padding:1px 6px;text-align:right'>1973–2013</td></tr><tr><td style='padding:1px 6px'>temperatura_minima</td><td style='padding:1px 6px;text-align:right'>1973–2013</td></tr><tr><td style='padding:1px 6px'>temperatura_punto_rocio</td><td style='padding:1px 6px;text-align:right'>1973–2013</td></tr><tr><td style='padding:1px 6px'>tiempo_pasado</td><td style='padding:1px 6px;text-align:right'>1910–2013</td></tr><tr><td style='padding:1px 6px'>tiempo_presente</td><td style='padding:1px 6px;text-align:right'>1910–2013</td></tr><tr><td style='padding:1px 6px'>velocidad_viento</td><td style='padding:1px 6px;text-align:right'>1973–2013</td></tr><tr><td style='padding:1px 6px'>visibilidad</td><td style='padding:1px 6px;text-align:right'>1910–2013</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_81cbd0a7c940fa2e107e3fb68f0f9235.setContent(html_d647144f42875eceb221bdea11310b6b);
+            
+        
+
+        circle_marker_2b7e4ad7b14c56040995d78f4f3c0959.bindPopup(popup_81cbd0a7c940fa2e107e3fb68f0f9235)
+        ;
+
+        
+    
+    
+            circle_marker_2b7e4ad7b14c56040995d78f4f3c0959.bindTooltip(
+                `<div>
+                     Adrián Jara, Dpto. del Alto Paraguay · 2016
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_63c8ac2dee710328d4fe074d65958c34 = L.circleMarker(
+                [-24.74167778, -58.83609167],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13.8, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_03942f0e24151a2203a365dba1e0ead4 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_e1ba51ffd1097978b774ea99735e95a3 = $(`<div id="html_e1ba51ffd1097978b774ea99735e95a3" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Gral. José María Bruguez, Dpto. de Pdte. Hayes</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>15000170</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">89.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">13</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">direccion_viento, temperatura_aire, temperatura_minima, velocidad_viento</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">1992 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>122.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>direccion_viento</td><td style='padding:1px 6px;text-align:right'>1992–2022</td></tr><tr><td style='padding:1px 6px'>insolacion</td><td style='padding:1px 6px;text-align:right'>1992–2022</td></tr><tr><td style='padding:1px 6px'>nubosidad</td><td style='padding:1px 6px;text-align:right'>1992–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_estacion</td><td style='padding:1px 6px;text-align:right'>1992–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_mar</td><td style='padding:1px 6px;text-align:right'>1992–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>1992–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_bulbo_humedo</td><td style='padding:1px 6px;text-align:right'>1992–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_minima</td><td style='padding:1px 6px;text-align:right'>1992–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_punto_rocio</td><td style='padding:1px 6px;text-align:right'>1992–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_pasado</td><td style='padding:1px 6px;text-align:right'>1995–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_presente</td><td style='padding:1px 6px;text-align:right'>1995–2022</td></tr><tr><td style='padding:1px 6px'>velocidad_viento</td><td style='padding:1px 6px;text-align:right'>1992–2022</td></tr><tr><td style='padding:1px 6px'>visibilidad</td><td style='padding:1px 6px;text-align:right'>1995–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_03942f0e24151a2203a365dba1e0ead4.setContent(html_e1ba51ffd1097978b774ea99735e95a3);
+            
+        
+
+        circle_marker_63c8ac2dee710328d4fe074d65958c34.bindPopup(popup_03942f0e24151a2203a365dba1e0ead4)
+        ;
+
+        
+    
+    
+            circle_marker_63c8ac2dee710328d4fe074d65958c34.bindTooltip(
+                `<div>
+                     Gral. José María Bruguez, Dpto. de Pdte. Hayes · 2022
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0173d1b695873b6e42648ae285a0147b = L.circleMarker(
+                [-25.62680833, -57.14583056],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_c5462ed303307154c6664bfac0810f0a = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_49d6c96d004be1c93140611713e289f8 = $(`<div id="html_49d6c96d004be1c93140611713e289f8" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Paraguarí, Dpto. de Paraguari</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>9000221</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">116.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">13</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">direccion_viento, precipitacion, temperatura_aire, temperatura_minima, velocidad_viento</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">1981 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>111.3</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>direccion_viento</td><td style='padding:1px 6px;text-align:right'>1981–2022</td></tr><tr><td style='padding:1px 6px'>nubosidad</td><td style='padding:1px 6px;text-align:right'>1981–2022</td></tr><tr><td style='padding:1px 6px'>precipitacion</td><td style='padding:1px 6px;text-align:right'>2000–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_estacion</td><td style='padding:1px 6px;text-align:right'>1994–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_mar</td><td style='padding:1px 6px;text-align:right'>1981–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>1981–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_bulbo_humedo</td><td style='padding:1px 6px;text-align:right'>1981–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_minima</td><td style='padding:1px 6px;text-align:right'>1981–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_punto_rocio</td><td style='padding:1px 6px;text-align:right'>1981–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_pasado</td><td style='padding:1px 6px;text-align:right'>2000–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_presente</td><td style='padding:1px 6px;text-align:right'>2000–2022</td></tr><tr><td style='padding:1px 6px'>velocidad_viento</td><td style='padding:1px 6px;text-align:right'>1981–2022</td></tr><tr><td style='padding:1px 6px'>visibilidad</td><td style='padding:1px 6px;text-align:right'>2006–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_c5462ed303307154c6664bfac0810f0a.setContent(html_49d6c96d004be1c93140611713e289f8);
+            
+        
+
+        circle_marker_0173d1b695873b6e42648ae285a0147b.bindPopup(popup_c5462ed303307154c6664bfac0810f0a)
+        ;
+
+        
+    
+    
+            circle_marker_0173d1b695873b6e42648ae285a0147b.bindTooltip(
+                `<div>
+                     Paraguarí, Dpto. de Paraguari · 2022
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_212f3a1c9fc275f85ffc4da76af328cf = L.circleMarker(
+                [-23.44153056, -57.43018611],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13.8, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_8642911e3863ca340972916a97e75173 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_86818d47d0ef15cccba5667031c87956 = $(`<div id="html_86818d47d0ef15cccba5667031c87956" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Concepción, Dpto. de Concepción</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>1000134</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">75.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">12</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">direccion_viento, temperatura_aire, temperatura_minima, velocidad_viento</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">1906 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>252.3</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>direccion_viento</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>nubosidad</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_estacion</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_mar</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_bulbo_humedo</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_minima</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_punto_rocio</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_pasado</td><td style='padding:1px 6px;text-align:right'>1906–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_presente</td><td style='padding:1px 6px;text-align:right'>1906–2022</td></tr><tr><td style='padding:1px 6px'>velocidad_viento</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>visibilidad</td><td style='padding:1px 6px;text-align:right'>1906–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_8642911e3863ca340972916a97e75173.setContent(html_86818d47d0ef15cccba5667031c87956);
+            
+        
+
+        circle_marker_212f3a1c9fc275f85ffc4da76af328cf.bindPopup(popup_8642911e3863ca340972916a97e75173)
+        ;
+
+        
+    
+    
+            circle_marker_212f3a1c9fc275f85ffc4da76af328cf.bindTooltip(
+                `<div>
+                     Concepción, Dpto. de Concepción · 2022
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_efea7432d598c7fe016f84f6de845350 = L.circleMarker(
+                [-24.66521389, -56.45703889],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_46546d38fbd7501be44f273d67caaade = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_19052b2c606e2dd8922b49a83dfd64cb = $(`<div id="html_19052b2c606e2dd8922b49a83dfd64cb" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">San Estanislao,  Dpto. de San Pedro del Ycuamandiyú</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000192</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">183.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">11</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">direccion_viento, temperatura_aire, temperatura_maxima, temperatura_minima, velocidad_viento</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">1975 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>236.3</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>direccion_viento</td><td style='padding:1px 6px;text-align:right'>1975–2022</td></tr><tr><td style='padding:1px 6px'>insolacion</td><td style='padding:1px 6px;text-align:right'>1975–2019</td></tr><tr><td style='padding:1px 6px'>nubosidad</td><td style='padding:1px 6px;text-align:right'>1975–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_estacion</td><td style='padding:1px 6px;text-align:right'>1975–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_mar</td><td style='padding:1px 6px;text-align:right'>1991–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>1975–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_bulbo_humedo</td><td style='padding:1px 6px;text-align:right'>1975–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_maxima</td><td style='padding:1px 6px;text-align:right'>1975–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_minima</td><td style='padding:1px 6px;text-align:right'>1975–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_punto_rocio</td><td style='padding:1px 6px;text-align:right'>1975–2022</td></tr><tr><td style='padding:1px 6px'>velocidad_viento</td><td style='padding:1px 6px;text-align:right'>1975–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_46546d38fbd7501be44f273d67caaade.setContent(html_19052b2c606e2dd8922b49a83dfd64cb);
+            
+        
+
+        circle_marker_efea7432d598c7fe016f84f6de845350.bindPopup(popup_46546d38fbd7501be44f273d67caaade)
+        ;
+
+        
+    
+    
+            circle_marker_efea7432d598c7fe016f84f6de845350.bindTooltip(
+                `<div>
+                     San Estanislao,  Dpto. de San Pedro del Ycuamandiyú · 2022
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_43a88bd35d7076969776dd7186d68640 = L.circleMarker(
+                [-27.074901, -55.676723],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7.2, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_62a93a77d542e40fec8413e0f68b9a96 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_83541bed1eb86d41f3cfce8bde06ab22 = $(`<div id="html_83541bed1eb86d41f3cfce8bde06ab22" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Hohenau - Arroyo Capiibary</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086292</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">0.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">1</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">temperatura_aire</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2018 → 2019</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>1.8</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>2018–2019</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_62a93a77d542e40fec8413e0f68b9a96.setContent(html_83541bed1eb86d41f3cfce8bde06ab22);
+            
+        
+
+        circle_marker_43a88bd35d7076969776dd7186d68640.bindPopup(popup_62a93a77d542e40fec8413e0f68b9a96)
+        ;
+
+        
+    
+    
+            circle_marker_43a88bd35d7076969776dd7186d68640.bindTooltip(
+                `<div>
+                     Hohenau - Arroyo Capiibary · 2019
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8c2e33d85422a80ee9ae2810c85f62c8 = L.circleMarker(
+                [-24.032575, -54.35383611],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13.8, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_709ebc6ed80274982323aafb8fdfb518 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_398d8ac5a17050b75bb3eeada992e437 = $(`<div id="html_398d8ac5a17050b75bb3eeada992e437" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Salto del Guairá, Dpto. de  Canindeyú</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>14000210</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">297.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">10</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">direccion_viento, temperatura_aire, temperatura_minima, velocidad_viento</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">1975 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>187.4</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>direccion_viento</td><td style='padding:1px 6px;text-align:right'>1975–2022</td></tr><tr><td style='padding:1px 6px'>insolacion</td><td style='padding:1px 6px;text-align:right'>1975–2022</td></tr><tr><td style='padding:1px 6px'>nubosidad</td><td style='padding:1px 6px;text-align:right'>1975–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_estacion</td><td style='padding:1px 6px;text-align:right'>1976–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_mar</td><td style='padding:1px 6px;text-align:right'>1991–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>1975–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_bulbo_humedo</td><td style='padding:1px 6px;text-align:right'>1975–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_minima</td><td style='padding:1px 6px;text-align:right'>1975–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_punto_rocio</td><td style='padding:1px 6px;text-align:right'>1975–2022</td></tr><tr><td style='padding:1px 6px'>velocidad_viento</td><td style='padding:1px 6px;text-align:right'>1975–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_709ebc6ed80274982323aafb8fdfb518.setContent(html_398d8ac5a17050b75bb3eeada992e437);
+            
+        
+
+        circle_marker_8c2e33d85422a80ee9ae2810c85f62c8.bindPopup(popup_709ebc6ed80274982323aafb8fdfb518)
+        ;
+
+        
+    
+    
+            circle_marker_8c2e33d85422a80ee9ae2810c85f62c8.bindTooltip(
+                `<div>
+                     Salto del Guairá, Dpto. de  Canindeyú · 2022
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_da04cc2e0b68e74d16afa98cee884112 = L.circleMarker(
+                [-25.23610833, -57.51474444],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_27d814e8b9d4d3c70862dd1a3c4bbcc2 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_52f46da4454323fcd3ade3942168c4ed = $(`<div id="html_52f46da4454323fcd3ade3942168c4ed" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Asunción, Silvio Pettirossi, Capital de la Republica</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>11000218</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">83.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">14</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">direccion_viento, temperatura_aire, temperatura_maxima, temperatura_minima, velocidad_viento</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">1900 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>314.2</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>direccion_viento</td><td style='padding:1px 6px;text-align:right'>1900–2022</td></tr><tr><td style='padding:1px 6px'>insolacion</td><td style='padding:1px 6px;text-align:right'>1972–2022</td></tr><tr><td style='padding:1px 6px'>nubosidad</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_estacion</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_mar</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_bulbo_humedo</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_maxima</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_minima</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_punto_rocio</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_pasado</td><td style='padding:1px 6px;text-align:right'>1911–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_presente</td><td style='padding:1px 6px;text-align:right'>1911–2022</td></tr><tr><td style='padding:1px 6px'>velocidad_viento</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>visibilidad</td><td style='padding:1px 6px;text-align:right'>1911–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_27d814e8b9d4d3c70862dd1a3c4bbcc2.setContent(html_52f46da4454323fcd3ade3942168c4ed);
+            
+        
+
+        circle_marker_da04cc2e0b68e74d16afa98cee884112.bindPopup(popup_27d814e8b9d4d3c70862dd1a3c4bbcc2)
+        ;
+
+        
+    
+    
+            circle_marker_da04cc2e0b68e74d16afa98cee884112.bindTooltip(
+                `<div>
+                     Asunción, Silvio Pettirossi, Capital de la Republica · 2022
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_28208338dd51412c5008ef0159f8af10 = L.circleMarker(
+                [-25.48374444, -56.37774167],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13.8, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_0861b5905c93952d4c02fce19fcbcf35 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_3944accfa83c18b82d4dc19c9ad892c7 = $(`<div id="html_3944accfa83c18b82d4dc19c9ad892c7" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Coronel Oviedo, Caaguazu</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>5000234</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">159.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">12</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">direccion_viento, temperatura_aire, temperatura_minima, velocidad_viento</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">1906 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>202.7</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>direccion_viento</td><td style='padding:1px 6px;text-align:right'>1971–2022</td></tr><tr><td style='padding:1px 6px'>nubosidad</td><td style='padding:1px 6px;text-align:right'>1971–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_estacion</td><td style='padding:1px 6px;text-align:right'>1971–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_mar</td><td style='padding:1px 6px;text-align:right'>2003–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>1971–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_bulbo_humedo</td><td style='padding:1px 6px;text-align:right'>1971–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_minima</td><td style='padding:1px 6px;text-align:right'>1971–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_punto_rocio</td><td style='padding:1px 6px;text-align:right'>1971–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_pasado</td><td style='padding:1px 6px;text-align:right'>1906–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_presente</td><td style='padding:1px 6px;text-align:right'>1906–2022</td></tr><tr><td style='padding:1px 6px'>velocidad_viento</td><td style='padding:1px 6px;text-align:right'>1971–2022</td></tr><tr><td style='padding:1px 6px'>visibilidad</td><td style='padding:1px 6px;text-align:right'>1906–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_0861b5905c93952d4c02fce19fcbcf35.setContent(html_3944accfa83c18b82d4dc19c9ad892c7);
+            
+        
+
+        circle_marker_28208338dd51412c5008ef0159f8af10.bindPopup(popup_0861b5905c93952d4c02fce19fcbcf35)
+        ;
+
+        
+    
+    
+            circle_marker_28208338dd51412c5008ef0159f8af10.bindTooltip(
+                `<div>
+                     Coronel Oviedo, Caaguazu · 2022
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_52236477ea51eb7d5ea3372f4cfb1730 = L.circleMarker(
+                [-22.64027778, -55.832725],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13.8, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_b315e963442a2637aa7c474ae492bb42 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_252ccab363a443fb5605e19649e64c7f = $(`<div id="html_252ccab363a443fb5605e19649e64c7f" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Pedro Juan Caballero, Dpto. de Amambay</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>13000097</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">206.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">9</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">direccion_viento, temperatura_aire, temperatura_minima, velocidad_viento</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">1959 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>254.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>direccion_viento</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>nubosidad</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_estacion</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>presion_nivel_mar</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_bulbo_humedo</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_minima</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_punto_rocio</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr><tr><td style='padding:1px 6px'>velocidad_viento</td><td style='padding:1px 6px;text-align:right'>1959–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_b315e963442a2637aa7c474ae492bb42.setContent(html_252ccab363a443fb5605e19649e64c7f);
+            
+        
+
+        circle_marker_52236477ea51eb7d5ea3372f4cfb1730.bindPopup(popup_b315e963442a2637aa7c474ae492bb42)
+        ;
+
+        
+    
+    
+            circle_marker_52236477ea51eb7d5ea3372f4cfb1730.bindTooltip(
+                `<div>
+                     Pedro Juan Caballero, Dpto. de Amambay · 2022
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9fcfaa9bb9a5628e3e5f48daad782501 = L.circleMarker(
+                [-26.67027778, -57.13413889],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13.8, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_be99f4a591725fd39792eceb0557adf2 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_095b60e371c419063b914d0c5d9ec3f5 = $(`<div id="html_095b60e371c419063b914d0c5d9ec3f5" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">San Juan Bautista Misiones, Dpto. de Misiones</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>8000260</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">131.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">13</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">direccion_viento, temperatura_aire, temperatura_maxima, velocidad_viento</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">1913 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>262.4</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>direccion_viento</td><td style='padding:1px 6px;text-align:right'>1956–2021</td></tr><tr><td style='padding:1px 6px'>insolacion</td><td style='padding:1px 6px;text-align:right'>1973–2022</td></tr><tr><td style='padding:1px 6px'>nubosidad</td><td style='padding:1px 6px;text-align:right'>1956–2021</td></tr><tr><td style='padding:1px 6px'>presion_nivel_estacion</td><td style='padding:1px 6px;text-align:right'>1956–2021</td></tr><tr><td style='padding:1px 6px'>presion_nivel_mar</td><td style='padding:1px 6px;text-align:right'>1956–2021</td></tr><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>1956–2021</td></tr><tr><td style='padding:1px 6px'>temperatura_bulbo_humedo</td><td style='padding:1px 6px;text-align:right'>1956–2021</td></tr><tr><td style='padding:1px 6px'>temperatura_maxima</td><td style='padding:1px 6px;text-align:right'>1956–2022</td></tr><tr><td style='padding:1px 6px'>temperatura_punto_rocio</td><td style='padding:1px 6px;text-align:right'>1956–2021</td></tr><tr><td style='padding:1px 6px'>tiempo_pasado</td><td style='padding:1px 6px;text-align:right'>1913–2022</td></tr><tr><td style='padding:1px 6px'>tiempo_presente</td><td style='padding:1px 6px;text-align:right'>1913–2022</td></tr><tr><td style='padding:1px 6px'>velocidad_viento</td><td style='padding:1px 6px;text-align:right'>1956–2021</td></tr><tr><td style='padding:1px 6px'>visibilidad</td><td style='padding:1px 6px;text-align:right'>1913–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_be99f4a591725fd39792eceb0557adf2.setContent(html_095b60e371c419063b914d0c5d9ec3f5);
+            
+        
+
+        circle_marker_9fcfaa9bb9a5628e3e5f48daad782501.bindPopup(popup_be99f4a591725fd39792eceb0557adf2)
+        ;
+
+        
+    
+    
+            circle_marker_9fcfaa9bb9a5628e3e5f48daad782501.bindTooltip(
+                `<div>
+                     San Juan Bautista Misiones, Dpto. de Misiones · 2022
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b0f4280f16a11f47da23ee3f36f9e76c = L.circleMarker(
+                [-27.20021944, -55.78964167],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "darkred", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a);
+        
+    
+        var popup_e093ac18a938b0f496710a16b617baab = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_f7fd055330972a7f54fdc031e612e8b2 = $(`<div id="html_f7fd055330972a7f54fdc031e612e8b2" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Cap. Miranda, Dpto. de  Itapua</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>7000294</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">228.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">10</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">direccion_viento, temperatura_aire, temperatura_maxima, temperatura_minima, velocidad_viento</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">1963 → 2014</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>186.3</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>direccion_viento</td><td style='padding:1px 6px;text-align:right'>1975–2012</td></tr><tr><td style='padding:1px 6px'>insolacion</td><td style='padding:1px 6px;text-align:right'>1976–2013</td></tr><tr><td style='padding:1px 6px'>nubosidad</td><td style='padding:1px 6px;text-align:right'>1975–2013</td></tr><tr><td style='padding:1px 6px'>temperatura_aire</td><td style='padding:1px 6px;text-align:right'>1963–2013</td></tr><tr><td style='padding:1px 6px'>temperatura_bulbo_humedo</td><td style='padding:1px 6px;text-align:right'>1963–2013</td></tr><tr><td style='padding:1px 6px'>temperatura_maxima</td><td style='padding:1px 6px;text-align:right'>1963–2014</td></tr><tr><td style='padding:1px 6px'>temperatura_minima</td><td style='padding:1px 6px;text-align:right'>1963–2014</td></tr><tr><td style='padding:1px 6px'>temperatura_punto_rocio</td><td style='padding:1px 6px;text-align:right'>1963–2013</td></tr><tr><td style='padding:1px 6px'>velocidad_viento</td><td style='padding:1px 6px;text-align:right'>1975–2012</td></tr><tr><td style='padding:1px 6px'>visibilidad</td><td style='padding:1px 6px;text-align:right'>2001–2013</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_e093ac18a938b0f496710a16b617baab.setContent(html_f7fd055330972a7f54fdc031e612e8b2);
+            
+        
+
+        circle_marker_b0f4280f16a11f47da23ee3f36f9e76c.bindPopup(popup_e093ac18a938b0f496710a16b617baab)
+        ;
+
+        
+    
+    
+            circle_marker_b0f4280f16a11f47da23ee3f36f9e76c.bindTooltip(
+                `<div>
+                     Cap. Miranda, Dpto. de  Itapua · 2014
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a.addTo(map_cb8fcca3fd5558715ac14d873deb9c00);
+        
+    
+            var feature_group_dd2d0373881b4bb6a673eba7b9797911 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_a0343734c52ced6552fb304f4937e509 = L.circleMarker(
+                [-25.315792, -57.455028],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_dd2d0373881b4bb6a673eba7b9797911);
+        
+    
+        var popup_f15c38112dddb1e74d3832ec969289e7 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_6261a700bd2d1cfc58ced6c49f4cc31e = $(`<div id="html_6261a700bd2d1cfc58ced6c49f4cc31e" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Capiatá - Arroyo San Lorenzo</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086203</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">0.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">2</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">—</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2016 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>0.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel</td><td style='padding:1px 6px;text-align:right'>2022–2022</td></tr><tr><td style='padding:1px 6px'>nivel_agua</td><td style='padding:1px 6px;text-align:right'>2016–2020</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_f15c38112dddb1e74d3832ec969289e7.setContent(html_6261a700bd2d1cfc58ced6c49f4cc31e);
+            
+        
+
+        circle_marker_a0343734c52ced6552fb304f4937e509.bindPopup(popup_f15c38112dddb1e74d3832ec969289e7)
+        ;
+
+        
+    
+    
+            circle_marker_a0343734c52ced6552fb304f4937e509.bindTooltip(
+                `<div>
+                     Capiatá - Arroyo San Lorenzo · —
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0b13d26e5f3e2fd42272ae2b6db1571c = L.circleMarker(
+                [-25.435, -57.614],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_dd2d0373881b4bb6a673eba7b9797911);
+        
+    
+        var popup_0ab2319171bd92a62639afafa3db3c71 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_d271cb09e715f36c500fb34d11cd883e = $(`<div id="html_d271cb09e715f36c500fb34d11cd883e" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Asunción (Puerto) - Río Paraguay</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086201</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">0.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">2</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">—</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2016 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>0.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel</td><td style='padding:1px 6px;text-align:right'>2022–2022</td></tr><tr><td style='padding:1px 6px'>nivel_agua</td><td style='padding:1px 6px;text-align:right'>2016–2018</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_0ab2319171bd92a62639afafa3db3c71.setContent(html_d271cb09e715f36c500fb34d11cd883e);
+            
+        
+
+        circle_marker_0b13d26e5f3e2fd42272ae2b6db1571c.bindPopup(popup_0ab2319171bd92a62639afafa3db3c71)
+        ;
+
+        
+    
+    
+            circle_marker_0b13d26e5f3e2fd42272ae2b6db1571c.bindTooltip(
+                `<div>
+                     Asunción (Puerto) - Río Paraguay · —
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d9577d777f0136693d2dbba6b58214cd = L.circleMarker(
+                [-25.312788, -57.300147],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_dd2d0373881b4bb6a673eba7b9797911);
+        
+    
+        var popup_aeeddea830377c9abea6c2402c7cf458 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_da803407425d0b0435022774abb21c35 = $(`<div id="html_da803407425d0b0435022774abb21c35" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">CNSB</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086222</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">0.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">1</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">—</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2022 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>0.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel</td><td style='padding:1px 6px;text-align:right'>2022–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_aeeddea830377c9abea6c2402c7cf458.setContent(html_da803407425d0b0435022774abb21c35);
+            
+        
+
+        circle_marker_d9577d777f0136693d2dbba6b58214cd.bindPopup(popup_aeeddea830377c9abea6c2402c7cf458)
+        ;
+
+        
+    
+    
+            circle_marker_d9577d777f0136693d2dbba6b58214cd.bindTooltip(
+                `<div>
+                     CNSB · —
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_80e92b1adbd426fc09f46c528c058b96 = L.circleMarker(
+                [-22.1346626, -58.046136],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_dd2d0373881b4bb6a673eba7b9797911);
+        
+    
+        var popup_c3915ee84617230d7a1dc403fc353c97 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_9955363dd6844fa0f2d796c63d771eeb = $(`<div id="html_9955363dd6844fa0f2d796c63d771eeb" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Vallemi, Rio Paraguay</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086088</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">75.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">1</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">—</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2022 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>0.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel</td><td style='padding:1px 6px;text-align:right'>2022–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_c3915ee84617230d7a1dc403fc353c97.setContent(html_9955363dd6844fa0f2d796c63d771eeb);
+            
+        
+
+        circle_marker_80e92b1adbd426fc09f46c528c058b96.bindPopup(popup_c3915ee84617230d7a1dc403fc353c97)
+        ;
+
+        
+    
+    
+            circle_marker_80e92b1adbd426fc09f46c528c058b96.bindTooltip(
+                `<div>
+                     Vallemi, Rio Paraguay · —
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6571c96f45a852b2c9d1913068019c26 = L.circleMarker(
+                [-25.388518, -57.269347],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_dd2d0373881b4bb6a673eba7b9797911);
+        
+    
+        var popup_939f2c080313ae5db441987ac5ce6722 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_5d698e8c19588299db44429aa2728fbf = $(`<div id="html_5d698e8c19588299db44429aa2728fbf" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Arroyo Ypacarai</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086221</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">0.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">1</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">—</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2022 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>0.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel</td><td style='padding:1px 6px;text-align:right'>2022–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_939f2c080313ae5db441987ac5ce6722.setContent(html_5d698e8c19588299db44429aa2728fbf);
+            
+        
+
+        circle_marker_6571c96f45a852b2c9d1913068019c26.bindPopup(popup_939f2c080313ae5db441987ac5ce6722)
+        ;
+
+        
+    
+    
+            circle_marker_6571c96f45a852b2c9d1913068019c26.bindTooltip(
+                `<div>
+                     Arroyo Ypacarai · —
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6b255cacc354f44f5789a55b2f65806d = L.circleMarker(
+                [-24.974343, -57.213917],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_dd2d0373881b4bb6a673eba7b9797911);
+        
+    
+        var popup_52a6ae0591b8f5bada114f02bba17fbf = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_82e3307684ab8c651c55b6eb874f4d49 = $(`<div id="html_82e3307684ab8c651c55b6eb874f4d49" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Naranjahai</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086220</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">0.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">1</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">—</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2022 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>0.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel</td><td style='padding:1px 6px;text-align:right'>2022–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_52a6ae0591b8f5bada114f02bba17fbf.setContent(html_82e3307684ab8c651c55b6eb874f4d49);
+            
+        
+
+        circle_marker_6b255cacc354f44f5789a55b2f65806d.bindPopup(popup_52a6ae0591b8f5bada114f02bba17fbf)
+        ;
+
+        
+    
+    
+            circle_marker_6b255cacc354f44f5789a55b2f65806d.bindTooltip(
+                `<div>
+                     Naranjahai · —
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c860540dfee9a4298bdafb83f41d894d = L.circleMarker(
+                [-26.515513, -56.281186],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_dd2d0373881b4bb6a673eba7b9797911);
+        
+    
+        var popup_87fe8c693153b90e14da04240a58b8b9 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_c197fb6aa234d5a7dd972f255eb0da7f = $(`<div id="html_c197fb6aa234d5a7dd972f255eb0da7f" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Tebicuary Yuty,Caazapa (Hidrológico SEAM - MOPC - DMH)</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086259</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">0.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">1</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">—</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2016 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>0.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel_agua</td><td style='padding:1px 6px;text-align:right'>2016–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_87fe8c693153b90e14da04240a58b8b9.setContent(html_c197fb6aa234d5a7dd972f255eb0da7f);
+            
+        
+
+        circle_marker_c860540dfee9a4298bdafb83f41d894d.bindPopup(popup_87fe8c693153b90e14da04240a58b8b9)
+        ;
+
+        
+    
+    
+            circle_marker_c860540dfee9a4298bdafb83f41d894d.bindTooltip(
+                `<div>
+                     Tebicuary Yuty,Caazapa (Hidrológico SEAM - MOPC - DMH) · —
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_06ecafbeb75773ea6ef6adfcf9e49f92 = L.circleMarker(
+                [-24.427809, -57.165856],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_dd2d0373881b4bb6a673eba7b9797911);
+        
+    
+        var popup_cc9778d345cd9c3442db90e304fd7df1 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_96a78cb0c199493c441af2706b864495 = $(`<div id="html_96a78cb0c199493c441af2706b864495" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Rosario, Rio Paraguay</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086183</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">0.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">1</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">—</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2022 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>0.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel</td><td style='padding:1px 6px;text-align:right'>2022–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_cc9778d345cd9c3442db90e304fd7df1.setContent(html_96a78cb0c199493c441af2706b864495);
+            
+        
+
+        circle_marker_06ecafbeb75773ea6ef6adfcf9e49f92.bindPopup(popup_cc9778d345cd9c3442db90e304fd7df1)
+        ;
+
+        
+    
+    
+            circle_marker_06ecafbeb75773ea6ef6adfcf9e49f92.bindTooltip(
+                `<div>
+                     Rosario, Rio Paraguay · —
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a938f25beb9a5108408e1946e8f4ed1e = L.circleMarker(
+                [-24.101208, -56.446334],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_dd2d0373881b4bb6a673eba7b9797911);
+        
+    
+        var popup_fa4a4ea989780852931e870cac5ee15c = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_66484f08b81b4ea2cd0c658db24ae4e3 = $(`<div id="html_66484f08b81b4ea2cd0c658db24ae4e3" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Rio Jejuí</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086191</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">0.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">1</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">—</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2022 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>0.4</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel</td><td style='padding:1px 6px;text-align:right'>2022–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_fa4a4ea989780852931e870cac5ee15c.setContent(html_66484f08b81b4ea2cd0c658db24ae4e3);
+            
+        
+
+        circle_marker_a938f25beb9a5108408e1946e8f4ed1e.bindPopup(popup_fa4a4ea989780852931e870cac5ee15c)
+        ;
+
+        
+    
+    
+            circle_marker_a938f25beb9a5108408e1946e8f4ed1e.bindTooltip(
+                `<div>
+                     Rio Jejuí · —
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_097cf13dbc51eedf55987ab99c5d40c5 = L.circleMarker(
+                [-20.227, -58.3],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_dd2d0373881b4bb6a673eba7b9797911);
+        
+    
+        var popup_f43d7e4aced0fc2221fa1d412c1c387c = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_40b839e7a5f622c49912d00198737cd0 = $(`<div id="html_40b839e7a5f622c49912d00198737cd0" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Bahia Negra, Rio Paraguay</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086033</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">82.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">1</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">—</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2022 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>0.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel</td><td style='padding:1px 6px;text-align:right'>2022–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_f43d7e4aced0fc2221fa1d412c1c387c.setContent(html_40b839e7a5f622c49912d00198737cd0);
+            
+        
+
+        circle_marker_097cf13dbc51eedf55987ab99c5d40c5.bindPopup(popup_f43d7e4aced0fc2221fa1d412c1c387c)
+        ;
+
+        
+    
+    
+            circle_marker_097cf13dbc51eedf55987ab99c5d40c5.bindTooltip(
+                `<div>
+                     Bahia Negra, Rio Paraguay · —
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9825a1e8243a2c76877e113ede5750b6 = L.circleMarker(
+                [-23.42418, -56.493036],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_dd2d0373881b4bb6a673eba7b9797911);
+        
+    
+        var popup_1e42ae77976286fe4e45d6d013647e58 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_1f1db44e2dec4835962633f9e2108d8e = $(`<div id="html_1f1db44e2dec4835962633f9e2108d8e" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Puente RN 3 - Río Ypane</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086194</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">93.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">1</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">—</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2022 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>0.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel</td><td style='padding:1px 6px;text-align:right'>2022–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_1e42ae77976286fe4e45d6d013647e58.setContent(html_1f1db44e2dec4835962633f9e2108d8e);
+            
+        
+
+        circle_marker_9825a1e8243a2c76877e113ede5750b6.bindPopup(popup_1e42ae77976286fe4e45d6d013647e58)
+        ;
+
+        
+    
+    
+            circle_marker_9825a1e8243a2c76877e113ede5750b6.bindTooltip(
+                `<div>
+                     Puente RN 3 - Río Ypane · —
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_90f7007b5a0810f3366bc2aecee6afb4 = L.circleMarker(
+                [-21.6246151, -57.9727067],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_dd2d0373881b4bb6a673eba7b9797911);
+        
+    
+        var popup_760318554d45c399debbc7a4fccb66be = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_4c34d6f350803d9a6dd787fea93c0b54 = $(`<div id="html_4c34d6f350803d9a6dd787fea93c0b54" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Isla Margarita, Rio Paraguay</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086009</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">0.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">1</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">—</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2022 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>0.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel</td><td style='padding:1px 6px;text-align:right'>2022–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_760318554d45c399debbc7a4fccb66be.setContent(html_4c34d6f350803d9a6dd787fea93c0b54);
+            
+        
+
+        circle_marker_90f7007b5a0810f3366bc2aecee6afb4.bindPopup(popup_760318554d45c399debbc7a4fccb66be)
+        ;
+
+        
+    
+    
+            circle_marker_90f7007b5a0810f3366bc2aecee6afb4.bindTooltip(
+                `<div>
+                     Isla Margarita, Rio Paraguay · —
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_eaeeeb13f6914fc875f1bf82197e9ee8 = L.circleMarker(
+                [-24.032, -54.353],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_dd2d0373881b4bb6a673eba7b9797911);
+        
+    
+        var popup_8d4fa6cccb6f4641deb563abf5aa4678 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_5a986dff7cc764b308d8cc8febceb85d = $(`<div id="html_5a986dff7cc764b308d8cc8febceb85d" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Salto del Guairá, Rio Paraná</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086210</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">297.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">1</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">—</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2022 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>0.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel</td><td style='padding:1px 6px;text-align:right'>2022–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_8d4fa6cccb6f4641deb563abf5aa4678.setContent(html_5a986dff7cc764b308d8cc8febceb85d);
+            
+        
+
+        circle_marker_eaeeeb13f6914fc875f1bf82197e9ee8.bindPopup(popup_8d4fa6cccb6f4641deb563abf5aa4678)
+        ;
+
+        
+    
+    
+            circle_marker_eaeeeb13f6914fc875f1bf82197e9ee8.bindTooltip(
+                `<div>
+                     Salto del Guairá, Rio Paraná · —
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_85988035bfb5a7800244fbee68e42c14 = L.circleMarker(
+                [-21.0375, -57.87083333],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_dd2d0373881b4bb6a673eba7b9797911);
+        
+    
+        var popup_4711ffad407e0b6e436aaea9471cbbea = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_c528f96102397ac709a7d5bd3e6cab6c = $(`<div id="html_c528f96102397ac709a7d5bd3e6cab6c" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Fuerte Olimpo, Rio Paraguay</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086010</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">65.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">1</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">—</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2022 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>0.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel</td><td style='padding:1px 6px;text-align:right'>2022–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_4711ffad407e0b6e436aaea9471cbbea.setContent(html_c528f96102397ac709a7d5bd3e6cab6c);
+            
+        
+
+        circle_marker_85988035bfb5a7800244fbee68e42c14.bindPopup(popup_4711ffad407e0b6e436aaea9471cbbea)
+        ;
+
+        
+    
+    
+            circle_marker_85988035bfb5a7800244fbee68e42c14.bindTooltip(
+                `<div>
+                     Fuerte Olimpo, Rio Paraguay · —
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e952023c48e1f53f4fea373298a6ccc0 = L.circleMarker(
+                [-27.4, -57.13333333],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_dd2d0373881b4bb6a673eba7b9797911);
+        
+    
+        var popup_ab3197411e93258aa611db35563b7909 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_8a471c0b482b3dce07c68ff9100739e9 = $(`<div id="html_8a471c0b482b3dce07c68ff9100739e9" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Arroyo Yabebyry, Alto Parana, Rio Paraná</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086247</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">0.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">1</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">—</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2022 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>0.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel</td><td style='padding:1px 6px;text-align:right'>2022–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_ab3197411e93258aa611db35563b7909.setContent(html_8a471c0b482b3dce07c68ff9100739e9);
+            
+        
+
+        circle_marker_e952023c48e1f53f4fea373298a6ccc0.bindPopup(popup_ab3197411e93258aa611db35563b7909)
+        ;
+
+        
+    
+    
+            circle_marker_e952023c48e1f53f4fea373298a6ccc0.bindTooltip(
+                `<div>
+                     Arroyo Yabebyry, Alto Parana, Rio Paraná · —
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bd49da5432b1b654cdaeef254abb2f13 = L.circleMarker(
+                [-25.235, -57.514],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_dd2d0373881b4bb6a673eba7b9797911);
+        
+    
+        var popup_663d93d32bb6a05f7448f265b7740d46 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_2c30068bc90b367bf7843776c4c19585 = $(`<div id="html_2c30068bc90b367bf7843776c4c19585" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Asuncion, Rio Paraguay</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086218</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">83.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">1</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">—</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2022 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>0.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel</td><td style='padding:1px 6px;text-align:right'>2022–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_663d93d32bb6a05f7448f265b7740d46.setContent(html_2c30068bc90b367bf7843776c4c19585);
+            
+        
+
+        circle_marker_bd49da5432b1b654cdaeef254abb2f13.bindPopup(popup_663d93d32bb6a05f7448f265b7740d46)
+        ;
+
+        
+    
+    
+            circle_marker_bd49da5432b1b654cdaeef254abb2f13.bindTooltip(
+                `<div>
+                     Asuncion, Rio Paraguay · —
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_abd3abfcfd1b2934f14691abae9feb29 = L.circleMarker(
+                [-26.050942, -56.497627],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_dd2d0373881b4bb6a673eba7b9797911);
+        
+    
+        var popup_cb606064f25a1dacbbfc6c2756b898c0 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_d485c8718d4c8db8ad726571a708a82c = $(`<div id="html_d485c8718d4c8db8ad726571a708a82c" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Iturbe - Rio Tebicuarymi</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086231</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">0.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">1</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">—</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2022 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>0.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel</td><td style='padding:1px 6px;text-align:right'>2022–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_cb606064f25a1dacbbfc6c2756b898c0.setContent(html_d485c8718d4c8db8ad726571a708a82c);
+            
+        
+
+        circle_marker_abd3abfcfd1b2934f14691abae9feb29.bindPopup(popup_cb606064f25a1dacbbfc6c2756b898c0)
+        ;
+
+        
+    
+    
+            circle_marker_abd3abfcfd1b2934f14691abae9feb29.bindTooltip(
+                `<div>
+                     Iturbe - Rio Tebicuarymi · —
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a2a11e9acba8a2f4efc6bdf6b6b924c0 = L.circleMarker(
+                [-25.519, -54.612],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_dd2d0373881b4bb6a673eba7b9797911);
+        
+    
+        var popup_b7d5bdc60cb815e9ca8ba37ac36dcaeb = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_0a92191f06a2de64113883ea25d0f934 = $(`<div id="html_0a92191f06a2de64113883ea25d0f934" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Ciudad del Este, Rio Paraná</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086248</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">196.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">1</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">—</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2022 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>0.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel</td><td style='padding:1px 6px;text-align:right'>2022–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_b7d5bdc60cb815e9ca8ba37ac36dcaeb.setContent(html_0a92191f06a2de64113883ea25d0f934);
+            
+        
+
+        circle_marker_a2a11e9acba8a2f4efc6bdf6b6b924c0.bindPopup(popup_b7d5bdc60cb815e9ca8ba37ac36dcaeb)
+        ;
+
+        
+    
+    
+            circle_marker_a2a11e9acba8a2f4efc6bdf6b6b924c0.bindTooltip(
+                `<div>
+                     Ciudad del Este, Rio Paraná · —
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4c27012c3b664767b80a5477e5065a60 = L.circleMarker(
+                [-23.869574, -56.508903],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_dd2d0373881b4bb6a673eba7b9797911);
+        
+    
+        var popup_de1c1df06ba74bf989b0ac699655a65a = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_10c9fa136d5d3e9523a279ec4ec71fab = $(`<div id="html_10c9fa136d5d3e9523a279ec4ec71fab" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Rio Aguaray</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086193</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">0.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">1</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">—</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2022 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>0.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel</td><td style='padding:1px 6px;text-align:right'>2022–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_de1c1df06ba74bf989b0ac699655a65a.setContent(html_10c9fa136d5d3e9523a279ec4ec71fab);
+            
+        
+
+        circle_marker_4c27012c3b664767b80a5477e5065a60.bindPopup(popup_de1c1df06ba74bf989b0ac699655a65a)
+        ;
+
+        
+    
+    
+            circle_marker_4c27012c3b664767b80a5477e5065a60.bindTooltip(
+                `<div>
+                     Rio Aguaray · —
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b95286750ae6d3c9ae88698433c23f41 = L.circleMarker(
+                [-22.287686, -57.878817],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_dd2d0373881b4bb6a673eba7b9797911);
+        
+    
+        var popup_5051cbe0e654732c8c99373f64952984 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_a28c5477f5d00a276c66d8b63a6331b8 = $(`<div id="html_a28c5477f5d00a276c66d8b63a6331b8" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Tres Cerros</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086089</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">81.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">1</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">—</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2022 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>0.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel</td><td style='padding:1px 6px;text-align:right'>2022–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_5051cbe0e654732c8c99373f64952984.setContent(html_a28c5477f5d00a276c66d8b63a6331b8);
+            
+        
+
+        circle_marker_b95286750ae6d3c9ae88698433c23f41.bindPopup(popup_5051cbe0e654732c8c99373f64952984)
+        ;
+
+        
+    
+    
+            circle_marker_b95286750ae6d3c9ae88698433c23f41.bindTooltip(
+                `<div>
+                     Tres Cerros · —
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6afac0c138161c9f133f8bd77493c3de = L.circleMarker(
+                [-24.1, -57.17],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_dd2d0373881b4bb6a673eba7b9797911);
+        
+    
+        var popup_26c6f48cab499dc5fd32593561d691ef = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_9135943f07cfeaebee2b7506e6d6d8f9 = $(`<div id="html_9135943f07cfeaebee2b7506e6d6d8f9" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Puerto Antequera, Rio Paraguay</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086184</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">70.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">1</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">—</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2022 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>0.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel</td><td style='padding:1px 6px;text-align:right'>2022–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_26c6f48cab499dc5fd32593561d691ef.setContent(html_9135943f07cfeaebee2b7506e6d6d8f9);
+            
+        
+
+        circle_marker_6afac0c138161c9f133f8bd77493c3de.bindPopup(popup_26c6f48cab499dc5fd32593561d691ef)
+        ;
+
+        
+    
+    
+            circle_marker_6afac0c138161c9f133f8bd77493c3de.bindTooltip(
+                `<div>
+                     Puerto Antequera, Rio Paraguay · —
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8eb84d1f5b6cd5c42abb5be1b2e3388e = L.circleMarker(
+                [-25.356111, -57.64],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_dd2d0373881b4bb6a673eba7b9797911);
+        
+    
+        var popup_a9878ab21daccbacac7cf924cf473772 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_d7f1dbed95fc009cb331a7b753da5e11 = $(`<div id="html_d7f1dbed95fc009cb331a7b753da5e11" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Ita Enramada, Rio Paraguay</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086219</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">0.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">1</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">—</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2022 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>0.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel</td><td style='padding:1px 6px;text-align:right'>2022–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_a9878ab21daccbacac7cf924cf473772.setContent(html_d7f1dbed95fc009cb331a7b753da5e11);
+            
+        
+
+        circle_marker_8eb84d1f5b6cd5c42abb5be1b2e3388e.bindPopup(popup_a9878ab21daccbacac7cf924cf473772)
+        ;
+
+        
+    
+    
+            circle_marker_8eb84d1f5b6cd5c42abb5be1b2e3388e.bindTooltip(
+                `<div>
+                     Ita Enramada, Rio Paraguay · —
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5d5bb54224f99679f31d17b0cfc2fbad = L.circleMarker(
+                [-25.347547, -57.416533],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_dd2d0373881b4bb6a673eba7b9797911);
+        
+    
+        var popup_72bbfcd38a9f7002fe30a9c8407d48bc = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_8d360aa7ec87b0d44f82d1119019eb0d = $(`<div id="html_8d360aa7ec87b0d44f82d1119019eb0d" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Aregua - Arroyo Yukyrymi</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086204</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">0.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">1</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">—</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2022 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>0.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel</td><td style='padding:1px 6px;text-align:right'>2022–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_72bbfcd38a9f7002fe30a9c8407d48bc.setContent(html_8d360aa7ec87b0d44f82d1119019eb0d);
+            
+        
+
+        circle_marker_5d5bb54224f99679f31d17b0cfc2fbad.bindPopup(popup_72bbfcd38a9f7002fe30a9c8407d48bc)
+        ;
+
+        
+    
+    
+            circle_marker_5d5bb54224f99679f31d17b0cfc2fbad.bindTooltip(
+                `<div>
+                     Aregua - Arroyo Yukyrymi · —
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_164b3413843757480b0ed18325487108 = L.circleMarker(
+                [-23.44, -57.43],
+                {"bubblingMouseEvents": true, "color": "#444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.0, "stroke": true, "weight": 1}
+            ).addTo(feature_group_dd2d0373881b4bb6a673eba7b9797911);
+        
+    
+        var popup_f436cb14cc97df674b319a34228c895e = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_799bd3a787bd02a4c88d64a864773d76 = $(`<div id="html_799bd3a787bd02a4c88d64a864773d76" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Helvetica,Arial,sans-serif;font-size:12px;min-width:240px">       <div style="font-size:14px;font-weight:700;color:#7a1f1f">Concepcion, Rio Paraguay</div>       <div style="color:#888;font-size:11px;margin-bottom:4px">Estación / Station</div>       <table style="border-collapse:collapse">         <tr><td style="padding:2px 6px;color:#555">código / code</td><td style="padding:2px 6px"><b>2000086134</b></td></tr>         <tr><td style="padding:2px 6px;color:#555">altitud / altitude (m)</td><td style="padding:2px 6px">75.0</td></tr>         <tr><td style="padding:2px 6px;color:#555">nº variables</td><td style="padding:2px 6px">1</td></tr>         <tr><td style="padding:2px 6px;color:#555">variables de incendio<br><span style="color:#999">fire-relevant vars</span></td><td style="padding:2px 6px">—</td></tr>         <tr><td style="padding:2px 6px;color:#555">periodo de registro<br><span style="color:#999">record period</span></td><td style="padding:2px 6px">2022 → 2022</td></tr>         <tr><td style='padding:2px 6px;color:#555'>readiness</td><td style='padding:2px 6px'><b>0.0</b></td></tr>       </table>       <div style="margin-top:6px;color:#888;font-size:11px">variables (inicio–fin / start–end)</div>       <div style="max-height:140px;overflow-y:auto;border:1px solid #eee">         <table style="border-collapse:collapse;width:100%;font-size:11px"><tr><td style='padding:1px 6px'>nivel</td><td style='padding:1px 6px;text-align:right'>2022–2022</td></tr></table>       </div>     </div>     </div>`)[0];
+                popup_f436cb14cc97df674b319a34228c895e.setContent(html_799bd3a787bd02a4c88d64a864773d76);
+            
+        
+
+        circle_marker_164b3413843757480b0ed18325487108.bindPopup(popup_f436cb14cc97df674b319a34228c895e)
+        ;
+
+        
+    
+    
+            circle_marker_164b3413843757480b0ed18325487108.bindTooltip(
+                `<div>
+                     Concepcion, Rio Paraguay · —
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_dd2d0373881b4bb6a673eba7b9797911.addTo(map_cb8fcca3fd5558715ac14d873deb9c00);
+        
+    
+            var layer_control_39e3a74065da7f44c5016420e26a9389_layers = {
+                base_layers : {
+                    "cartodbpositron" : tile_layer_a6d0032bdda2185b1e108cbc76ee2849,
+                },
+                overlays :  {
+                    "Con variables de incendio / Fire-relevant" : feature_group_6a97cec9ac83b24f7cbf2e1aee495a7a,
+                    "Otras / Other" : feature_group_dd2d0373881b4bb6a673eba7b9797911,
+                },
+            };
+            let layer_control_39e3a74065da7f44c5016420e26a9389 = L.control.layers(
+                layer_control_39e3a74065da7f44c5016420e26a9389_layers.base_layers,
+                layer_control_39e3a74065da7f44c5016420e26a9389_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": false,
+  "autoZIndex": true,
+}
+            ).addTo(map_cb8fcca3fd5558715ac14d873deb9c00);
+
+        
+</script>
+</html>
