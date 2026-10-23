@@ -1,0 +1,935 @@
+<!doctype html>
+<!-- Generated 2026-10-22 22:31 -03 (2026-10-22T22:31:17-03:00) -->
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modelo de simulación: estado y camino a diciembre · 2026-10-22</title>
+<meta name="description" content="Plataforma de Simulación de Incendios y Respuesta Rápida, INFONA · DAI · Forest4Life Paraguay · 15 láminas: metodología, las 15 capas que exige el motor y su estado, meteorología, control de códigos de combustible, flujograma de las 7 salidas y plan hacia la entrega de diciembre de 2026. Fire-simulation lane: status and road to the first integrated output (December 2026).">
+<meta name="generated" content="2026-10-22T22:31:17-03:00">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHBhdGggZmlsbD0iI2Q5NDgwZiIgZD0iTTIwIDJjMS41IDYuMiA5LjUgMTAuNCA5LjUgMjAuMkMyOS41IDMwLjQgMjUuMiAzNiAyMCAzNnMtOS41LTUuNi05LjUtMTMuOGMwLTQuNiAyLjEtOC4yIDQuNi0xMC43LjIgMy40IDEuNiA1LjYgMy40IDYuNkMxNy42IDEyLjYgMTguNCA2LjggMjAgMnptMCAyMC41Yy0xLjYgMi4zLTQgMy45LTQgNi45IDAgMi41IDEuOCA0LjEgNCA0LjFzNC0xLjYgNC00LjFjMC0zLTIuNC00LjYtNC02Ljl6Ii8+PHJlY3QgeD0iNiIgeT0iMzciIHdpZHRoPSIyOCIgaGVpZ2h0PSIxLjYiIHJ4PSIuOCIgZmlsbD0iI2Q5NDgwZiIvPjwvc3ZnPgo="><style>
+.deckbar{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin-top:26px}
+.present-btn{font:600 14px var(--f-sans);background:var(--accent);color:var(--accent-ink);border:0;border-radius:999px;padding:9px 18px;cursor:pointer}
+.present-btn:hover{filter:brightness(1.08)}
+.deckbar .hint{font-size:13px;color:var(--ink-3)}
+.toc{display:flex;flex-wrap:wrap;gap:6px 8px;margin-top:14px}
+.toc a{font-size:13px;text-decoration:none;color:var(--ink-2);border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:var(--surface)}
+.toc a:hover{border-color:var(--accent);color:var(--accent)}
+.deck{display:grid;gap:30px;margin-top:36px}
+.slide{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:16px;
+  padding:clamp(18px,3vw,40px);box-shadow:var(--shadow);font-size:16px;scroll-margin-top:16px;min-width:0}
+.sl-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.kicker{font:500 .75em/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.sl-num{font:500 .8em var(--f-mono);color:var(--ink-3)}
+.slide h2{font-size:1.75em;line-height:1.2;margin:.35em 0 0;letter-spacing:-.015em}
+.slide .en{font-size:.95em;color:var(--ink-3);font-style:italic;margin:.25em 0 0}
+.sl-body{margin-top:1.1em}
+.slide h3{font-size:1.05em}.slide h4{font-size:.8em;font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);margin:0 0 .6em;font-weight:500}
+.pts{margin:.6em 0 0;padding-left:1.2em}.pts li{margin:.45em 0;max-width:75ch;line-height:1.5}
+.foot{font-size:.9em;color:var(--ink-2);margin:1.1em 0 0;border-top:1px solid var(--line);padding-top:.8em;max-width:none}
+.grid{display:grid;gap:14px}.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))}
+.box{border:1px solid var(--line);border-top:4px solid var(--c);border-radius:12px;padding:.9em 1em;background:var(--raised)}
+.box .ic{font-size:1.5em;line-height:1}.box h3{margin:.3em 0 0}.box p{margin:.35em 0 0;font-size:.92em;color:var(--ink-2)}
+.flow{display:flex;gap:10px;align-items:stretch;flex-wrap:wrap}
+.flow .step{flex:1 1 140px;position:relative;border:1px solid var(--line);border-left:5px solid var(--c);border-radius:10px;padding:.6em .8em;background:var(--raised)}
+.flow .step b{display:block;font-size:.95em}.flow .step span{display:block;font-size:.85em;color:var(--ink-2);margin-top:.15em}
+.flow:not(.v) .step:not(:last-child)::after{content:"→";position:absolute;right:-12px;top:50%;transform:translateY(-50%);color:var(--ink-3);font-size:14px;z-index:1}
+.flow.v{flex-direction:column}.flow.v .step{flex:none}
+.flow.v .step:not(:last-child)::after{content:"↓";position:absolute;left:50%;bottom:-15px;transform:translateX(-50%);color:var(--ink-3);font-size:13px;z-index:1}
+.flow.v{gap:16px}
+.fc{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.chip{display:inline-block;font-size:.8em;font-weight:600;padding:2px 9px;border-radius:999px;border:1.5px solid var(--c);color:var(--ink);background:color-mix(in srgb,var(--c) 18%,transparent);white-space:nowrap}
+.okey{display:flex;gap:8px 16px;flex-wrap:wrap;margin:1.1em 0 .6em;font-size:.85em}
+.okey span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.okey .p1::before,.ocell.p1{--c:var(--s3)}.okey .p2::before,.ocell.p2{--c:var(--s1)}.okey .p3::before,.ocell.p3{--c:var(--s7)}
+.okey span::before{background:var(--c)}
+.okey .p1{--c:var(--s3)}.okey .p2{--c:var(--s1)}.okey .p3{--c:var(--s7)}
+.ogrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr))}
+.ocell{border:1px solid var(--line);border-left:5px solid var(--c);border-radius:10px;padding:.6em .8em;background:var(--raised)}
+.ocell:hover,.ocell:focus,.box[data-tip]:hover,.step[data-tip]:hover{box-shadow:0 0 0 2px var(--ink)}
+.ocell b{display:block}.ocell small{display:block;color:var(--ink-3);font-size:.78em;margin-top:.1em}.ocell span{display:block;font-size:.86em;color:var(--ink-2);margin-top:.3em}
+.tl{list-style:none;margin:0;padding:0;position:relative}
+.tl li{position:relative;padding:0 0 1em 1.6em;border-left:2px solid var(--line);margin-left:.4em}
+.tl li::before{content:"";position:absolute;left:-.48em;top:.25em;width:.8em;height:.8em;border-radius:50%;background:var(--c);border:2px solid var(--surface)}
+.tl li>b{display:block;font-family:var(--f-mono);font-size:.85em;color:var(--ink-2)}.tl li>span{display:block;margin-top:.15em}
+.slide .card{margin-top:.8em}
+/* presenter mode: one slide fills the screen */
+.pnav{display:none}
+body.present{overflow:hidden}
+body.present .wrap>header,body.present footer.site,body.present .deckbar,body.present .toc{display:none}
+body.present .wrap{max-width:none;padding:0}
+body.present .deck{margin:0;display:block}
+body.present .slide{display:none;position:fixed;inset:0;border:0;border-radius:0;box-shadow:none;overflow:auto;
+  font-size:clamp(15px,1.28vw,30px);padding:clamp(24px,4vw,72px) clamp(24px,6vw,120px) 80px}
+body.present .slide.on{display:block}
+body.present .pnav{display:flex;position:fixed;right:16px;bottom:14px;gap:6px;align-items:center;z-index:30;
+  background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 6px;box-shadow:var(--shadow)}
+.pnav button{font:500 14px var(--f-sans);border:0;background:transparent;color:var(--ink-2);padding:6px 10px;border-radius:999px;cursor:pointer}
+.pnav button:hover{background:var(--accent-soft)}.pnav .cnt{font:500 13px var(--f-mono);color:var(--ink-3);padding:0 6px}
+.pbar{position:fixed;left:0;top:0;height:3px;background:var(--accent);z-index:31;display:none}
+body.present .pbar{display:block}
+@media (max-width:640px){.slide{font-size:15px}.slide h2{font-size:1.45em}.flow:not(.v){flex-direction:column}.flow:not(.v) .step{flex:none}.chip{white-space:normal}
+  .flow:not(.v) .step:not(:last-child)::after{content:"↓";right:auto;left:50%;top:auto;bottom:-15px;transform:translateX(-50%)}.flow:not(.v){gap:16px}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#F5F7F9; --surface:#FFFFFF; --raised:#FBFCFD; --ink:#13202C; --ink-2:#465667; --ink-3:#768494;
+  --line:#E1E6EB; --line-2:#CBD3DB; --accent:#1B4F8A; --accent-ink:#FFFFFF; --accent-soft:#E7EFF8; --empty:#ECEFF2; --flag:#C62828;
+  --s1:#0072B2; --s2:#E69F00; --s3:#009E73; --s4:#D55E00; --s5:#56B4E9; --s6:#CC79A7; --s7:#8A949E;
+  --shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.12);
+  --f-sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace; color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0D1217; --surface:#141B22; --raised:#18212A; --ink:#E7EDF3; --ink-2:#A8B5C2; --ink-3:#7B8895;
+  --line:#243039; --line-2:#33414D; --accent:#7EB2EE; --accent-ink:#0D1217; --accent-soft:#18283A; --empty:#1E2730; --flag:#FF6B5E;
+  --s1:#4AA3E0; --s2:#F2B33D; --s3:#2EC496; --s4:#F07B3F; --s5:#86CDF2; --s6:#E59CC8; --s7:#8D99A6;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.45); color-scheme:dark; }}
+:root[data-theme="dark"]{
+  --bg:#0D1217; --surface:#141B22; --raised:#18212A; --ink:#E7EDF3; --ink-2:#A8B5C2; --ink-3:#7B8895;
+  --line:#243039; --line-2:#33414D; --accent:#7EB2EE; --accent-ink:#0D1217; --accent-soft:#18283A; --empty:#1E2730; --flag:#FF6B5E;
+  --s1:#4AA3E0; --s2:#F2B33D; --s3:#2EC496; --s4:#F07B3F; --s5:#86CDF2; --s6:#E59CC8; --s7:#8D99A6;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.45); color-scheme:dark; }
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--f-sans);-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-underline-offset:3px;text-decoration-thickness:1px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.wrap{max-width:1080px;margin:0 auto;padding:32px 20px 72px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.eyebrow{font:500 12px/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+h1{font-size:clamp(26px,3.4vw,36px);line-height:1.2;letter-spacing:-.015em;margin:10px 0 0;font-weight:600}
+h1.long{font-size:clamp(21px,2.4vw,27px);line-height:1.3;max-width:62ch}
+.subtitle{font-size:clamp(16.5px,1.6vw,18.5px);color:var(--ink);max-width:70ch;margin:10px 0 0;line-height:1.5}
+.lede{font-size:clamp(16px,1.5vw,17.5px);color:var(--ink-2);max-width:64ch;margin:14px 0 0}
+h2{font-size:22px;line-height:1.3;letter-spacing:-.01em;margin:0;font-weight:600}
+h3{font-size:16.5px;line-height:1.35;margin:0;font-weight:600}
+section.sec{margin-top:52px}
+.sec-lede{color:var(--ink-2);max-width:70ch;margin:8px 0 0}
+p{max-width:75ch}
+.note{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin:24px 0 0}
+.note h3{font-size:15px;margin-bottom:4px}
+.note p{margin:6px 0;color:var(--ink-2);font-size:15px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-top:16px}
+.cap{font-size:14px;color:var(--ink-2);margin:4px 0 0}
+.src{font-size:12.5px;color:var(--ink-3);margin:12px 0 0}
+.muted{color:var(--ink-2)} .faint{color:var(--ink-3)} .num{font-variant-numeric:tabular-nums}
+.nw{white-space:nowrap}
+.tech{display:none}
+.langseg{float:right;display:inline-flex;margin:0 0 6px 12px;border:1px solid var(--line-2);border-radius:999px;overflow:hidden;position:relative;z-index:1}
+header .btns .langseg{float:none;margin:0}
+.langseg button{font:500 12px var(--f-sans);border:0;background:var(--surface);color:var(--ink-3);padding:4px 10px;cursor:pointer}
+.langseg button[aria-pressed="true"]{background:var(--ink-2);color:var(--surface)}
+@media (max-width:560px){.langseg{float:none;display:flex;width:fit-content;margin:0 0 8px auto}}
+.btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.ax-y{font-size:12.5px;color:var(--ink-2);margin:8px 0 6px;width:fit-content}
+.ax-x{font-size:12.5px;color:var(--ink-2);margin:6px auto 0;width:fit-content}
+.legend .k[data-tip],.ax-y[data-tip],.ax-x[data-tip],.axis-t[data-tip],h3[data-tip],th[data-tip]{text-decoration:underline dotted var(--ink-3);text-underline-offset:3px}
+.themebtn{white-space:nowrap;flex:none;font:500 13px var(--f-sans);border:1px solid var(--line-2);background:var(--surface);color:var(--ink-2);border-radius:999px;padding:6px 12px}
+/* stat tiles */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:12px;margin-top:24px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.tile .v{font:600 30px/1.1 var(--f-sans);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.tile .l{font-size:14.5px;margin-top:6px}
+.tile .s{font-size:13px;color:var(--ink-3);margin-top:2px}
+/* legend: big, friendly keys */
+.legend{display:flex;flex-wrap:wrap;gap:8px 20px;margin:12px 0 14px;font-size:14.5px}
+.legend .k{display:inline-flex;align-items:center;gap:4px 8px;flex-wrap:wrap;max-width:100%}
+.legend .sw{width:18px;height:14px;border-radius:4px;flex:none}
+.legend .ln{width:22px;height:0;border-top:2px dashed var(--ink-2)}
+/* horizontal bars */
+.hb{display:grid;grid-template-columns:minmax(96px,max-content) minmax(0,1fr);gap:12px 14px;align-items:center;margin-top:14px}
+.hb .lab{font-size:14.5px;line-height:1.25;text-align:right}
+.hb .lab small{display:block;color:var(--ink-3);font-size:12.5px}
+.hb .area{position:relative;margin-right:72px;display:grid;gap:3px}
+.hb .grid{position:absolute;top:-6px;bottom:-6px;width:0;border-left:1px solid var(--line)}
+.hb .ref{position:absolute;top:-6px;bottom:-6px;width:0;border-left:2px dashed var(--ink-2);z-index:1}
+.hb .brow{position:relative;height:20px}
+.hb .bar{position:relative;height:20px;border-radius:0 4px 4px 0;min-width:2px;transition:filter .15s,box-shadow .15s;z-index:2}
+.hb .bar:hover,.hb .bar:focus{filter:brightness(1.12);box-shadow:0 0 0 2px var(--ink)}
+.hb .val{position:absolute;top:50%;transform:translateY(-50%);font:500 13px var(--f-mono);white-space:nowrap;color:var(--ink);background:var(--surface);padding:0 3px;border-radius:3px;z-index:4}
+.hb .ci{position:absolute;top:50%;height:10px;transform:translateY(-50%);border-left:1.5px solid var(--ink);border-right:1.5px solid var(--ink);z-index:3}
+.hb .ci::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:1.5px solid var(--ink)}
+.hb .axis{position:relative;height:18px;margin-right:72px;font:400 12px var(--f-mono);color:var(--ink-3)}
+.hb .axis span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+.axis-t{font-size:13px;color:var(--ink-2);text-align:center;margin:4px 72px 0 0}
+@media (max-width:560px){
+  .hb{grid-template-columns:minmax(0,1fr);gap:4px}
+  .hb .lab{text-align:left;margin-top:8px}
+  .hb .lab small{display:inline;margin-left:6px}
+  .hb .area,.hb .axis{margin-right:64px}
+}
+/* columns (e.g. one per year) */
+.cols{display:flex;align-items:flex-end;gap:3px;height:240px;margin-top:30px;border-bottom:1px solid var(--line-2);position:relative}
+.ax-y + .cols{margin-top:40px}   /* room for the top tick label under the axis title */
+.cols .c{flex:1 1 0;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:flex-end;position:relative}
+.cols .seg{width:100%;transition:filter .15s}
+.cols .c:hover .seg,.cols .c:focus .seg{filter:brightness(1.12)}
+.cols .c .seg:first-child{border-radius:3px 3px 0 0}
+.cols .cv{position:absolute;left:50%;transform:translateX(-50%);font:500 11.5px var(--f-mono);white-space:nowrap;color:var(--ink-2)}
+.xl{display:flex;gap:3px;margin-top:6px}
+.xl span{flex:1 1 0;min-width:0;text-align:center;font:400 11.5px var(--f-mono);color:var(--ink-3);white-space:nowrap;overflow:visible}
+.cols .gl{position:absolute;left:0;right:0;border-top:1px dashed var(--line);font:400 11px var(--f-mono);color:var(--ink-3)}
+.cols .gl span{position:absolute;top:-16px;left:0}
+.cols .short{display:none}
+/* line chart: a wide drawing for desktop and a narrow one for phones, so nothing scrolls sideways */
+.svgwrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.svgwrap svg{display:block;width:100%;height:auto}
+.svgwrap svg.narrow{display:none}
+.svgwrap svg.keep{min-width:600px}
+.svgwrap text{font-family:var(--f-mono);font-size:calc(12.5px * var(--k, 1));fill:var(--ink-3)}
+.svgwrap .gridl{stroke:var(--line);stroke-width:1}
+.svgwrap .axisl{stroke:var(--line-2);stroke-width:1}
+.svgwrap .pt{transition:r .15s}
+.svgwrap .pt:hover,.svgwrap .pt:focus{r:7}
+/* heatmap table */
+.scroll{overflow:auto;-webkit-overflow-scrolling:touch;margin-top:8px;max-height:78vh}
+/* frozen panes: header row and first column stay put while a big table scrolls */
+.scroll table thead th{position:sticky;top:0;z-index:2;background:var(--surface)}
+.scroll table tbody th:first-child,.scroll table tbody td:first-child,.scroll table thead th:first-child{position:sticky;left:0;z-index:1;background:var(--surface)}
+.scroll table thead th:first-child{z-index:3}
+.scroll table.tb tbody tr:hover td:first-child{background:var(--raised)}
+table.hm{border-collapse:separate;border-spacing:3px;font-variant-numeric:tabular-nums}
+table.hm caption{text-align:left;font-size:13px;color:var(--ink-2);padding:0 0 6px}
+table.hm thead th{font:500 12px var(--f-mono);color:var(--ink-3);padding:2px 4px;white-space:nowrap}
+table.hm th.rl{text-align:right;font-weight:400;padding-right:10px;white-space:nowrap;font-size:14px}
+table.hm tr.grp th{text-align:left;font:500 11.5px var(--f-mono);letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);padding:14px 0 3px;border-bottom:1px solid var(--line)}
+table.hm td.c{min-width:58px;height:50px;text-align:center;border-radius:5px;line-height:1.15;padding:3px 4px;transition:box-shadow .15s}
+table.hm td.c:hover,table.hm td.c:focus{box-shadow:0 0 0 2px var(--ink)}
+table.hm td.c b{display:block;font-size:16px;font-weight:600}
+table.hm td.c i{display:block;font-style:normal;font-size:10.5px;margin-top:2px;opacity:.85}
+table.hm td.c.dk{color:#0B0B0B} table.hm td.c.lt{color:#FFFFFF}
+table.hm td.c.empty{background:var(--empty);color:var(--ink-3)}
+table.hm td.x{font-size:13px;color:var(--ink-2);padding:0 8px;text-align:right;white-space:nowrap}
+.ramp{display:inline-flex;vertical-align:middle;margin:0 8px;border-radius:3px;overflow:hidden}
+.ramp i{width:18px;height:14px}
+/* phone="cards" layouts (chosen per chart; see charts.md, "Phone layout") */
+.hm-m{display:none}
+.hm-g{font:500 11.5px var(--f-mono);letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);margin:14px 0 2px;padding-bottom:3px;border-bottom:1px solid var(--line)}
+.hm-r{padding:9px 0;border-bottom:1px solid var(--line)}
+.hm-r:last-child{border-bottom:0}
+.hm-rh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:6px}
+.hm-rh b{font-size:15px}
+.hm-rh span{font-size:12.5px;color:var(--ink-2);text-align:right}
+.hm-cells{display:grid;grid-template-columns:repeat(auto-fill,minmax(42px,1fr));gap:4px}
+.hm-c{border-radius:5px;text-align:center;padding:3px 2px 4px;line-height:1.12;font-variant-numeric:tabular-nums}
+.hm-c small{display:block;font:400 9.5px var(--f-mono);opacity:.8}
+.hm-c b{display:block;font-size:14.5px;font-weight:600;margin-top:1px}
+.hm-c i{display:block;font-style:normal;font-size:9.5px;opacity:.85;margin-top:1px}
+.hm-c.dk{color:#0B0B0B} .hm-c.lt{color:#FFFFFF} .hm-c.empty{background:var(--empty);color:var(--ink-3)}
+/* an interactive map as a panel in a chart page (map_panel) */
+.mapframe{display:block;width:100%;height:var(--h,520px);border:1px solid var(--line);border-radius:10px;background:var(--bg);margin-top:10px}
+@media (max-width:560px){.mapframe{height:var(--ph,440px)}}
+/* shaded table cells (table(shade=...)) and flagged cells (a cell dict with "flag") */
+table.tb td.sh{font-variant-numeric:tabular-nums}
+table.tb td.flag{box-shadow:inset 0 0 0 2px var(--flag);font-weight:600}
+table.hm td.c.flag{outline:2.5px solid var(--flag);outline-offset:-2.5px}
+.legend .flagsw{width:18px;height:14px;border-radius:3px;box-shadow:inset 0 0 0 2px var(--flag)}
+/* the rigor pass under a panel */
+details.checks{margin-top:12px;font-size:13px;color:var(--ink-2);border-top:1px solid var(--line);padding-top:8px}
+details.checks summary{font:500 12px var(--f-mono);letter-spacing:.04em;color:var(--ink-3);list-style:none;display:flex;align-items:center;gap:6px}
+details.checks summary::-webkit-details-marker{display:none}
+details.checks summary::marker{content:""}
+details.checks summary::before{content:"";width:6px;height:6px;border-right:1.5px solid var(--ink-3);border-bottom:1.5px solid var(--ink-3);transform:rotate(-45deg);transition:transform .15s}
+details.checks[open] summary::before{transform:rotate(45deg)}
+details.checks ul{margin:6px 0 0;padding-left:18px} details.checks li{margin:3px 0}
+/* living pages: each panel carries when it was added / updated; page history at the foot */
+.pstamp{float:right;margin:0 0 6px 12px;font:400 11.5px var(--f-mono);color:var(--ink-3);white-space:nowrap}
+@media (max-width:560px){.pstamp{float:none;display:block;margin:0 0 4px;white-space:normal}}
+section.panel{margin-top:22px}
+details.history{margin-top:40px;font-size:13.5px;color:var(--ink-2)}
+details.history summary{font:500 12px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+details.history li{margin:3px 0}
+/* plain tables */
+table.tb{border-collapse:collapse;width:100%;font-size:14.5px;font-variant-numeric:tabular-nums}
+table.tb th,table.tb td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+table.tb thead th{font:500 12px var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);border-bottom:1px solid var(--line-2)}
+table.tb td.n,table.tb th.n{text-align:right;white-space:nowrap}
+table.tb tbody tr:hover{background:var(--raised)}
+/* tooltip */
+#tip{position:fixed;z-index:50;pointer-events:none;max-width:300px;background:var(--surface);color:var(--ink);border:1px solid var(--line-2);
+  border-radius:8px;padding:9px 11px;font-size:13px;line-height:1.45;box-shadow:var(--shadow);display:none}
+#tip b{display:block;margin-bottom:2px;font-size:13.5px}
+#tip .mean{margin-top:5px;padding-top:5px;border-top:1px solid var(--line);color:var(--ink)}
+[data-tip]{cursor:default}
+footer.site{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);font-size:13.5px;color:var(--ink-2)}
+footer.site h3{font:500 12px/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin:0 0 8px}
+footer.site ul{padding-left:18px;margin:0 0 12px} footer.site li{margin:4px 0}
+@media (max-width:560px){
+  /* phones: reflow charts to the width instead of scrolling them sideways */
+  .svgwrap svg.wide{display:none} .svgwrap svg.narrow{display:block}
+  .cols .full{display:none} .cols .short{display:inline}
+  .cols.dense .cv{display:none} .xl.dense span.alt{visibility:hidden}
+  .tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .tile{padding:11px 12px} .tile .v{font-size:23px} .tile .l{font-size:13.5px} .tile .s{font-size:12px}
+  /* phone="cards": heatmap rows and table rows become cards */
+  .hm-desk{display:none} .hm-m{display:block}
+  .scroll.tb-cards-box{overflow:visible;max-height:none}
+  table.tb.tb-cards thead{display:none}
+  table.tb.tb-cards,table.tb.tb-cards tbody{display:block;width:100%}
+  /* compact card: the first cell is the heading, the rest sit three across with the label above the value */
+  table.tb.tb-cards tr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px 10px;border:1px solid var(--line);
+    border-radius:10px;padding:9px 12px;margin:0 0 8px;background:var(--surface)}
+  table.tb.tb-cards td,table.tb.tb-cards td.n{position:static;display:block;border:0;padding:0;text-align:left;white-space:normal;background:none}
+  table.tb.tb-cards td::before{content:attr(data-label);display:block;color:var(--ink-3);font:500 10.5px var(--f-mono);text-transform:uppercase;letter-spacing:.04em}
+  table.tb.tb-cards td:first-child{grid-column:1/-1;font-weight:600;font-size:15.5px}
+  table.tb.tb-cards td:first-child::before{content:none}
+  /* phone="scroll" (default for tables): tighter cells; the scroll box keeps row labels and headers frozen */
+  table.hm{border-spacing:2px}
+  table.hm td.c{min-width:40px;height:42px;padding:2px}
+  table.hm td.c b{font-size:14px} table.hm td.c i{font-size:9.5px}
+  table.hm th.rl{font-size:13px;padding-right:6px}
+  table.hm thead th{font-size:11px;padding:2px}
+  table.hm td.x{font-size:12px;padding:0 5px}
+  table.tb{font-size:13.5px} table.tb th,table.tb td{padding:7px 8px}
+  .wrap{padding:22px 14px 56px}
+  .card{padding:14px 12px}
+  table.hm td.c{min-width:46px;height:46px}
+  table.hm td.c b{font-size:15px}
+  table.hm th.rl{font-size:13px;padding-right:6px}
+}
+/* byline and the organisation / GitHub strip (identity.json) */
+.byline{margin:10px 0 0;font-size:14px;color:var(--ink-2)}
+.byline time{font-family:var(--f-mono);font-size:13px;white-space:nowrap}
+.brand{display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.brand .org{display:inline-flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;transition:transform .18s ease}
+.brand .org:hover,.brand .org:focus-visible{transform:translateY(-2px) rotate(-1.5deg)}
+.brand .logo{height:40px;width:auto;flex:none;display:block}
+.brand svg.logo{color:var(--ink)}
+.brand .org b{display:block;font-size:14px;line-height:1.2}
+.brand .org small{display:block;font-size:12px;color:var(--ink-3);line-height:1.3;max-width:24ch}
+.brand .gh{flex-basis:100%;margin:0;font-size:13px;color:var(--ink-2)}
+.brand .gh{max-width:none}
+.brand .gh a{font-family:var(--f-mono);font-size:12.5px;white-space:nowrap}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style></head>
+<body><div class="wrap">
+<header><div class="topbar"><div class="eyebrow">Parafire · Simulación</div><div class="btns"><button type="button" class="themebtn" id="themebtn" aria-label="Switch light or dark">Light / dark</button></div></div>
+<h1>Modelo de simulación: estado y camino a diciembre · 2026-10-22</h1><p class="subtitle">Plataforma de Simulación de Incendios y Respuesta Rápida, INFONA · DAI · Forest4Life Paraguay · 15 láminas: metodología, las 15 capas que exige el motor y su estado, meteorología, control de códigos de combustible, flujograma de las 7 salidas y plan hacia la entrega de diciembre de 2026. <span class=faint>Fire-simulation lane: status and road to the first integrated output (December 2026).</span></p><p class="byline">By <b>Carlo Broderick</b>, HENDATA · Forest4Life Paraguay · <time>2026-10-22 22:31 -03</time></p><p class="lede">Presentación detallada del componente de simulación para el equipo técnico, INFONA y DAI. Cada número sale de los sondeos del diagnóstico de fuentes; pasá el cursor (o tocá) sobre los elementos con más detalle.</p></header>
+<div class="deckbar"><button type="button" class="present-btn" id="present">▶ Presentar</button><span class="hint">o tecla P · flechas para avanzar · Esc para salir</span></div><nav class="toc" aria-label="Láminas"><a href="#resumen">01 · En una lámina</a><a href="#contexto">02 · Qué estamos construyendo</a><a href="#metodologia">03 · Metodología vigente (Producto 1a, abril 2026)</a><a href="#flujograma">04 · Cómo se conectan los modelos</a><a href="#combustibles">05 · El combustible base: MapBiomas Col. 3 → FBFM40</a><a href="#motor">06 · Cómo funciona el motor de simulación</a><a href="#insumos">07 · Las 15 capas que el motor exige</a><a href="#meteorologia">08 · Viento y clima: ERA5 es la columna vertebral</a><a href="#era5">09 · ¿Cuánto se parece ERA5 a las estaciones?</a><a href="#codigos">10 · Un código de combustible desconocido falla en silencio</a><a href="#salidas">11 · Flujograma de salidas de la simulación</a><a href="#plataforma">12 · Dónde entra la simulación en la plataforma</a><a href="#plan">13 · Camino a diciembre</a><a href="#pendientes">14 · Riesgos y temas abiertos</a><a href="#pasos">15 · Próximos pasos y decisiones</a></nav><div class="deck"><section class="slide" id="resumen" aria-label="En una lámina">
+<div class="sl-top"><span class="kicker">Resumen</span><span class="sl-num">01</span></div>
+<h2>En una lámina</h2><p class="en">The simulation lane on one slide</p><div class="sl-body"><div class="tiles"><div class="tile" data-tip="Capas obligatorias del motor
+15 space-time cubes sin valor por defecto: el motor se detiene si falta una.
+@@tech
+Capas obligatorias del motor
+Inputs with required = &#x27;required (no default)&#x27; and a space-time cube dtype, from inputs_required.csv (live drop-one-input probe)."><div class="v">15</div><div class="l">capas de entrada que el motor exige</div><div class="s">Pyretechnics 2026.8.10, sin valor por defecto</div></div><div class="tile" data-tip="Salidas del motor
+Rasters que devuelve cada corrida; ver la lámina de salidas."><div class="v">7</div><div class="l">capas de salida por simulación</div><div class="s">velocidad, intensidad, llama, tiempo de llegada…</div></div><div class="tile" data-tip="Tabla cerrada de códigos
+58 códigos aceptados por el motor (fuel_codes_allowed.csv). Cualquier otro código falla en silencio."><div class="v">58</div><div class="l">códigos de combustible válidos</div><div class="s">Anderson 13 + Scott & Burgan 40 (+ no combustibles)</div></div><div class="tile"><div class="v">Dic 2026</div><div class="l">primera salida integrada en la plataforma</div><div class="s">resultados preliminares; calibración en 2027</div></div></div><ul class=pts><li><b>Qué es:</b> el componente que, a partir de un punto de ignición, estima <i>cómo</i> se comporta el fuego (velocidad de propagación, intensidad, longitud de llama) y <i>hacia dónde</i> se propaga.</li><li><b>Con qué:</b> Pyretechnics (comportamiento, Rothermel) + SimFire (propagación espacial), sobre una grilla de 100 m en UTM 21S.</li><li><b>Dónde estamos:</b> de las 15 capas obligatorias, 5 tienen fuente verificada, 7 requieren derivación y 3 no tienen fuente aún; el combustible base ya está decidido (MapBiomas Col. 3).</li><li><b>Meta de diciembre:</b> una primera salida de simulación que recorra el flujo completo backend → frontend, para que INFONA la vea en la plataforma.</li></ul></div></section><section class="slide" id="contexto" aria-label="Qué estamos construyendo">
+<div class="sl-top"><span class="kicker">Contexto</span><span class="sl-num">02</span></div>
+<h2>Qué estamos construyendo</h2><p class="en">Three models feeding one platform for INFONA</p><div class="sl-body"><div class="grid g4"><div class="box" style="--c:var(--s3)"><span class=ic>🌿</span><h3>Combustibles</h3><p>Mapa nacional de modelos de combustible: qué puede arder y cómo. V01 por <i>crosswalk</i>, V02 con refinamientos.</p></div><div class="box" style="--c:var(--s2)"><span class=ic>⚠️</span><h3>Riesgo</h3><p>Probabilidad mensual de ocurrencia de fuego en una grilla de 1 km, con Random Forest y 10 años de historia.</p></div><div class="box" style="--c:var(--s4)"><span class=ic>🔥</span><h3>Simulación</h3><p>Comportamiento y propagación de un incendio desde una ignición: velocidad, intensidad, llama y tiempo de llegada.</p></div><div class="box" style="--c:var(--s1)"><span class=ic>🗺️</span><h3>Plataforma</h3><p>PostGIS (Data Hub), GeoServer/GeoNode y visor institucional: donde los tres modelos se publican.</p></div></div><p class="foot">Instituto Forestal Nacional (INFONA) · financiado por la Unión Europea a través de Forest4Life Paraguay (F4L), Componente 1, ejecutado por DAI · equipo de implementación HENDATA.</p></div></section><section class="slide" id="metodologia" aria-label="Metodología vigente (Producto 1a, abril 2026)">
+<div class="sl-top"><span class="kicker">Metodología</span><span class="sl-num">03</span></div>
+<h2>Metodología vigente (Producto 1a, abril 2026)</h2><p class="en">Methodology of record</p><div class="sl-body"><div class="scroll tb-cards-box"><table class="tb tb-cards"><thead><tr><th>Componente</th><th>Enfoque</th><th>Por qué así</th></tr></thead><tbody><tr><td data-label="Componente">Combustibles</td><td data-label="Enfoque">Modelo nacional. V01 = <i>crosswalk</i> cobertura → FBFM40 (Scott &amp; Burgan 2005); V02 = refinamientos ecorregionales, estacionales y de estructura forestal.</td><td data-label="Por qué así">Reproducible y auditable: cada clase de cobertura tiene una asignación documentada.</td></tr><tr><td data-label="Componente">Riesgo</td><td data-label="Enfoque">Random Forest, ocurrencia mensual binaria, grilla 1 km × 1 km, filas <code>celda_id + mes</code>, 10 años.</td><td data-label="Por qué así">La resolución mensual modela la estacionalidad; el riesgo diario ya lo cubre el modelo operativo de INFONA.</td></tr><tr><td data-label="Componente">Simulación</td><td data-label="Enfoque">Pyretechnics (comportamiento) + SimFire (propagación espacial desde una ignición).</td><td data-label="Por qué así">Motores abiertos en Python, integrables al backend sin licencias.</td></tr><tr><td data-label="Componente">Infraestructura</td><td data-label="Enfoque">PostgreSQL/PostGIS (staging → core / Data Hub), GeoServer/GeoNode, visor MapStore.</td><td data-label="Por qué así">Estándares OGC que INFONA puede operar.</td></tr></tbody></table></div><p class="foot">Reemplaza el plan de 2025 (FWI → FlamMap → FSim), que queda solo como antecedente.</p></div></section><section class="slide" id="flujograma" aria-label="Cómo se conectan los modelos">
+<div class="sl-top"><span class="kicker">Flujograma</span><span class="sl-num">04</span></div>
+<h2>Cómo se conectan los modelos</h2><p class="en">Shared inputs and how each model uses them</p><div class="sl-body"><div class="fc"><div class="fc-col"><h4>Eventos de incendio 2016–2025</h4><div class="flow v"><div class="step" style="--c:var(--s4)"><b>VIIRS</b><span>focos activos, filtrados por confianza y continuidad</span></div><div class="step" style="--c:var(--s4)"><b>MapBiomas Fuego</b><span>cicatrices (Col. 2 desde dic 2026)</span></div><div class="step" style="--c:var(--ink-3)"><b>Cruce espacio-temporal</b><span>mismo mes + intersección espacial</span></div><div class="step" style="--c:var(--ink-2)"><b>Base depurada</b><span>eventos de incendio 2016–2025</span></div></div></div><div class="fc-col"><h4>Modelos</h4><div class="flow v"><div class="step" style="--c:var(--s2)"><b>Riesgo</b><span>respuesta <code>fuego_mes</code> (0/1), 1 km × mes</span></div><div class="step" style="--c:var(--s4)"><b>Simulación</b><span>eventos históricos: ignición + fecha/hora + ubicación</span></div><div class="step" style="--c:var(--ink-2)"><b>Validación</b><span>contra MapBiomas Fuego Col. 2</span></div></div></div><div class="fc-col"><h4>Insumos de la simulación</h4><div class="flow v"><div class="step" style="--c:var(--s3)"><b>Combustibles V01 / V02</b><span>MapBiomas Col. 3 → FBFM40</span></div><div class="step" style="--c:var(--s1)"><b>Viento</b><span>ERA5/ERA5-Land; EMAs en uso operativo</span></div><div class="step" style="--c:var(--s7)"><b>Topografía</b><span>ANADEM: pendiente y orientación</span></div><div class="step" style="--c:var(--s3)"><b>Dosel</b><span>ETH Global Canopy Height</span></div></div></div></div><p class="foot">La simulación también sirve para <b>validar la V01</b> de combustibles: si un combustible mal asignado propaga demasiado o demasiado poco frente a las cicatrices reales, se corrige el <i>crosswalk</i>.</p></div></section><section class="slide" id="combustibles" aria-label="El combustible base: MapBiomas Col. 3 → FBFM40">
+<div class="sl-top"><span class="kicker">Combustibles</span><span class="sl-num">05</span></div>
+<h2>El combustible base: MapBiomas Col. 3 → FBFM40</h2><p class="en">Fuels V01: land cover crosswalked to fuel models</p><div class="sl-body"><div class="grid g2"><div><ul class=pts><li>Un <b>modelo de combustible</b> es un conjunto estándar de parámetros: carga por clase de tamaño, relación superficie/volumen, profundidad, humedad de extinción y contenido calórico. FBFM40 tiene 40 modelos en 7 familias.</li><li>La V01 es una <b>representación funcional</b> del potencial de combustión, no una reclasificación temática de la cobertura.</li><li><b>Decidido 2026-10-22:</b> la base es MapBiomas Uso y Cobertura Col. 3 (serie anual 1985–2025, leyenda y métodos documentados), para no demorar más el modelo. La capa de INFONA 2024 puede usarse para comparar o refinar.</li><li>El análisis de combustibles del equipo se incorpora cuando esté listo; la V02 suma Inventario Forestal Nacional (IFN) y ecorregiones.</li></ul></div><div><div class="flow v"><div class="step" style="--c:var(--s3)"><b>1 · Capa base</b><span>revisar MapBiomas Col. 3</span></div><div class="step" style="--c:var(--s3)"><b>2 · Crosswalk</b><span>tabla maestra clase → código FBFM40</span></div><div class="step" style="--c:var(--s3)"><b>3 · Implementación espacial</b><span>raster nacional de códigos</span></div><div class="step" style="--c:var(--s4)" tabindex=0 data-tip="Paso obligatorio del ETL
+El motor no avisa si recibe un código desconocido; ver la lámina de validación."><b>4 · Validación de códigos</b><span>cada código dentro de los 58 válidos</span></div><div class="step" style="--c:var(--s3)"><b>5 · Pruebas</b><span>simulaciones contra cicatrices reales</span></div></div></div></div></div></section><section class="slide" id="motor" aria-label="Cómo funciona el motor de simulación">
+<div class="sl-top"><span class="kicker">Motor</span><span class="sl-num">06</span></div>
+<h2>Cómo funciona el motor de simulación</h2><p class="en">Pyretechnics behaviour + SimFire spread</p><div class="sl-body"><div class="flow"><div class="step" style="--c:var(--s1)"><b>Insumos</b><span>15 capas: combustible, dosel, humedad, topografía y viento</span></div><div class="step" style="--c:var(--s2)"><b>Comportamiento</b><span>Rothermel por celda: velocidad, intensidad, llama; transición a copa</span></div><div class="step" style="--c:var(--s4)"><b>Propagación</b><span>frente de fuego por <i>level set</i> desde la ignición, con focos secundarios (<i>spotting</i>)</span></div><div class="step" style="--c:var(--s3)"><b>Salidas</b><span>7 capas por corrida, listas para publicar</span></div></div><div class="grid g3" style="margin-top:1.2em"><div class="box" style="--c:var(--accent)"><span class=ic>▦</span><h3>Grilla</h3><p>100 m de simulación, almacenamiento nativo de 30 m, proyección UTM 21S.</p></div><div class="box" style="--c:var(--accent)"><span class=ic>🧊</span><h3>Formato</h3><p>Las 15 capas entran como <i>space-time cubes</i> en float32, sin CRS propio: el ETL fija la proyección y la alineación.</p></div><div class="box" style="--c:var(--accent)"><span class=ic>⏱️</span><h3>Escenarios</h3><p>Ignición en un punto (evento histórico o hipotético) + clima de la fecha; cada corrida dura minutos.</p></div></div></div></section><section class="slide" id="insumos" aria-label="Las 15 capas que el motor exige">
+<div class="sl-top"><span class="kicker">Insumos</span><span class="sl-num">07</span></div>
+<h2>Las 15 capas que el motor exige</h2><p class="en">Required engine inputs and where each will come from</p><div class="sl-body"><div class="legend"><span class="k"><span class="sw" style="background:var(--s3)"></span>Fuente verificada (5)</span><span class="k"><span class="sw" style="background:var(--s2)"></span>Requiere derivación (7)</span><span class="k"><span class="sw" style="background:var(--s4)"></span>Sin fuente aún (3)</span></div><div class="card"><p class="cap">Estado según el diagnóstico de fuentes (septiembre 2026). Desde el 2026-10-22 el modelo de combustible tiene base decidida (MapBiomas Col. 3); sigue marcado «sin fuente» hasta que exista la capa V01.</p><div class="scroll tb-cards-box"><table class="tb tb-cards"><thead><tr><th data-tip="Grupo
+Categoría del insumo en el código del motor.">Grupo</th><th data-tip="Capa
+Nombre en español; debajo, el nombre exacto que usa el motor y sus unidades.">Capa</th><th data-tip="Estado
+Verificada: se abrió el dato real. Requiere derivación: hay insumos pero hay que calcularla. Sin fuente: no se encontró producto.">Estado (diagnóstico)</th><th data-tip="Origen previsto
+De dónde saldrá la capa en la primera versión, según la metodología y las decisiones del 2026-10-22.">Origen previsto</th></tr></thead><tbody><tr><td data-label="Grupo">Combustible y dosel</td><td data-label="Capa"><b>Altura de la base del dosel</b><br><small class=faint><code>canopy_base_height</code> · m</small></td><td data-label="Estado (diagnóstico)"><span class="chip" style="--c:var(--s4)">Sin fuente aún</span></td><td data-label="Origen previsto">Sin fuente: estimar desde altura y tipo de bosque</td></tr><tr><td data-label="Grupo">Combustible y dosel</td><td data-label="Capa"><b>Densidad aparente del dosel</b><br><small class=faint><code>canopy_bulk_density</code> · kg/m^3</small></td><td data-label="Estado (diagnóstico)"><span class="chip" style="--c:var(--s4)">Sin fuente aún</span></td><td data-label="Origen previsto">Sin fuente: estimar desde altura y tipo de bosque</td></tr><tr><td data-label="Grupo">Combustible y dosel</td><td data-label="Capa"><b>Cobertura del dosel</b><br><small class=faint><code>canopy_cover</code> · 0-1 (fraction)</small></td><td data-label="Estado (diagnóstico)"><span class="chip" style="--c:var(--s2)">Requiere derivación</span></td><td data-label="Origen previsto">Derivar de productos de cobertura arbórea (candidatos de 10 m)</td></tr><tr><td data-label="Grupo">Combustible y dosel</td><td data-label="Capa"><b>Altura del dosel</b><br><small class=faint><code>canopy_height</code> · m</small></td><td data-label="Estado (diagnóstico)"><span class="chip" style="--c:var(--s3)">Fuente verificada</span></td><td data-label="Origen previsto">ETH Global Canopy Height (verificada)</td></tr><tr><td data-label="Grupo">Combustible y dosel</td><td data-label="Capa"><b>Modelo de combustible (código)</b><br><small class=faint><code>fuel_model</code> · dimensionless integer class code (index into pyretechnics.fuel_models.fuel_model_table)</small></td><td data-label="Estado (diagnóstico)"><span class="chip" style="--c:var(--s4)">Sin fuente aún</span></td><td data-label="Origen previsto">Combustibles V01: crosswalk MapBiomas Col. 3 → FBFM40 (decidido 2026-10-22)</td></tr><tr><td data-label="Grupo">Humedad del combustible</td><td data-label="Capa"><b>Humedad foliar</b><br><small class=faint><code>foliar_moisture</code> · kg moisture/kg ovendry weight</small></td><td data-label="Estado (diagnóstico)"><span class="chip" style="--c:var(--s2)">Requiere derivación</span></td><td data-label="Origen previsto">Derivar (valor estacional)</td></tr><tr><td data-label="Grupo">Humedad del combustible</td><td data-label="Capa"><b>Humedad combustible muerto 100 h</b><br><small class=faint><code>fuel_moisture_dead_100hr</code> · kg moisture/kg ovendry weight</small></td><td data-label="Estado (diagnóstico)"><span class="chip" style="--c:var(--s2)">Requiere derivación</span></td><td data-label="Origen previsto">Derivar de meteorología (ERA5)</td></tr><tr><td data-label="Grupo">Humedad del combustible</td><td data-label="Capa"><b>Humedad combustible muerto 10 h</b><br><small class=faint><code>fuel_moisture_dead_10hr</code> · kg moisture/kg ovendry weight</small></td><td data-label="Estado (diagnóstico)"><span class="chip" style="--c:var(--s2)">Requiere derivación</span></td><td data-label="Origen previsto">Derivar de meteorología (ERA5)</td></tr><tr><td data-label="Grupo">Humedad del combustible</td><td data-label="Capa"><b>Humedad combustible muerto 1 h</b><br><small class=faint><code>fuel_moisture_dead_1hr</code> · kg moisture/kg ovendry weight</small></td><td data-label="Estado (diagnóstico)"><span class="chip" style="--c:var(--s2)">Requiere derivación</span></td><td data-label="Origen previsto">Derivar de meteorología (ERA5: T, HR)</td></tr><tr><td data-label="Grupo">Humedad del combustible</td><td data-label="Capa"><b>Humedad viva herbácea</b><br><small class=faint><code>fuel_moisture_live_herbaceous</code> · kg moisture/kg ovendry weight</small></td><td data-label="Estado (diagnóstico)"><span class="chip" style="--c:var(--s2)">Requiere derivación</span></td><td data-label="Origen previsto">Derivar (estacionalidad / NDVI)</td></tr><tr><td data-label="Grupo">Humedad del combustible</td><td data-label="Capa"><b>Humedad viva leñosa</b><br><small class=faint><code>fuel_moisture_live_woody</code> · kg moisture/kg ovendry weight</small></td><td data-label="Estado (diagnóstico)"><span class="chip" style="--c:var(--s2)">Requiere derivación</span></td><td data-label="Origen previsto">Derivar (estacionalidad / NDVI)</td></tr><tr><td data-label="Grupo">Topografía</td><td data-label="Capa"><b>Orientación</b><br><small class=faint><code>aspect</code> · degrees clockwise from North</small></td><td data-label="Estado (diagnóstico)"><span class="chip" style="--c:var(--s3)">Fuente verificada</span></td><td data-label="Origen previsto">ANADEM / Copernicus GLO-30 (derivada)</td></tr><tr><td data-label="Grupo">Topografía</td><td data-label="Capa"><b>Pendiente</b><br><small class=faint><code>slope</code> · rise/run (dimensionless ratio)</small></td><td data-label="Estado (diagnóstico)"><span class="chip" style="--c:var(--s3)">Fuente verificada</span></td><td data-label="Origen previsto">ANADEM / Copernicus GLO-30 (derivada)</td></tr><tr><td data-label="Grupo">Meteorología</td><td data-label="Capa"><b>Dirección del viento</b><br><small class=faint><code>upwind_direction</code> · degrees clockwise from North</small></td><td data-label="Estado (diagnóstico)"><span class="chip" style="--c:var(--s3)">Fuente verificada</span></td><td data-label="Origen previsto">ERA5/ERA5-Land; EMAs en uso operativo</td></tr><tr><td data-label="Grupo">Meteorología</td><td data-label="Capa"><b>Velocidad del viento a 10 m</b><br><small class=faint><code>wind_speed_10m</code> · km/hr</small></td><td data-label="Estado (diagnóstico)"><span class="chip" style="--c:var(--s3)">Fuente verificada</span></td><td data-label="Origen previsto">ERA5/ERA5-Land; EMAs en uso operativo</td></tr></tbody></table></div><details class="checks"><summary>How this panel was checked</summary><ul><li>Lista de capas tomada del motor instalado (prueba quitando una capa a la vez), no de la documentación: 15 obligatorias.</li><li>El estado viene de sondeos en vivo a cada fuente; «verificada» significa que se abrió el dato, no solo el catálogo.</li></ul></details></div></div></section><section class="slide" id="meteorologia" aria-label="Viento y clima: ERA5 es la columna vertebral">
+<div class="sl-top"><span class="kicker">Meteorología</span><span class="sl-num">08</span></div>
+<h2>Viento y clima: ERA5 es la columna vertebral</h2><p class="en">Stations are too sparse and end too early; ERA5 carries the history</p><div class="sl-body"><div class="grid g2"><div><ul class=pts><li><b>MCH (histórico, DMH–DINAC):</b> 52 estaciones; 48 terminan en 2022 y el último registro es del <b>2022-07-05</b>. En promedio, un punto del país está a 70 km de la estación más cercana.</li><li><b>EMAs (automáticas):</b> 96 estaciones en la captura del diagnóstico, 88 con velocidad y dirección del viento; cobertura nacional incluido el Chaco (42 km en promedio a la más cercana). Solo se publica la última lectura: <b>no hay archivo histórico</b> descargable.</li><li><b>ERA5:</b> grilla de ~27.8 × 25.5 km, sin huecos, 1940 → presente. Es la única fuente histórica en grilla verificada.</li><li>Para operación, las EMAs alimentan el viento casi en tiempo real; su archivo histórico requiere una solicitud formal a DMH–DINAC (pendiente).</li></ul></div><div><div class="card"><p class="cap">Estaciones MCH (naranja, 50) y EMAs (azul, 96). Pasá el cursor sobre una estación para ver su nombre. 2 estaciones MCH sin coordenadas registradas no se dibujan.</p><iframe class="mapframe" title="Interactive map" allow="fullscreen" allowfullscreen style="--h:420px;--ph:360px" srcdoc="&lt;!doctype html&gt;
+&lt;!-- Generated 2026-10-22 22:31 -03 (2026-10-22T22:31:17-03:00) --&gt;
+&lt;html lang=&quot;en&quot;&gt;&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, viewport-fit=cover&quot;&gt;
+&lt;title&gt;Estaciones meteorológicas&lt;/title&gt;
+&lt;meta name=&quot;description&quot; content=&quot;&quot;&gt;
+&lt;meta name=&quot;generated&quot; content=&quot;2026-10-22T22:31:17-03:00&quot;&gt;
+
+
+&lt;link rel=&quot;icon&quot; type=&quot;image/svg+xml&quot; href=&quot;data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHBhdGggZmlsbD0iI2Q5NDgwZiIgZD0iTTIwIDJjMS41IDYuMiA5LjUgMTAuNCA5LjUgMjAuMkMyOS41IDMwLjQgMjUuMiAzNiAyMCAzNnMtOS41LTUuNi05LjUtMTMuOGMwLTQuNiAyLjEtOC4yIDQuNi0xMC43LjIgMy40IDEuNiA1LjYgMy40IDYuNkMxNy42IDEyLjYgMTguNCA2LjggMjAgMnptMCAyMC41Yy0xLjYgMi4zLTQgMy45LTQgNi45IDAgMi41IDEuOCA0LjEgNCA0LjFzNC0xLjYgNC00LjFjMC0zLTIuNC00LjYtNC02Ljl6Ii8+PHJlY3QgeD0iNiIgeT0iMzciIHdpZHRoPSIyOCIgaGVpZ2h0PSIxLjYiIHJ4PSIuOCIgZmlsbD0iI2Q5NDgwZiIvPjwvc3ZnPgo=&quot;&gt;
+&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.css&quot; integrity=&quot;sha384-uTttxo/aOKbdE5RlD/SPzSDoDmNvGlUYPjONi2MN/b7c9HPSvW07OIuyP7uL6jxK&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;script src=&quot;https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.js&quot; integrity=&quot;sha384-5+cfbwT0iiub6VsQAdn6yz16nr6sDiQoHx6tm4O8OVYXHYOxcffFmCJBL0dgdvGp&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
+&lt;style&gt;
+/* ---- design tokens: the same set as the chart pages (one design system across maps and charts) ---- */
+:root{
+  --bg:#F5F7F9; --surface:#FFFFFF; --raised:#FBFCFD; --ink:#13202C; --ink-2:#465667; --ink-3:#768494;
+  --line:#E1E6EB; --line-2:#CBD3DB; --accent:#1B4F8A; --accent-ink:#FFFFFF; --accent-soft:#E7EFF8;
+  --shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.14);
+  --f-sans:&quot;IBM Plex Sans&quot;,system-ui,-apple-system,&quot;Segoe UI&quot;,Roboto,Helvetica,Arial,sans-serif;
+  --f-mono:&quot;IBM Plex Mono&quot;,ui-monospace,SFMono-Regular,Menlo,monospace;
+  --ph:0px; color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme=&quot;light&quot;]){
+  --bg:#0D1217; --surface:#141B22; --raised:#18212A; --ink:#E7EDF3; --ink-2:#A8B5C2; --ink-3:#7B8895;
+  --line:#243039; --line-2:#33414D; --accent:#7EB2EE; --accent-ink:#0D1217; --accent-soft:#18283A;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.45); color-scheme:dark; }}
+:root[data-theme=&quot;dark&quot;]{
+  --bg:#0D1217; --surface:#141B22; --raised:#18212A; --ink:#E7EDF3; --ink-2:#A8B5C2; --ink-3:#7B8895;
+  --line:#243039; --line-2:#33414D; --accent:#7EB2EE; --accent-ink:#0D1217; --accent-soft:#18283A;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.45); color-scheme:dark; }
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:400 15px/1.5 var(--f-sans);-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#map{position:fixed;inset:0}
+/* ---- side panel (desktop) / bottom drawer (phone) ---- */
+#panel{position:fixed;z-index:5;top:12px;left:12px;width:368px;max-height:calc(100% - 24px);display:flex;flex-direction:column;
+  background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.ph{display:flex;gap:10px;align-items:flex-start;padding:14px 12px 10px 16px}
+.ph .t{flex:1;min-width:0}
+.eyebrow{font:500 11.5px/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:5px}
+h1{font-size:16.5px;line-height:1.35;margin:0;font-weight:600;letter-spacing:-.01em}
+#pbody{overflow-y:auto;padding:0 16px 16px;overscroll-behavior:contain}
+#panel.closed #pbody{display:none}
+#panel h2{font:500 11.5px/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin:20px 0 8px}
+.subtitle{color:var(--ink);margin:0 0 8px;font-size:14.5px;line-height:1.45}
+.lede{color:var(--ink-2);margin:0 0 12px;font-size:14.5px}
+details.howto{border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:var(--raised);font-size:14px}
+/* the open/close chevron is a real icon inside the box: the browser&#x27;s own triangle sits on the border in some browsers */
+details.howto summary{font-weight:600;list-style:none;display:flex;align-items:center;gap:8px;padding:2px 0}
+details.howto summary::-webkit-details-marker{display:none}
+details.howto summary::marker{content:&quot;&quot;}
+details.howto .chev{flex:none;width:14px;height:14px;color:var(--ink-2);transition:transform .15s}
+details.howto[open] .chev{transform:rotate(90deg)}
+details.howto[open] summary{margin-bottom:6px}
+details.howto p{margin:6px 0;color:var(--ink-2)}
+.seg,.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.seg button,.tabs button{font:500 13.5px/1 var(--f-sans);padding:8px 12px;border-radius:999px;border:1px solid var(--line-2);
+  background:var(--surface);color:var(--ink-2);transition:background .15s,border-color .15s,color .15s}
+.seg button:hover,.tabs button:hover{border-color:var(--ink-3);color:var(--ink)}
+.seg button[aria-pressed=&quot;true&quot;],.tabs button[aria-selected=&quot;true&quot;]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.note{font-size:13px;color:var(--ink-2);margin:8px 0 0}
+.lay{border-top:1px solid var(--line);padding:12px 0}
+.lay:first-child{border-top:0;padding-top:2px}
+.lrow{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14.5px}
+.lrow .cnt{font-weight:400}
+.ldesc{font-size:13px;color:var(--ink-2);margin:4px 0 0 28px}
+.cats{list-style:none;margin:8px 0 0 28px;padding:0;display:grid;gap:7px}
+.cats label{display:flex;align-items:center;gap:9px;font-size:14px}
+.sw{width:15px;height:15px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.35)}
+.sw.sq{border-radius:3px}
+.sw.ln{width:24px;height:0;border-radius:2px;border-top:3px solid;box-shadow:0 0 0 1.5px rgba(11,18,24,.55)}
+.cnt{margin-left:auto;font:400 12.5px var(--f-mono);color:var(--ink-3);font-variant-numeric:tabular-nums}
+.grad{height:12px;border-radius:6px;margin:10px 0 4px 28px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+.gl{display:flex;justify-content:space-between;margin-left:28px;font:400 12px var(--f-mono);color:var(--ink-3)}
+.gt{margin:6px 0 0 28px;font-size:13px;color:var(--ink-2)}
+input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent);margin:0;flex:none}
+.srcs ul{padding-left:18px;margin:0;font-size:13px;color:var(--ink-2)}
+.srcs li{margin:3px 0}
+.foot{font-size:12.5px;color:var(--ink-3);margin-top:10px}
+.iconbtn{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);
+  display:grid;place-items:center;flex:none;font:500 18px/1 var(--f-sans);padding:0}
+.iconbtn svg{transition:transform .2s}
+#panel.closed #panelToggle svg{transform:rotate(180deg)}
+.fitbtn{margin-top:8px;font:500 13px var(--f-sans);padding:7px 11px;border-radius:8px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink-2)}
+/* ---- hover cards and the phone details sheet ---- */
+.maplibregl-popup-content{background:var(--surface);color:var(--ink);border-radius:10px;box-shadow:var(--shadow);padding:10px 12px;font:400 13.5px/1.45 var(--f-sans)}
+.maplibregl-popup-anchor-top .maplibregl-popup-tip,.maplibregl-popup-anchor-top-left .maplibregl-popup-tip,.maplibregl-popup-anchor-top-right .maplibregl-popup-tip{border-bottom-color:var(--surface)}
+.maplibregl-popup-anchor-bottom .maplibregl-popup-tip,.maplibregl-popup-anchor-bottom-left .maplibregl-popup-tip,.maplibregl-popup-anchor-bottom-right .maplibregl-popup-tip{border-top-color:var(--surface)}
+.maplibregl-popup-anchor-left .maplibregl-popup-tip{border-right-color:var(--surface)}
+.maplibregl-popup-anchor-right .maplibregl-popup-tip{border-left-color:var(--surface)}
+.maplibregl-popup-close-button{font-size:18px;width:28px;height:28px;color:var(--ink-2)}
+.card .ct{font-weight:600;display:flex;gap:8px;align-items:center;margin:0 18px 2px 0;font-size:14px}
+.card p{margin:4px 0;color:var(--ink-2)}
+.card dl{display:grid;grid-template-columns:auto 1fr;gap:3px 14px;margin:8px 0 0;font-size:13px}
+.card dt{color:var(--ink-3)} .card dd{margin:0;font-variant-numeric:tabular-nums}
+#sheet{display:none;position:fixed;z-index:8;left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom,0px));max-height:52vh;overflow:auto;
+  background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px}
+#sheetClose{position:absolute;top:8px;right:8px}
+.maplibregl-ctrl-attrib{font:400 11px var(--f-sans)}
+@media (min-width:761px){body:not(.pclosed) .maplibregl-ctrl-bottom-left{left:392px} html.embed body:not(.pclosed) .maplibregl-ctrl-bottom-left{left:322px}}   /* scale bars clear the open panel */
+/* ---- phone ---- */
+@media (max-width:760px){
+  #panel{top:auto;left:0;right:0;bottom:0;width:auto;border-radius:16px 16px 0 0;max-height:64vh;border-bottom:0;padding-bottom:env(safe-area-inset-bottom,0px)}
+  .ph{padding:10px 10px 10px 16px}
+  h1{font-size:15px}
+  #panel.closed h1{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .eyebrow{font-size:10.5px;margin-bottom:3px}
+  .maplibregl-ctrl-bottom-left,.maplibregl-ctrl-bottom-right{bottom:var(--ph)}
+}
+/* byline and the organisation / GitHub strip (identity.json) */
+.byline{margin:0 0 10px;font-size:14px;color:var(--ink-2)}
+.byline time{font-family:var(--f-mono);font-size:13px;white-space:nowrap}
+.brand{display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.brand .org{display:inline-flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;transition:transform .18s ease}
+.brand .org:hover,.brand .org:focus-visible{transform:translateY(-2px) rotate(-1.5deg)}
+.brand .logo{height:40px;width:auto;flex:none;display:block}
+.brand svg.logo{color:var(--ink)}
+.brand .org b{display:block;font-size:14px;line-height:1.2}
+.brand .org small{display:block;font-size:12px;color:var(--ink-3);line-height:1.3;max-width:24ch}
+.brand .gh{flex-basis:100%;margin:0;font-size:13px;color:var(--ink-2)}
+.brand .gh{max-width:none}
+.brand .gh a{font-family:var(--f-mono);font-size:12.5px;white-space:nowrap}
+.brand .logo{height:34px}
+/* plain language / technical (spec fields *_tech) */
+.tech{display:none}
+html[data-lang=&quot;tech&quot;] .tech{display:revert} html[data-lang=&quot;tech&quot;] .plain{display:none}
+/* embedded in a chart page (vizkit.map_panel): slimmer panel, no title block */
+.eyebrow:empty{display:none}
+html.embed #panel{width:300px}
+html.embed h1{font-size:14.5px}
+html.embed .ph{padding:11px 10px 8px 14px}
+html.embed #pbody{padding:0 14px 12px}
+html.embed #pbody &gt; section:first-of-type h2{margin-top:4px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;map&quot; role=&quot;region&quot; aria-label=&quot;Interactive map&quot;&gt;&lt;/div&gt;
+&lt;aside id=&quot;panel&quot; aria-label=&quot;Map key and controls&quot;&gt;
+  &lt;div class=&quot;ph&quot;&gt;
+    &lt;div class=&quot;t&quot;&gt;&lt;div class=&quot;eyebrow&quot; id=&quot;eyebrow&quot;&gt;&lt;/div&gt;&lt;h1 id=&quot;title&quot;&gt;&lt;/h1&gt;&lt;/div&gt;
+    &lt;button id=&quot;panelToggle&quot; class=&quot;iconbtn&quot; aria-expanded=&quot;true&quot; aria-controls=&quot;pbody&quot; aria-label=&quot;Hide or show the key&quot;&gt;
+      &lt;svg width=&quot;16&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M4 10l4-4 4 4&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;/svg&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div id=&quot;pbody&quot;&gt;
+    &lt;p class=&quot;subtitle&quot; id=&quot;subtitle&quot;&gt;&lt;/p&gt;
+    &lt;p class=&quot;byline&quot; id=&quot;byline&quot;&gt;&lt;/p&gt;
+    &lt;p class=&quot;lede&quot; id=&quot;lede&quot;&gt;&lt;/p&gt;
+    &lt;details class=&quot;howto&quot; id=&quot;howtoWrap&quot;&gt;&lt;summary&gt;&lt;svg class=&quot;chev&quot; viewBox=&quot;0 0 16 16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M6 3.5 10.5 8 6 12.5&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;/svg&gt;How to read this map&lt;/summary&gt;&lt;div id=&quot;howto&quot;&gt;&lt;/div&gt;&lt;/details&gt;
+    &lt;section id=&quot;langSec&quot;&gt;&lt;h2&gt;Explanations&lt;/h2&gt;&lt;div class=&quot;seg&quot; id=&quot;langSeg&quot;&gt;
+      &lt;button type=&quot;button&quot; data-l=&quot;plain&quot; aria-pressed=&quot;true&quot;&gt;Plain language&lt;/button&gt;&lt;button type=&quot;button&quot; data-l=&quot;tech&quot; aria-pressed=&quot;false&quot;&gt;Technical&lt;/button&gt;&lt;/div&gt;&lt;/section&gt;
+    &lt;section id=&quot;sitesSec&quot;&gt;&lt;h2&gt;Places to look&lt;/h2&gt;&lt;div class=&quot;tabs&quot; id=&quot;sites&quot; role=&quot;tablist&quot;&gt;&lt;/div&gt;&lt;p class=&quot;note&quot; id=&quot;siteNote&quot;&gt;&lt;/p&gt;&lt;/section&gt;
+    &lt;section&gt;&lt;h2&gt;Base map&lt;/h2&gt;&lt;div class=&quot;seg&quot; id=&quot;bm&quot;&gt;&lt;/div&gt;&lt;p class=&quot;note&quot; id=&quot;bmNote&quot;&gt;&lt;/p&gt;&lt;/section&gt;
+    &lt;section&gt;&lt;h2&gt;Layers&lt;/h2&gt;&lt;div id=&quot;layers&quot;&gt;&lt;/div&gt;&lt;/section&gt;
+    &lt;section class=&quot;srcs&quot; id=&quot;srcsSec&quot;&gt;&lt;h2&gt;Sources&lt;/h2&gt;&lt;ul id=&quot;sources&quot;&gt;&lt;/ul&gt;&lt;p class=&quot;foot&quot; id=&quot;footer&quot;&gt;&lt;/p&gt;&lt;div id=&quot;brand&quot;&gt;&lt;/div&gt;&lt;/section&gt;
+  &lt;/div&gt;
+&lt;/aside&gt;
+&lt;div id=&quot;sheet&quot; role=&quot;dialog&quot; aria-label=&quot;Details&quot; tabindex=&quot;-1&quot;&gt;&lt;button id=&quot;sheetClose&quot; class=&quot;iconbtn&quot; aria-label=&quot;Close details&quot;&gt;&amp;times;&lt;/button&gt;&lt;div id=&quot;sheetBody&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;script type=&quot;application/json&quot; id=&quot;cfg&quot;&gt;{&quot;panel_title&quot;:&quot;Estaciones meteorológicas&quot;,&quot;basemap&quot;:&quot;map&quot;,&quot;basemaps&quot;:[&quot;map&quot;,&quot;satellite&quot;],&quot;vector_style&quot;:&quot;positron&quot;,&quot;bounds&quot;:[-62.8,-27.7,-54.2,-19.2],&quot;embed&quot;:true,&quot;hash&quot;:false,&quot;eyebrow&quot;:&quot;&quot;,&quot;subtitle&quot;:&quot;&quot;,&quot;lede&quot;:&quot;&quot;,&quot;byline&quot;:&quot;&quot;,&quot;brand&quot;:&quot;&quot;,&quot;footer&quot;:&quot;&quot;,&quot;sources&quot;:[],&quot;title&quot;:&quot;Estaciones meteorológicas&quot;,&quot;layers&quot;:[{&quot;id&quot;:&quot;emas&quot;,&quot;name&quot;:&quot;EMAs (automáticas, 96)&quot;,&quot;kind&quot;:&quot;point&quot;,&quot;description&quot;:&quot;Tiempo casi real; solo la última lectura, sin archivo histórico.&quot;,&quot;style&quot;:{&quot;color&quot;:&quot;#0072B2&quot;,&quot;radius&quot;:[[5,3.5],[9,6]]},&quot;tooltip&quot;:{&quot;title_field&quot;:&quot;nombre&quot;,&quot;text&quot;:&quot;Estación automática (EMAs, DMH–DINAC).&quot;,&quot;fields&quot;:[{&quot;field&quot;:&quot;departamento&quot;,&quot;label&quot;:&quot;Departamento&quot;}]},&quot;count&quot;:96},{&quot;id&quot;:&quot;mch&quot;,&quot;name&quot;:&quot;MCH (históricas, 50)&quot;,&quot;kind&quot;:&quot;point&quot;,&quot;description&quot;:&quot;Registro histórico; termina a mediados de 2022.&quot;,&quot;style&quot;:{&quot;color&quot;:&quot;#D55E00&quot;,&quot;radius&quot;:[[5,3.5],[9,6]]},&quot;tooltip&quot;:{&quot;title_field&quot;:&quot;station_name&quot;,&quot;text&quot;:&quot;Estación sinóptica histórica (MCH, DMH–DINAC).&quot;,&quot;fields&quot;:[{&quot;field&quot;:&quot;ultimo&quot;,&quot;label&quot;:&quot;Último registro&quot;}]},&quot;count&quot;:50}]}&lt;/script&gt;
+&lt;script type=&quot;application/json&quot; id=&quot;d-emas&quot;&gt;{&quot;type&quot;:&quot;FeatureCollection&quot;,&quot;features&quot;:[{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-60.771441,-19.929635]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;5ta. División de Infantería - Mayor Pablo Lagerenza&quot;,&quot;departamento&quot;:&quot;Alto Paraguay&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-59.494924,-19.541573]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Base Aérea Gral. Div. Adrián Jara&quot;,&quot;departamento&quot;:&quot;Alto Paraguay&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-61.92491,-20.710865]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Base Aérea Nueva Asunción&quot;,&quot;departamento&quot;:&quot;Boquerón&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-59.778902,-19.966132]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Asociación Agropecuaria de Agua Dulce&quot;,&quot;departamento&quot;:&quot;Alto Paraguay&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-60.896184,-21.530996]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Establecimiento Nueve Lunas&quot;,&quot;departamento&quot;:&quot;Boquerón&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-58.160481,-20.078086]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Estación Los Tres Gigantes - Guyra Paraguay&quot;,&quot;departamento&quot;:&quot;Alto Paraguay&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-58.1691,-20.228736]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Base Naval Bahia Negra&quot;,&quot;departamento&quot;:&quot;Alto Paraguay&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.879948,-21.041857]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Aeródromo Tte 1° Inocencio Herebia&quot;,&quot;departamento&quot;:&quot;Alto Paraguay&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-61.612781,-22.558443]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Base Aerea Tte. Mna. Pelayo Prats Gill&quot;,&quot;departamento&quot;:&quot;Boquerón&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-59.913295,-22.82451]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;ASdeA - Campo Comunal de Campo Largo&quot;,&quot;departamento&quot;:&quot;Presidente Hayes&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-60.618665,-22.030522]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Aeropuerto Prof. Dr. Luis Maria Argaña&quot;,&quot;departamento&quot;:&quot;Boquerón&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.942697,-22.160499]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Aeropuerto Municipal Vallemi&quot;,&quot;departamento&quot;:&quot;Concepción&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.368822,-22.692116]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Estancia Garay Kue&quot;,&quot;departamento&quot;:&quot;Concepción&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.636163,-22.616048]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Establecimiento Santa Teresa&quot;,&quot;departamento&quot;:&quot;Amambay&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-55.832572,-22.640315]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Aeropuerto Prof. Dr. Augusto Fuster&quot;,&quot;departamento&quot;:&quot;Amambay&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-60.368375,-23.576416]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Establecimiento Sombrero Hovy&quot;,&quot;departamento&quot;:&quot;Presidente Hayes&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-58.790672,-23.496797]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;RC1 Cnel Valois Rivarola&quot;,&quot;departamento&quot;:&quot;Presidente Hayes&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.4303,-23.440819]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Aeropuerto Tte. PAM Carmelo Peralta&quot;,&quot;departamento&quot;:&quot;Concepción&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-58.835922,-24.741691]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Fortín General Bruguez&quot;,&quot;departamento&quot;:&quot;Presidente Hayes&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.718587,-25.170016]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Establecimiento Pariri&quot;,&quot;departamento&quot;:&quot;Presidente Hayes&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-59.81302,-24.087962]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Destacamento Militar Tte. Esteban Martinez&quot;,&quot;departamento&quot;:&quot;Presidente Hayes&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.550335,-24.962892]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;TEE - Tropas Especiales del Ejercito, Cerrito&quot;,&quot;departamento&quot;:&quot;Presidente Hayes&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.368561,-24.961589]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Centro de Investigación del Chaco Americano  - Fundación Manuel Gondra&quot;,&quot;departamento&quot;:&quot;Presidente Hayes&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.022765,-24.029082]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Aeropuerto Mayor PAM Job Von Zastrow&quot;,&quot;departamento&quot;:&quot;San Pedro&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.59893,-24.17326]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Agroforestal del Paraguay S.A.&quot;,&quot;departamento&quot;:&quot;San Pedro&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.457093,-24.665227]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Col. Nac. EMD Sebastián De Yegros&quot;,&quot;departamento&quot;:&quot;San Pedro&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-55.813847,-24.054961]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Asociación Tesai Reka Paraguay - Koe Pora&quot;,&quot;departamento&quot;:&quot;Canindeyú&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-54.749561,-24.246894]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;UNICAN - Facultad de Ciencias Agropecuarias y Ambientales filial Katueté&quot;,&quot;departamento&quot;:&quot;Canindeyú&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-55.363138,-24.43768]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;MOPC - Ruta 10 - Planagro&quot;,&quot;departamento&quot;:&quot;Canindeyú&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-55.686686,-24.497552]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;3ra. División de Caballería&quot;,&quot;departamento&quot;:&quot;Canindeyú&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.638974,-25.324221]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;UCA - Facultad de Ciencias y Tecnología Campus Sta. Librada - Asunción&quot;,&quot;departamento&quot;:&quot;Central&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-54.353525,-24.032381]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Aeropuerto Cap. Bernardino Caballero&quot;,&quot;departamento&quot;:&quot;Canindeyú&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.517605,-25.336185]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;UNA - Facultad de Ciencias Agrarias Campus San Lorenzo&quot;,&quot;departamento&quot;:&quot;Central&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.655317,-25.286336]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Centro Meteorológico Nacional&quot;,&quot;departamento&quot;:&quot;Central&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.514725,-25.235822]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Aeropuerto Internacional Silvio Pettirossi&quot;,&quot;departamento&quot;:&quot;Central&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.187683,-25.390233]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;IPTA - Centro de Investigación Hernando Bertoni&quot;,&quot;departamento&quot;:&quot;Cordillera&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.148642,-25.60413]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Comando de Artillería del Ejército (COMARTE)&quot;,&quot;departamento&quot;:&quot;Paraguarí&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.300169,-25.312722]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;CNSB - San Bernardino&quot;,&quot;departamento&quot;:&quot;Cordillera&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.738801,-25.528517]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;San José de los Arroyos&quot;,&quot;departamento&quot;:&quot;Caaguazú&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.587116,-25.629215]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;GL South America&quot;,&quot;departamento&quot;:&quot;Central&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-55.938739,-26.105238]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;San Luis (Itaipú) - San Juan Nepomuceno&quot;,&quot;departamento&quot;:&quot;Caazapá&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.310988,-25.664572]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;IPTA - Campo Experimental Natalicio Talavera&quot;,&quot;departamento&quot;:&quot;Guairá&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.438031,-25.753988]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;2ª División de Infantería “El Carmen”&quot;,&quot;departamento&quot;:&quot;Guairá&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.462447,-25.460107]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;UCA - Facultad de Ciencias Agropecuarias Sede Cnel. Oviedo&quot;,&quot;departamento&quot;:&quot;Caaguazú&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-55.83311,-25.386121]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Juan Manuel Frutos&quot;,&quot;departamento&quot;:&quot;Caaguazú&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.376187,-25.088368]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Asociación Tesai Reka Paraguay - Chokokue Reta&quot;,&quot;departamento&quot;:&quot;Caaguazú&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.049793,-25.034385]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Unidad de Gestión de Riesgo - MAG - San Joaquín&quot;,&quot;departamento&quot;:&quot;Caaguazú&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.223339,-25.996921]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Establecimiento Miguel y Jesús&quot;,&quot;departamento&quot;:&quot;Paraguarí&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.280103,-25.234322]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Establecimiento Monarca&quot;,&quot;departamento&quot;:&quot;Caaguazú&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-54.835657,-25.445193]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Aeropuerto Internacional Guarani&quot;,&quot;departamento&quot;:&quot;Alto Paraná&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-54.772701,-25.495372]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Facultad de Ingeniería Agronómica - UNE&quot;,&quot;departamento&quot;:&quot;Alto Paraná&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-54.612386,-25.519457]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Biblioteca Municipal de Ciudad del Este&quot;,&quot;departamento&quot;:&quot;Alto Paraná&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.990008,-26.22373]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;San Miguel, Quyquyho&quot;,&quot;departamento&quot;:&quot;Paraguarí&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.641127,-27.344771]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Destacamento Naval Cerrito&quot;,&quot;departamento&quot;:&quot;Ñeembucú&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-58.318469,-26.881172]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Aeropuerto Carlos Miguel Gimenez&quot;,&quot;departamento&quot;:&quot;Ñeembucú&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-58.287989,-26.880828]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;UNP - Facultad de Ciencias Agropecuarias y Desarrollo Rural&quot;,&quot;departamento&quot;:&quot;Ñeembucú&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.980948,-26.221225]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Agriplus S.A. Palmares&quot;,&quot;departamento&quot;:&quot;Ñeembucú&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.134342,-26.67059]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;2ª División de Caballería \&quot;Gral. de Brigada Alfredo Patricio Ramos\&quot;&quot;,&quot;departamento&quot;:&quot;Misiones&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.852547,-27.398206]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Junta Municipal de Ayolas&quot;,&quot;departamento&quot;:&quot;Misiones&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.851828,-26.593119]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Agriplus S.A. Arazape&quot;,&quot;departamento&quot;:&quot;Misiones&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.095523,-26.481746]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Municipalidad de 3 de Mayo&quot;,&quot;departamento&quot;:&quot;Caazapá&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.403309,-26.457342]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Municipalidad de Fulgencio Yegros&quot;,&quot;departamento&quot;:&quot;Caazapá&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.249355,-26.618139]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Santa Inés (Itaipú) - Yuty&quot;,&quot;departamento&quot;:&quot;Caazapá&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.359875,-26.169856]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Aeródromo Don Eduardo Schaerer Vera y Aragón&quot;,&quot;departamento&quot;:&quot;Caazapá&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-55.051473,-26.478485]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Agro Serrana S.A.&quot;,&quot;departamento&quot;:&quot;Itapúa&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-55.331764,-26.834078]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Base Aérea Cnel. DEM José María Argaña&quot;,&quot;departamento&quot;:&quot;Itapúa&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.22985,-26.93461]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;UNI - Facultad de Ciencias Agropecuarias y Forestales Filial Gral. Artigas&quot;,&quot;departamento&quot;:&quot;Itapúa&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.531822,-27.096437]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Puesta del Sol (Itaipú) - Gral. Delgado&quot;,&quot;departamento&quot;:&quot;Itapúa&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-55.267131,-26.646911]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;CECTEC - Centro Agroecológico Pirapey&quot;,&quot;departamento&quot;:&quot;Itapúa&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-55.669078,-27.163572]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Cabaña Don Zeno&quot;,&quot;departamento&quot;:&quot;Itapúa&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.339534,-27.314541]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Club Social Villa Permanente San Cosme y San Damián&quot;,&quot;departamento&quot;:&quot;Itapúa&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-55.869715,-27.340648]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Costanera Encarnación&quot;,&quot;departamento&quot;:&quot;Itapúa&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-55.642327,-27.061644]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;UCA - Facultad de Ciencias Agropecuarias Sede Hohenau&quot;,&quot;departamento&quot;:&quot;Itapúa&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-59.771035,-22.678362]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Campo Experimental Chaco Central Km 412 - IPTA&quot;,&quot;departamento&quot;:&quot;Presidente Hayes&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-58.48111,-21.050114]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Toro Pampa - AbE Chaco&quot;,&quot;departamento&quot;:&quot;Alto Paraguay&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-62.40031,-21.68041]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Mayor Infante Rivarola&quot;,&quot;departamento&quot;:&quot;Boquerón&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-60.56329,-22.423143]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Comunidad Campo Loa - AbE Chaco&quot;,&quot;departamento&quot;:&quot;Boquerón&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.913771,-23.59916]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Estancia Punta riel&quot;,&quot;departamento&quot;:&quot;San Pedro&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-55.835556,-27.224722]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Aeropuerto Internacional Tte. Amin Ayub - Cabecera Sur&quot;,&quot;departamento&quot;:&quot;Itapúa&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-60.117298,-22.671634]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Cooperativa Multiactiva Neuland Ltda, Aeropuerto de Neuland&quot;,&quot;departamento&quot;:&quot;Boquerón&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-59.661333,-23.027833]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Cooperativa Chortitzer Ltda, Lolita&quot;,&quot;departamento&quot;:&quot;Presidente Hayes&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.581934,-25.262721]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Sede Central de Fecoprod&quot;,&quot;departamento&quot;:&quot;Central&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.1347,-25.6983]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Cooperativa Multiactiva Carlos Pfannl Ltda&quot;,&quot;departamento&quot;:&quot;Guairá&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-55.838978,-25.376354]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;UNCA - Facultad Ciencias de la Producción Filial Juan Manuel Frutos&quot;,&quot;departamento&quot;:&quot;Caaguazú&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-54.9712,-25.8425]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Cooperativa Unión Curupayty Ltda&quot;,&quot;departamento&quot;:&quot;Alto Paraná&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-54.617314,-25.406362]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Usina&quot;,&quot;departamento&quot;:&quot;Alto Paraná&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-54.628429,-25.4425]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Acuicultura&quot;,&quot;departamento&quot;:&quot;Alto Paraná&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-54.94838,-24.951781]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;San Alberto&quot;,&quot;departamento&quot;:&quot;Alto Paraná&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-54.45681,-24.758954]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Reserva Biológica Limoy (Itaipú)&quot;,&quot;departamento&quot;:&quot;Alto Paraná&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-54.715151,-25.06983]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Reserva Biológica Itabó (Itaipú)&quot;,&quot;departamento&quot;:&quot;Alto Paraná&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-54.298327,-24.054363]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Reserva Biológica Mbaracayu (Itaipú)&quot;,&quot;departamento&quot;:&quot;Canindeyú&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-54.681177,-25.981018]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Paranambu&quot;,&quot;departamento&quot;:&quot;Alto Paraná&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-54.379238,-24.374855]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Reserva Biológica Carapa (Itaipú)&quot;,&quot;departamento&quot;:&quot;Canindeyú&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-54.341482,-24.576172]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Reserva Biológica Pozuelo (Itaipú)&quot;,&quot;departamento&quot;:&quot;Canindeyú&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-54.491507,-25.031377]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Reserva Biológica Yvyty Rokai (Itaipú)&quot;,&quot;departamento&quot;:&quot;Alto Paraná&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-54.518728,-25.203135]},&quot;properties&quot;:{&quot;nombre&quot;:&quot;Pikyry&quot;,&quot;departamento&quot;:&quot;Alto Paraná&quot;}}]}&lt;/script&gt;
+&lt;script type=&quot;application/json&quot; id=&quot;d-mch&quot;&gt;{&quot;type&quot;:&quot;FeatureCollection&quot;,&quot;features&quot;:[{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.941308,-22.283025]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Puerto Casado (La Victoria), Dpto. del Alto Paraguay&quot;,&quot;ultimo&quot;:&quot;2022-07-05&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.145831,-25.626808]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Paraguarí, Dpto. de Paraguari&quot;,&quot;ultimo&quot;:&quot;2022-07-05&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-60.618961,-22.030539]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Mcal. Estigarribia, Dpto. de Boquerón&quot;,&quot;ultimo&quot;:&quot;2022-07-05&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.457039,-24.665214]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;San Estanislao,  Dpto. de San Pedro del Ycuamandiyú&quot;,&quot;ultimo&quot;:&quot;2022-07-05&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.377742,-25.483744]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Coronel Oviedo, Caaguazu&quot;,&quot;ultimo&quot;:&quot;2022-07-05&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-58.169128,-20.227367]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Bahía Negra, Dpto. de Alto Paraguay&quot;,&quot;ultimo&quot;:&quot;2022-07-05&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.281186,-26.515513]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Tebicuary Yuty,Caazapa (Hidrológico SEAM - MOPC - DMH)&quot;,&quot;ultimo&quot;:&quot;2022-07-05&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.514744,-25.236108]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Asunción, Silvio Pettirossi, Capital de la Republica&quot;,&quot;ultimo&quot;:&quot;2022-07-05&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.446334,-24.101208]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Rio Jejuí&quot;,&quot;ultimo&quot;:&quot;2022-07-05&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-55.886953,-27.305828]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Encarnación, Dpto. de  Itapua&quot;,&quot;ultimo&quot;:&quot;2022-07-05&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.359875,-26.169856]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Caazapa, Dpto de Caazapa&quot;,&quot;ultimo&quot;:&quot;2022-07-05&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-58.836092,-24.741678]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Gral. José María Bruguez, Dpto. de Pdte. Hayes&quot;,&quot;ultimo&quot;:&quot;2022-07-05&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.134139,-26.670278]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;San Juan Bautista Misiones, Dpto. de Misiones&quot;,&quot;ultimo&quot;:&quot;2022-07-05&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-54.353836,-24.032575]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Salto del Guairá, Dpto. de  Canindeyú&quot;,&quot;ultimo&quot;:&quot;2022-07-05&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-55.331661,-26.834117]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Cap. Meza, Dpto. de Itapua&quot;,&quot;ultimo&quot;:&quot;2022-07-05&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-54.838947,-25.455839]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Aeropuerto Guarani, Dpto. de  Alto Parana&quot;,&quot;ultimo&quot;:&quot;2022-07-05&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.430186,-23.441531]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Concepción, Dpto. de Concepción&quot;,&quot;ultimo&quot;:&quot;2022-07-05&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-55.832725,-22.640278]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Pedro Juan Caballero, Dpto. de Amambay&quot;,&quot;ultimo&quot;:&quot;2022-07-05&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.437906,-25.754125]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Villarrica, Dpto. del  Guaira&quot;,&quot;ultimo&quot;:&quot;2022-07-05&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.087547,-24.085236]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;San Pedro, Dpto. de San Pedro del Ycuamandiyú&quot;,&quot;ultimo&quot;:&quot;2022-07-05&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-58.318383,-26.881239]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Pilar, Dpto. de Ñeembucú&quot;,&quot;ultimo&quot;:&quot;2022-07-05&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-58.15,-26.1667]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Alberdi&quot;,&quot;ultimo&quot;:&quot;2022-07-05&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-58.790364,-23.497733]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Pozo Colorado, Dpto. de Pdte. Hayes&quot;,&quot;ultimo&quot;:&quot;2022-07-05&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.300147,-25.312788]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;CNSB&quot;,&quot;ultimo&quot;:&quot;2022-01-01&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.165856,-24.427809]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Rosario, Rio Paraguay&quot;,&quot;ultimo&quot;:&quot;2022-01-01&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-58.3,-20.227]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Bahia Negra, Rio Paraguay&quot;,&quot;ultimo&quot;:&quot;2022-01-01&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-54.612,-25.519]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Ciudad del Este, Rio Paraná&quot;,&quot;ultimo&quot;:&quot;2022-01-01&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.64,-25.356111]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Ita Enramada, Rio Paraguay&quot;,&quot;ultimo&quot;:&quot;2022-01-01&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.133333,-27.4]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Arroyo Yabebyry, Alto Parana, Rio Paraná&quot;,&quot;ultimo&quot;:&quot;2022-01-01&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.508903,-23.869574]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Rio Aguaray&quot;,&quot;ultimo&quot;:&quot;2022-01-01&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-58.046136,-22.134663]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Vallemi, Rio Paraguay&quot;,&quot;ultimo&quot;:&quot;2022-01-01&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.614,-25.435]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Asunción (Puerto) - Río Paraguay&quot;,&quot;ultimo&quot;:&quot;2022-01-01&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.269347,-25.388518]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Arroyo Ypacarai&quot;,&quot;ultimo&quot;:&quot;2022-01-01&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.053708,-25.046557]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Arroyos y Esteros - Rio Yhahuy&quot;,&quot;ultimo&quot;:&quot;2022-01-01&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.43,-23.44]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Concepcion, Rio Paraguay&quot;,&quot;ultimo&quot;:&quot;2022-01-01&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.17,-24.1]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Puerto Antequera, Rio Paraguay&quot;,&quot;ultimo&quot;:&quot;2022-01-01&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.416533,-25.347547]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Aregua - Arroyo Yukyrymi&quot;,&quot;ultimo&quot;:&quot;2022-01-01&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.878817,-22.287686]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Tres Cerros&quot;,&quot;ultimo&quot;:&quot;2022-01-01&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.455028,-25.315792]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Capiatá - Arroyo San Lorenzo&quot;,&quot;ultimo&quot;:&quot;2022-01-01&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-54.353,-24.032]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Salto del Guairá, Rio Paraná&quot;,&quot;ultimo&quot;:&quot;2022-01-01&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.870833,-21.0375]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Fuerte Olimpo, Rio Paraguay&quot;,&quot;ultimo&quot;:&quot;2022-01-01&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.972707,-21.624615]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Isla Margarita, Rio Paraguay&quot;,&quot;ultimo&quot;:&quot;2022-01-01&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.213917,-24.974343]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Naranjahai&quot;,&quot;ultimo&quot;:&quot;2022-01-01&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.497627,-26.050942]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Iturbe - Rio Tebicuarymi&quot;,&quot;ultimo&quot;:&quot;2022-01-01&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-56.493036,-23.42418]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Puente RN 3 - Río Ypane&quot;,&quot;ultimo&quot;:&quot;2022-01-01&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-57.514,-25.235]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Asuncion, Rio Paraguay&quot;,&quot;ultimo&quot;:&quot;2022-01-01&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-55.676723,-27.074901]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Hohenau - Arroyo Capiibary&quot;,&quot;ultimo&quot;:&quot;2019-12-03&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-59.366667,-19.533358]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Adrián Jara, Dpto. del Alto Paraguay&quot;,&quot;ultimo&quot;:&quot;2016-11-20&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-61.560111,-22.558425]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Prats Gill, Dpto. de Boquerón&quot;,&quot;ultimo&quot;:&quot;2016-11-20&quot;}},{&quot;type&quot;:&quot;Feature&quot;,&quot;geometry&quot;:{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-55.789642,-27.200219]},&quot;properties&quot;:{&quot;station_name&quot;:&quot;Cap. Miranda, Dpto. de  Itapua&quot;,&quot;ultimo&quot;:&quot;2014-05-28&quot;}}]}&lt;/script&gt;
+&lt;script&gt;
+&quot;use strict&quot;;
+const C = JSON.parse(document.getElementById(&#x27;cfg&#x27;).textContent);
+const $ = id =&gt; document.getElementById(id);
+const esc = s =&gt; String(s == null ? &#x27;&#x27; : s).replace(/[&amp;&lt;&gt;&quot;]/g, c =&gt; ({&#x27;&amp;&#x27;:&#x27;&amp;amp;&#x27;,&#x27;&lt;&#x27;:&#x27;&amp;lt;&#x27;,&#x27;&gt;&#x27;:&#x27;&amp;gt;&#x27;,&#x27;&quot;&#x27;:&#x27;&amp;quot;&#x27;}[c]));
+const phone = () =&gt; innerWidth &lt;= 760;
+if(C.embed) document.documentElement.classList.add(&#x27;embed&#x27;);
+// a host chart page can switch light / dark for the map too
+addEventListener(&#x27;message&#x27;, e =&gt; { if(e.data &amp;&amp; (e.data.theme === &#x27;light&#x27; || e.data.theme === &#x27;dark&#x27;)) document.documentElement.dataset.theme = e.data.theme; });
+const canHover = matchMedia(&#x27;(hover:hover) and (pointer:fine)&#x27;).matches;
+
+// ---------- panel text (spec text fields are trusted HTML written by the page author)
+$(&#x27;eyebrow&#x27;).innerHTML = C.eyebrow || &#x27;&#x27;; $(&#x27;title&#x27;).innerHTML = C.title || &#x27;&#x27;;
+$(&#x27;subtitle&#x27;).innerHTML = C.subtitle || &#x27;&#x27;; if(!C.subtitle) $(&#x27;subtitle&#x27;).remove();
+$(&#x27;lede&#x27;).innerHTML = C.lede || &#x27;&#x27;; if(!C.lede) $(&#x27;lede&#x27;).remove();
+const both = (pl, te) =&gt; te ? &#x27;&lt;div class=&quot;plain&quot;&gt;&#x27; + (pl || &#x27;&#x27;) + &#x27;&lt;/div&gt;&lt;div class=&quot;tech&quot;&gt;&#x27; + te + &#x27;&lt;/div&gt;&#x27; : (pl || &#x27;&#x27;);
+if(C.how_to_read) $(&#x27;howto&#x27;).innerHTML = both(C.how_to_read, C.how_to_read_tech); else $(&#x27;howtoWrap&#x27;).remove();
+// plain / technical: shown only when the spec has technical text; a host chart page can switch it too
+const hasTech = !!(C.how_to_read_tech || (C.layers || []).some(L =&gt; L.description_tech || (L.tooltip || {}).text_tech));
+function setLang(l){ document.documentElement.dataset.lang = l;
+  document.querySelectorAll(&#x27;#langSeg button&#x27;).forEach(b =&gt; b.setAttribute(&#x27;aria-pressed&#x27;, String(b.dataset.l === l))); }
+if(hasTech) document.querySelectorAll(&#x27;#langSeg button&#x27;).forEach(b =&gt; b.addEventListener(&#x27;click&#x27;, () =&gt; setLang(b.dataset.l)));
+else $(&#x27;langSec&#x27;).remove();
+addEventListener(&#x27;message&#x27;, e =&gt; { if(e.data &amp;&amp; (e.data.lang === &#x27;plain&#x27; || e.data.lang === &#x27;tech&#x27;)) setLang(e.data.lang); });
+$(&#x27;footer&#x27;).innerHTML = C.footer || &#x27;&#x27;;
+$(&#x27;byline&#x27;).outerHTML = C.byline || &#x27;&#x27;; $(&#x27;brand&#x27;).outerHTML = C.brand || &#x27;&#x27;;
+(C.sources || []).forEach(s =&gt; { const li = document.createElement(&#x27;li&#x27;); li.innerHTML = s; $(&#x27;sources&#x27;).appendChild(li); });
+if(C.embed || (!(C.sources || []).length &amp;&amp; !C.footer &amp;&amp; !C.brand)) $(&#x27;srcsSec&#x27;).remove();
+const panel = $(&#x27;panel&#x27;);
+function setPanel(open){ panel.classList.toggle(&#x27;closed&#x27;, !open); document.body.classList.toggle(&#x27;pclosed&#x27;, !open); $(&#x27;panelToggle&#x27;).setAttribute(&#x27;aria-expanded&#x27;, String(open)); syncPh(); }
+function syncPh(){ document.documentElement.style.setProperty(&#x27;--ph&#x27;, phone() ? panel.offsetHeight + &#x27;px&#x27; : &#x27;0px&#x27;); }
+$(&#x27;panelToggle&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; setPanel(panel.classList.contains(&#x27;closed&#x27;)));
+setPanel(!phone());
+new ResizeObserver(syncPh).observe(panel);
+
+// ---------- formatting for hover cards
+function fmt(v, f){
+  if(v === null || v === undefined || v === &#x27;&#x27;) return null;
+  if(f.labels &amp;&amp; f.labels[String(v)] !== undefined) v = f.labels[String(v)];
+  const n = Number(v), fm = f.format || &#x27;text&#x27;;
+  let s;
+  if(fm === &#x27;int&#x27; &amp;&amp; isFinite(n)) s = Math.round(n).toLocaleString(&#x27;en-US&#x27;);
+  else if(/^num[0-9]$/.test(fm) &amp;&amp; isFinite(n)) s = n.toLocaleString(&#x27;en-US&#x27;, {minimumFractionDigits:+fm[3], maximumFractionDigits:+fm[3]});
+  else if(fm === &#x27;pct&#x27; &amp;&amp; isFinite(n)) s = (n * 100).toLocaleString(&#x27;en-US&#x27;, {maximumFractionDigits:f.decimals ?? 0}) + &#x27;%&#x27;;
+  else if(fm === &#x27;pct100&#x27; &amp;&amp; isFinite(n)) s = n.toLocaleString(&#x27;en-US&#x27;, {maximumFractionDigits:f.decimals ?? 0}) + &#x27;%&#x27;;
+  else s = String(v);
+  return (f.prefix || &#x27;&#x27;) + s + (f.suffix || &#x27;&#x27;);
+}
+function catOf(L, p){ const cb = L.color_by; if(!cb || cb.type !== &#x27;categorical&#x27;) return null;
+  const v = String(p[cb.field]); return cb.categories.find(c =&gt; String(c.value) === v) || null; }
+function card(L, p){
+  const t = L.tooltip || {};
+  if(t.html_field &amp;&amp; p[t.html_field]) return &#x27;&lt;div class=&quot;card&quot;&gt;&#x27; + p[t.html_field] + &#x27;&lt;/div&gt;&#x27;;
+  const c = catOf(L, p);
+  let title = t.title_field ? fmt(p[t.title_field], {format:t.title_format, labels:t.title_labels}) : (t.title || (c ? c.label : L.name));
+  const sw = c ? &#x27;&lt;span class=&quot;sw&quot; style=&quot;background:&#x27; + c.color + &#x27;&quot;&gt;&lt;/span&gt;&#x27; : &#x27;&#x27;;
+  let h = &#x27;&lt;div class=&quot;card&quot;&gt;&lt;div class=&quot;ct&quot;&gt;&#x27; + sw + esc(title) + &#x27;&lt;/div&gt;&#x27;;
+  if(t.text) h += &#x27;&lt;p&gt;&#x27; + both(t.text, t.text_tech) + &#x27;&lt;/p&gt;&#x27;;
+  const rows = (t.fields || []).map(f =&gt; [f.label, fmt(p[f.field], f)]).filter(r =&gt; r[1] !== null);
+  if(rows.length) h += &#x27;&lt;dl&gt;&#x27; + rows.map(r =&gt; &#x27;&lt;dt&gt;&#x27; + esc(r[0]) + &#x27;&lt;/dt&gt;&lt;dd&gt;&#x27; + esc(r[1]) + &#x27;&lt;/dd&gt;&#x27;).join(&#x27;&#x27;) + &#x27;&lt;/dl&gt;&#x27;;
+  return h + &#x27;&lt;/div&gt;&#x27;;
+}
+
+// ---------- style expressions
+function colorExpr(L){
+  const cb = L.color_by, st = L.style || {};
+  if(!cb) return st.color || &#x27;#3B82F6&#x27;;
+  if(cb.type === &#x27;categorical&#x27;){
+    const e = [&#x27;match&#x27;, [&#x27;to-string&#x27;, [&#x27;get&#x27;, cb.field]]];
+    cb.categories.forEach(c =&gt; e.push(String(c.value), c.color)); e.push(cb.other_color || &#x27;#9AA3AD&#x27;); return e;
+  }
+  const e = [&#x27;interpolate&#x27;, [&#x27;linear&#x27;], [&#x27;to-number&#x27;, [&#x27;get&#x27;, cb.field]]]; cb.stops.forEach(s =&gt; e.push(s[0], s[1]));
+  return [&#x27;case&#x27;, [&#x27;==&#x27;, [&#x27;get&#x27;, cb.field], null], cb.nodata_color || &#x27;#9AA3AD&#x27;, e];
+}
+function edgeExpr(L){
+  const cb = L.color_by, st = L.style || {};
+  if(cb &amp;&amp; cb.type === &#x27;categorical&#x27; &amp;&amp; cb.categories.some(c =&gt; c.edge)){
+    const e = [&#x27;match&#x27;, [&#x27;to-string&#x27;, [&#x27;get&#x27;, cb.field]]];
+    cb.categories.forEach(c =&gt; e.push(String(c.value), c.edge || st.outline || &#x27;#FFFFFF&#x27;)); e.push(st.outline || &#x27;#FFFFFF&#x27;); return e;
+  }
+  return st.outline || (L.kind === &#x27;polygon&#x27; ? colorExpr(L) : &#x27;#FFFFFF&#x27;);
+}
+const hov = (a, b) =&gt; [&#x27;case&#x27;, [&#x27;boolean&#x27;, [&#x27;feature-state&#x27;, &#x27;hover&#x27;], false], a, b];
+
+// ---------- map
+const basePad = () =&gt; phone() ? {top:24, right:24, left:24, bottom:panel.offsetHeight + 24}
+                              : {top:40, right:40, bottom:40, left:panel.classList.contains(&#x27;closed&#x27;) ? 40 : (C.embed ? 330 : 400)};
+let map = null;
+// The map is created only once its final style is known, and overlays go on at &#x27;style.load&#x27;. (Adding them on
+// the first &#x27;styledata&#x27; event raced the style load and sometimes left the map without overlays.)
+function start(style){
+  map = new maplibregl.Map({container:&#x27;map&#x27;, style:style,
+    bounds:[[C.bounds[0], C.bounds[1]], [C.bounds[2], C.bounds[3]]], fitBoundsOptions:{padding:basePad()},
+    maxZoom:20, dragRotate:false, pitchWithRotate:false, attributionControl:false, hash:C.hash === false ? false : &#x27;view&#x27;,
+    cooperativeGestures:!!C.embed});           // embedded: two fingers / Ctrl+scroll move the map, so the page still scrolls
+  map.touchZoomRotate.disableRotation();
+  map.addControl(new maplibregl.NavigationControl({showCompass:false}), &#x27;top-right&#x27;);
+  if(C.embed) map.addControl(new maplibregl.FullscreenControl(), &#x27;top-right&#x27;);
+  map.addControl(new maplibregl.ScaleControl({unit:&#x27;imperial&#x27;, maxWidth:110}), &#x27;bottom-left&#x27;);
+  map.addControl(new maplibregl.ScaleControl({unit:&#x27;metric&#x27;, maxWidth:110}), &#x27;bottom-left&#x27;);
+  map.addControl(new maplibregl.AttributionControl({compact:true}), &#x27;bottom-right&#x27;);
+  map.once(&#x27;style.load&#x27;, addOverlays);
+  map.once(&#x27;load&#x27;, () =&gt; {
+    addOverlays();                                   // no-op if &#x27;style.load&#x27; already added them
+    if(!location.hash.includes(&#x27;view=&#x27;)) fly(C.bounds, false);
+    document.querySelectorAll(&#x27;.maplibregl-ctrl-attrib&#x27;).forEach(e =&gt; {      // start the credits folded
+      e.classList.remove(&#x27;maplibregl-compact-show&#x27;); e.removeAttribute(&#x27;open&#x27;); });
+  });
+}
+
+const NAIP_URL = &#x27;https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPPlus/ImageServer/exportImage?bbox={bbox-epsg-3857}&amp;bboxSR=3857&amp;imageSR=3857&amp;size=512,512&amp;format=jpg&amp;f=image&#x27;;
+const ESRI_URL = &#x27;https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}&#x27;;
+const ESRI_ATTR = &#x27;Imagery: Esri, Maxar, Earthstar Geographics, and the GIS User Community&#x27;;
+const NAIP_ATTR = &#x27;Aerial photo: USDA NAIP via USGS The National Map (public domain)&#x27;;
+const BM = {
+  satellite:{label:&#x27;Satellite&#x27;, note:&#x27;Esri World Imagery. Image dates vary by place and can be before or after an event; check before reading damage from the photo.&#x27;},
+  aerial:{label:&#x27;Aerial (NAIP)&#x27;, note:&#x27;USDA NAIP aerial photography via USGS The National Map: the most recent flight here, which can be after an event.&#x27;},
+  map:{label:&#x27;Map&#x27;, note:&#x27;Street map: OpenStreetMap data via OpenFreeMap.&#x27;},
+  hybrid:{label:&#x27;Hybrid&#x27;, note:&#x27;Esri World Imagery with street and place labels from OpenStreetMap.&#x27;}
+};
+Object.entries(C.basemap_notes || {}).forEach(([k, v]) =&gt; { if(BM[k]) BM[k].note = v; });
+const modes = (C.basemaps || [&#x27;satellite&#x27;,&#x27;aerial&#x27;,&#x27;map&#x27;,&#x27;hybrid&#x27;]).filter(m =&gt; BM[m]);
+let mode = modes.includes(C.basemap) ? C.basemap : modes[0];
+let vecLayers = [], symLayers = [];
+modes.forEach(m =&gt; { const b = document.createElement(&#x27;button&#x27;); b.type = &#x27;button&#x27;; b.dataset.m = m; b.textContent = BM[m].label;
+  b.addEventListener(&#x27;click&#x27;, () =&gt; setBase(m)); $(&#x27;bm&#x27;).appendChild(b); });
+function vis(id, on){ if(map &amp;&amp; map.getLayer(id)) map.setLayoutProperty(id, &#x27;visibility&#x27;, on ? &#x27;visible&#x27; : &#x27;none&#x27;); }
+function setBase(m){
+  mode = m; vis(&#x27;bm-esri&#x27;, m === &#x27;satellite&#x27; || m === &#x27;hybrid&#x27;); vis(&#x27;bm-naip&#x27;, m === &#x27;aerial&#x27;);
+  vecLayers.forEach(id =&gt; vis(id, m === &#x27;map&#x27; || (m === &#x27;hybrid&#x27; &amp;&amp; symLayers.includes(id))));
+  document.querySelectorAll(&#x27;#bm button&#x27;).forEach(b =&gt; b.setAttribute(&#x27;aria-pressed&#x27;, String(b.dataset.m === m)));
+  $(&#x27;bmNote&#x27;).textContent = BM[m].note;
+}
+const rasterBase = {
+  sources:{ &#x27;bm-esri&#x27;:{type:&#x27;raster&#x27;, tiles:[ESRI_URL], tileSize:256, maxzoom:19, attribution:ESRI_ATTR},
+            &#x27;bm-naip&#x27;:{type:&#x27;raster&#x27;, tiles:[NAIP_URL], tileSize:256, maxzoom:20, attribution:NAIP_ATTR} },
+  layers:[ {id:&#x27;bm-esri&#x27;, type:&#x27;raster&#x27;, source:&#x27;bm-esri&#x27;, layout:{visibility:&#x27;none&#x27;}},
+           {id:&#x27;bm-naip&#x27;, type:&#x27;raster&#x27;, source:&#x27;bm-naip&#x27;, layout:{visibility:&#x27;none&#x27;}} ]
+};
+// the street-map style is optional: if it has not arrived in 6 s, start with imagery only rather than a blank page
+const styleCtl = new AbortController(); setTimeout(() =&gt; styleCtl.abort(), 6000);
+fetch(&#x27;https://tiles.openfreemap.org/styles/&#x27; + (C.vector_style || &#x27;liberty&#x27;), {signal:styleCtl.signal}).then(r =&gt; r.json()).then(st =&gt; {
+  st.layers.forEach(l =&gt; { l.layout = l.layout || {}; });
+  vecLayers = st.layers.filter(l =&gt; l.type !== &#x27;background&#x27;).map(l =&gt; l.id);
+  symLayers = st.layers.filter(l =&gt; l.type === &#x27;symbol&#x27;).map(l =&gt; l.id);
+  Object.assign(st.sources, rasterBase.sources);
+  st.layers.splice(1, 0, ...rasterBase.layers);
+  start(st);
+}).catch(() =&gt; {
+  modes.splice(0, modes.length, ...modes.filter(m =&gt; m === &#x27;satellite&#x27; || m === &#x27;aerial&#x27;));
+  document.querySelectorAll(&#x27;#bm button&#x27;).forEach(b =&gt; { if(!modes.includes(b.dataset.m)) b.remove(); });
+  if(!modes.includes(mode)) mode = &#x27;satellite&#x27;;
+  start({version:8, sources:rasterBase.sources, layers:rasterBase.layers});
+});
+
+// ---------- overlays
+const hidden = {};         // layer id -&gt; Set of hidden category values
+const sub = {};            // layer id -&gt; map layer ids drawn for it
+const hitLayers = [];      // map layer ids that answer hover/tap, top-most first
+function dataFor(L){ if(L.url) return L.url; const el = $(&#x27;d-&#x27; + L.id); return el ? JSON.parse(el.textContent) : {type:&#x27;FeatureCollection&#x27;, features:[]}; }
+function addOverlays(){
+  if(map.getSource(&#x27;ov-&#x27; + (C.layers[0] || {}).id)) return;
+  C.layers.forEach(L =&gt; {
+    const src = &#x27;ov-&#x27; + L.id, st = L.style || {}, ids = [], v = L.visible === false ? &#x27;none&#x27; : &#x27;visible&#x27;;
+    const zoom = o =&gt; { if(L.minzoom != null) o.minzoom = L.minzoom; if(L.maxzoom != null) o.maxzoom = L.maxzoom; return o; };
+    if(L.kind === &#x27;raster&#x27;){
+      map.addSource(src, {type:&#x27;image&#x27;, url:L.image.src, coordinates:L.image.coordinates});
+      map.addLayer(zoom({id:L.id + &#x27;-img&#x27;, type:&#x27;raster&#x27;, source:src, layout:{visibility:v},
+        paint:{&#x27;raster-opacity&#x27;:L.opacity ?? .75, &#x27;raster-resampling&#x27;:L.resampling || &#x27;nearest&#x27;, &#x27;raster-fade-duration&#x27;:0}})); ids.push(L.id + &#x27;-img&#x27;);
+    } else {
+      map.addSource(src, {type:&#x27;geojson&#x27;, data:dataFor(L), generateId:true});
+      if(L.kind === &#x27;line&#x27;){
+        const w = st.width ?? 2;
+        if(st.halo !== false) { map.addLayer(zoom({id:L.id + &#x27;-halo&#x27;, type:&#x27;line&#x27;, source:src, layout:{visibility:v, &#x27;line-join&#x27;:&#x27;round&#x27;},
+          paint:{&#x27;line-color&#x27;:st.halo_color || &#x27;#0B1218&#x27;, &#x27;line-width&#x27;:w + 2.6, &#x27;line-opacity&#x27;:.45}})); ids.push(L.id + &#x27;-halo&#x27;); }
+        const p = {&#x27;line-color&#x27;:colorExpr(L), &#x27;line-width&#x27;:hov(w + 1.5, w), &#x27;line-opacity&#x27;:st.opacity ?? 1};
+        if(st.dash) p[&#x27;line-dasharray&#x27;] = st.dash;
+        map.addLayer(zoom({id:L.id + &#x27;-line&#x27;, type:&#x27;line&#x27;, source:src, layout:{visibility:v, &#x27;line-join&#x27;:&#x27;round&#x27;}, paint:p})); ids.push(L.id + &#x27;-line&#x27;);
+        map.addLayer(zoom({id:L.id + &#x27;-hit&#x27;, type:&#x27;line&#x27;, source:src, layout:{visibility:v}, paint:{&#x27;line-color&#x27;:&#x27;#000&#x27;, &#x27;line-width&#x27;:14, &#x27;line-opacity&#x27;:0.001}}));
+        ids.push(L.id + &#x27;-hit&#x27;); if(L.tooltip) hitLayers.unshift(L.id + &#x27;-hit&#x27;);
+      } else if(L.kind === &#x27;polygon&#x27;){
+        map.addLayer(zoom({id:L.id + &#x27;-fill&#x27;, type:&#x27;fill&#x27;, source:src, layout:{visibility:v},
+          paint:{&#x27;fill-color&#x27;:colorExpr(L), &#x27;fill-opacity&#x27;:hov(Math.min(1, (st.fill_opacity ?? .55) + .2), st.fill_opacity ?? .55)}}));
+        map.addLayer(zoom({id:L.id + &#x27;-line&#x27;, type:&#x27;line&#x27;, source:src, layout:{visibility:v},
+          paint:{&#x27;line-color&#x27;:edgeExpr(L), &#x27;line-width&#x27;:hov((st.outline_width ?? 1) + 1.6, st.outline_width ?? 1), &#x27;line-opacity&#x27;:.95}}));
+        ids.push(L.id + &#x27;-fill&#x27;, L.id + &#x27;-line&#x27;); if(L.tooltip) hitLayers.unshift(L.id + &#x27;-fill&#x27;);
+      } else {
+        const r = st.radius || [[8, 2.5], [12, 4], [16, 7]], rad = [&#x27;interpolate&#x27;, [&#x27;linear&#x27;], [&#x27;zoom&#x27;]];
+        r.forEach(s =&gt; rad.push(s[0], s[1]));
+        const lay = {visibility:v}, cb = L.color_by;
+        if(cb &amp;&amp; cb.type === &#x27;categorical&#x27;){            // the first class in the key draws on top
+          const k = [&#x27;match&#x27;, [&#x27;to-string&#x27;, [&#x27;get&#x27;, cb.field]]], n = cb.categories.length;
+          cb.categories.forEach((c, i) =&gt; k.push(String(c.value), n - i)); k.push(0); lay[&#x27;circle-sort-key&#x27;] = k; }
+        map.addLayer(zoom({id:L.id + &#x27;-pt&#x27;, type:&#x27;circle&#x27;, source:src, layout:lay, paint:{
+          &#x27;circle-radius&#x27;:rad, &#x27;circle-color&#x27;:colorExpr(L), &#x27;circle-opacity&#x27;:st.opacity ?? .95,
+          &#x27;circle-stroke-color&#x27;:edgeExpr(L), &#x27;circle-stroke-width&#x27;:hov(2.6, st.outline_width ?? .7)}}));
+        ids.push(L.id + &#x27;-pt&#x27;); if(L.tooltip) hitLayers.unshift(L.id + &#x27;-pt&#x27;);
+      }
+    }
+    sub[L.id] = ids; hidden[L.id] = new Set();
+  });
+  setBase(mode); buildKey(); wire();
+}
+
+// ---------- key = layer control (visibility + category filters + counts)
+function swatch(L, color){
+  const s = document.createElement(&#x27;span&#x27;);
+  s.className = &#x27;sw&#x27; + (L.kind === &#x27;polygon&#x27; || L.kind === &#x27;raster&#x27; ? &#x27; sq&#x27; : L.kind === &#x27;line&#x27; ? &#x27; ln&#x27; : &#x27;&#x27;);
+  if(L.kind === &#x27;line&#x27;) s.style.borderTopColor = color, s.style.borderTopStyle = (L.style || {}).dash ? &#x27;dashed&#x27; : &#x27;solid&#x27;;
+  else s.style.background = color;
+  return s;
+}
+function applyFilter(L){
+  const cb = L.color_by, h = hidden[L.id];
+  const f = cb &amp;&amp; h.size ? [&#x27;!&#x27;, [&#x27;in&#x27;, [&#x27;to-string&#x27;, [&#x27;get&#x27;, cb.field]], [&#x27;literal&#x27;, [...h]]]] : null;
+  sub[L.id].forEach(id =&gt; { if(map.getLayer(id) &amp;&amp; L.kind !== &#x27;raster&#x27;) map.setFilter(id, f); });
+}
+function buildKey(){
+  const box = $(&#x27;layers&#x27;);
+  C.layers.forEach(L =&gt; {
+    if(L.in_key === false) return;
+    const d = document.createElement(&#x27;div&#x27;); d.className = &#x27;lay&#x27;;
+    const row = document.createElement(&#x27;label&#x27;); row.className = &#x27;lrow&#x27;;
+    const cb = document.createElement(&#x27;input&#x27;); cb.type = &#x27;checkbox&#x27;; cb.checked = L.visible !== false;
+    cb.addEventListener(&#x27;change&#x27;, () =&gt; sub[L.id].forEach(id =&gt; vis(id, cb.checked)));
+    row.appendChild(cb);
+    const cbx = L.color_by;
+    if(!cbx) row.appendChild(swatch(L, (L.style || {}).color || &#x27;#3B82F6&#x27;));
+    const nm = document.createElement(&#x27;span&#x27;); nm.textContent = L.name; row.appendChild(nm);
+    if(L.count != null){ const c = document.createElement(&#x27;span&#x27;); c.className = &#x27;cnt&#x27;; c.textContent = L.count.toLocaleString(&#x27;en-US&#x27;); row.appendChild(c); }
+    d.appendChild(row);
+    if(L.description){ const p = document.createElement(&#x27;p&#x27;); p.className = &#x27;ldesc&#x27;; p.innerHTML = both(L.description, L.description_tech); d.appendChild(p); }
+    if(cbx &amp;&amp; cbx.type === &#x27;categorical&#x27;){
+      const ul = document.createElement(&#x27;ul&#x27;); ul.className = &#x27;cats&#x27;;
+      cbx.categories.forEach(c =&gt; {
+        const li = document.createElement(&#x27;li&#x27;), lab = document.createElement(&#x27;label&#x27;), x = document.createElement(&#x27;input&#x27;);
+        x.type = &#x27;checkbox&#x27;; x.checked = true;
+        x.addEventListener(&#x27;change&#x27;, () =&gt; { x.checked ? hidden[L.id].delete(String(c.value)) : hidden[L.id].add(String(c.value)); applyFilter(L); });
+        lab.append(x, swatch(L, c.color));
+        const t = document.createElement(&#x27;span&#x27;); t.textContent = c.label; lab.appendChild(t);
+        if(c.count != null){ const n = document.createElement(&#x27;span&#x27;); n.className = &#x27;cnt&#x27;; n.textContent = c.count.toLocaleString(&#x27;en-US&#x27;); lab.appendChild(n); }
+        li.appendChild(lab); ul.appendChild(li);
+      });
+      d.appendChild(ul);
+    } else if(cbx &amp;&amp; cbx.type === &#x27;continuous&#x27;){
+      const g = document.createElement(&#x27;div&#x27;); g.className = &#x27;grad&#x27;;
+      const lo = cbx.stops[0][0], hi = cbx.stops[cbx.stops.length - 1][0];
+      g.style.background = &#x27;linear-gradient(90deg,&#x27; + cbx.stops.map(s =&gt; s[1] + &#x27; &#x27; + ((s[0] - lo) / (hi - lo) * 100).toFixed(1) + &#x27;%&#x27;).join(&#x27;,&#x27;) + &#x27;)&#x27;;
+      const gl = document.createElement(&#x27;div&#x27;); gl.className = &#x27;gl&#x27;;
+      gl.innerHTML = &#x27;&lt;span&gt;&#x27; + esc(cbx.min_label ?? lo) + &#x27;&lt;/span&gt;&lt;span&gt;&#x27; + esc(cbx.max_label ?? hi) + &#x27;&lt;/span&gt;&#x27;;
+      d.append(g, gl);
+      if(cbx.label){ const t = document.createElement(&#x27;div&#x27;); t.className = &#x27;gt&#x27;; t.textContent = cbx.label; d.appendChild(t); }
+    }
+    box.appendChild(d);
+  });
+}
+
+// ---------- places to look (tabs)
+const sites = [{name:C.whole_label || &#x27;Whole area&#x27;, bounds:C.bounds, note:&#x27;&#x27;}].concat(C.sites || []);
+function fly(b, anim){ if(map) map.fitBounds([[b[0], b[1]], [b[2], b[3]]], {padding:basePad(), maxZoom:C.max_fit_zoom || 17, duration:anim ? 900 : 0}); }
+if(!C.sites || !C.sites.length) $(&#x27;sitesSec&#x27;).remove();
+else sites.forEach((s, i) =&gt; {
+  const b = document.createElement(&#x27;button&#x27;); b.type = &#x27;button&#x27;; b.setAttribute(&#x27;role&#x27;, &#x27;tab&#x27;); b.textContent = s.name;
+  b.setAttribute(&#x27;aria-selected&#x27;, String(i === 0));
+  b.addEventListener(&#x27;click&#x27;, () =&gt; { document.querySelectorAll(&#x27;#sites button&#x27;).forEach(x =&gt; x.setAttribute(&#x27;aria-selected&#x27;, String(x === b)));
+    $(&#x27;siteNote&#x27;).innerHTML = s.note || &#x27;&#x27;; fly(s.bounds, true); if(phone()) setPanel(false); });
+  $(&#x27;sites&#x27;).appendChild(b);
+});
+
+// ---------- hover (desktop) and tap (phone)
+const pop = new maplibregl.Popup({closeButton:false, closeOnClick:false, maxWidth:&#x27;320px&#x27;, offset:12});
+let hovered = null;
+const layerOf = id =&gt; C.layers.find(L =&gt; sub[L.id] &amp;&amp; sub[L.id].includes(id));
+function pick(e){
+  const ids = hitLayers.filter(id =&gt; map.getLayer(id) &amp;&amp; map.getLayoutProperty(id, &#x27;visibility&#x27;) !== &#x27;none&#x27;);
+  if(!ids.length) return null;
+  const fs = map.queryRenderedFeatures(e.point, {layers:ids});
+  return fs.length ? fs[0] : null;
+}
+function setHover(f){
+  if(hovered) map.setFeatureState(hovered, {hover:false}); hovered = null;
+  if(f &amp;&amp; f.id !== undefined){ hovered = {source:f.source, id:f.id}; map.setFeatureState(hovered, {hover:true}); }
+}
+function wire(){
+  map.on(&#x27;mousemove&#x27;, e =&gt; { if(!canHover) return; const f = pick(e);
+    map.getCanvas().style.cursor = f ? &#x27;pointer&#x27; : &#x27;&#x27;;
+    if(!f){ pop.remove(); setHover(null); return; }
+    setHover(f); pop.setLngLat(e.lngLat).setHTML(card(layerOf(f.layer.id), f.properties)).addTo(map); });
+  map.on(&#x27;mouseout&#x27;, () =&gt; { pop.remove(); setHover(null); });
+  map.on(&#x27;click&#x27;, e =&gt; { const f = pick(e);
+    if(canHover){ if(f){ pop.remove(); new maplibregl.Popup({maxWidth:&#x27;320px&#x27;, offset:12}).setLngLat(e.lngLat).setHTML(card(layerOf(f.layer.id), f.properties)).addTo(map); } return; }
+    if(!f){ closeSheet(); return; }
+    setHover(f); $(&#x27;sheetBody&#x27;).innerHTML = card(layerOf(f.layer.id), f.properties); $(&#x27;sheet&#x27;).style.display = &#x27;block&#x27;; });
+}
+function closeSheet(){ $(&#x27;sheet&#x27;).style.display = &#x27;none&#x27;; setHover(null); }
+$(&#x27;sheetClose&#x27;).addEventListener(&#x27;click&#x27;, closeSheet);
+document.addEventListener(&#x27;keydown&#x27;, e =&gt; { if(e.key === &#x27;Escape&#x27;){ closeSheet(); pop.remove(); } });
+&lt;/script&gt;
+&lt;/body&gt;&lt;/html&gt;
+"></iframe></div></div></div></div></section><section class="slide" id="era5" aria-label="¿Cuánto se parece ERA5 a las estaciones?">
+<div class="sl-top"><span class="kicker">Meteorología</span><span class="sl-num">09</span></div>
+<h2>¿Cuánto se parece ERA5 a las estaciones?</h2><p class="en">ERA5 vs MCH stations, pooled hourly pairs</p><div class="sl-body"><div class="card"><h3>Temperatura: muy parecida · viento: bastante menos</h3><p class="cap">Temperatura: sesgo -0.1 °C, error medio 1.9 °C. Viento: ERA5 da +3.6 km/h más que la estación en promedio (media estación 5.4, ERA5 9.0 km/h). Ventana corta: 2021-07-28 a 2021-08-04, únicas horas solapadas disponibles en el MCH.</p><div class="hb"><div class="lab">Temperatura del aire<small>n = 552 pares horarios</small></div><div class="area"><i class="grid" style="left:0.00%"></i><i class="grid" style="left:20.00%"></i><i class="grid" style="left:40.00%"></i><i class="grid" style="left:60.00%"></i><i class="grid" style="left:80.00%"></i><i class="grid" style="left:100.00%"></i><div class="brow"><div class="bar" style="width:94.75%;background:var(--s1)" data-tip="Temperatura del aire
+Correlación 0.95; sesgo ERA5 − estación -0.1 °C; error cuadrático medio 1.9 °C.
+What it suggests: ERA5 reproduce la temperatura de las estaciones."></div><span class="val" style="left:calc(94.75% + 6px)">0.95</span></div></div><div class="lab">Viento a 10 m<small>n = 552 pares horarios</small></div><div class="area"><i class="grid" style="left:0.00%"></i><i class="grid" style="left:20.00%"></i><i class="grid" style="left:40.00%"></i><i class="grid" style="left:60.00%"></i><i class="grid" style="left:80.00%"></i><i class="grid" style="left:100.00%"></i><div class="brow"><div class="bar" style="width:44.91%;background:var(--s1)" data-tip="Viento a 10 m
+Correlación 0.45; sesgo ERA5 − estación +3.6 km/h; error cuadrático medio 7.2 km/h.
+What it suggests: ERA5 sigue bien la temperatura; el viento local varía más de lo que una celda de ~27 km capta."></div><span class="val" style="left:calc(44.91% + 6px)">0.45</span></div></div><div></div><div class="axis"><span style="left:0.00%">0</span><span style="left:20.00%">0.2</span><span style="left:40.00%">0.4</span><span style="left:60.00%">0.6</span><span style="left:80.00%">0.8</span><span style="left:100.00%">1</span></div></div><div class="axis-t"><span>Correlación de Pearson entre ERA5 y la estación (1 = idénticas)</span></div><details class="checks"><summary>How this panel was checked</summary><ul><li>Comparación de una sola semana (2021-07-28 a 2021-08-04) y 552 pares horarios: indica dirección, no una calibración.</li><li>Los pares no son independientes (horas consecutivas de las mismas estaciones); no se reportan intervalos por eso.</li><li>Unidades igualadas antes de comparar: ERA5 t2m − 273,15 → °C; viento ERA5 a km/h como el MCH.</li></ul></details></div><p class="foot">Implicancia: ERA5 sirve como base histórica, pero el viento debe corregirse con estaciones (EMAs, MCH) antes de usarlo en simulaciones de eventos concretos.</p></div></section><section class="slide" id="codigos" aria-label="Un código de combustible desconocido falla en silencio">
+<div class="sl-top"><span class="kicker">Control de calidad</span><span class="sl-num">10</span></div>
+<h2>Un código de combustible desconocido falla en silencio</h2><p class="en">Unknown fuel codes fail silently, so the ETL must check every code</p><div class="sl-body"><ul class=pts><li>El motor acepta una <b>tabla cerrada de 58 códigos</b> (Anderson 13 + Scott &amp; Burgan 40, más no combustibles).</li><li>En la prueba, los 10 códigos no válidos (50, 205, 299, 300, 301, 0, 255, -1, -9999, 32767) <b>completaron 30 de 30 corridas con 0 errores</b> y quemaron como máximo 0 celdas: un resultado vacío que parece legítimo.</li><li>Por eso el ETL valida <b>cada</b> código contra la tabla antes de escribir el cubo, y rechaza la capa si aparece uno desconocido.</li></ul><div class="card"><p class="cap">Corridas repetidas del motor sobre una grilla de prueba, cambiando solo el código de combustible.</p><div class="scroll"><table class="tb"><thead><tr><th data-tip="Código
+Código de combustible entregado al motor en toda la grilla de prueba.">Códigos probados</th><th data-tip="¿Válido?
+Si el código está en la tabla de 58 códigos que acepta el motor.">¿Válido?</th><th class=n data-tip="Corridas completas
+Corridas que terminaron normalmente (llegaron a la duración máxima).">Corridas completas</th><th class=n data-tip="Errores
+Excepciones lanzadas por el motor. Para un código inválido debería haber al menos una; hay cero.">Errores</th><th class=n data-tip="Celdas quemadas
+Máximo, entre repeticiones, de celdas con fuego (tipo de fuego mayor que 0).">Celdas quemadas (máx.)</th><th class=n data-tip="Velocidad máxima
+Mayor velocidad de propagación observada en la corrida, en metros por minuto.">Vel. máx. (m/min)</th></tr></thead><tbody><tr><td data-label="Códigos probados"><b>10 códigos inválidos</b><br><small class=faint>50, 205, 299, 300, 301, 0, 255, -1, -9999, 32767</small></td><td data-label="¿Válido?"><b>no</b></td><td class="n" data-label="Corridas completas">30 de 30</td><td class="n" data-label="Errores">0</td><td class="n" data-label="Celdas quemadas (máx.)">0</td><td class="n" data-label="Vel. máx. (m/min)">0.00</td></tr><tr><td data-label="Códigos probados"><b>Código 204</b><br><small class=faint>válido, como control</small></td><td data-label="¿Válido?">sí</td><td class="n" data-label="Corridas completas">3 de 3</td><td class="n" data-label="Errores">0</td><td class="n" data-label="Celdas quemadas (máx.)">20</td><td class="n" data-label="Vel. máx. (m/min)">4.81</td></tr></tbody></table></div><details class="checks"><summary>How this panel was checked</summary><ul><li>Mismas condiciones en todas las corridas; solo cambia el código.</li><li>«Errores» cuenta excepciones lanzadas por el motor: 0 para el código inválido es justamente el problema.</li></ul></details></div></div></section><section class="slide" id="salidas" aria-label="Flujograma de salidas de la simulación">
+<div class="sl-top"><span class="kicker">Salidas</span><span class="sl-num">11</span></div>
+<h2>Flujograma de salidas de la simulación</h2><p class="en">What each run produces, and what the frontend could show first (proposal)</p><div class="sl-body"><div class="flow"><div class="step" style="--c:var(--s4)"><b>Corrida</b><span>ignición + fecha + clima + combustibles</span></div><div class="step" style="--c:var(--s2)"><b>Rasters del motor</b><span>7 capas, misma grilla</span></div><div class="step" style="--c:var(--s3)"><b>Productos derivados</b><span>isócronas, área quemada, máximos por evento</span></div><div class="step" style="--c:var(--s1)"><b>PostGIS core</b><span>capas modeladas + metadatos</span></div><div class="step" style="--c:var(--s1)"><b>GeoServer → visor</b><span>WMS/WFS para el frontend</span></div></div><div class="okey"><span class="p1">Mostrar primero</span><span class="p2">Segunda etapa</span><span class="p3">Solo interno</span></div><div class="ogrid"><div class="ocell p1" tabindex="0" data-tip="Tipo de fuego
+0 no quemado · 1 superficie · 2 copa pasiva · 3 copa activa.
+Tipo de dato: uint8; unidades del motor: 0 unburned / 1 surface / 2 passive_crown / 3 active_crown."><b>Tipo de fuego</b><small>clase · <code>fire_type</code></small><span>0 no quemado · 1 superficie · 2 copa pasiva · 3 copa activa.</span></div><div class="ocell p1" tabindex="0" data-tip="Velocidad de propagación
+Qué tan rápido avanza el frente en cada celda.
+Tipo de dato: float32; unidades del motor: m/min."><b>Velocidad de propagación</b><small>m/min · <code>spread_rate</code></small><span>Qué tan rápido avanza el frente en cada celda.</span></div><div class="ocell p1" tabindex="0" data-tip="Longitud de llama
+Indicador directo de dificultad de control para brigadas.
+Tipo de dato: float32; unidades del motor: m."><b>Longitud de llama</b><small>m · <code>flame_length</code></small><span>Indicador directo de dificultad de control para brigadas.</span></div><div class="ocell p1" tabindex="0" data-tip="Tiempo de llegada
+Minuto en que el frente alcanza cada celda. Base de las isócronas (perímetros por hora).
+Tipo de dato: float32; unidades del motor: min."><b>Tiempo de llegada</b><small>min · <code>time_of_arrival</code></small><span>Minuto en que el frente alcanza cada celda. Base de las isócronas (perímetros por hora).</span></div><div class="ocell p2" tabindex="0" data-tip="Dirección de propagación
+Hacia dónde avanza el frente en cada celda.
+Tipo de dato: float32; unidades del motor: degrees clockwise from North."><b>Dirección de propagación</b><small>° desde el norte · <code>spread_direction</code></small><span>Hacia dónde avanza el frente en cada celda.</span></div><div class="ocell p2" tabindex="0" data-tip="Intensidad lineal
+Energía liberada por metro de frente.
+Tipo de dato: float32; unidades del motor: kW/m."><b>Intensidad lineal</b><small>kW/m · <code>fireline_intensity</code></small><span>Energía liberada por metro de frente.</span></div><div class="ocell p3" tabindex="0" data-tip="Campo φ (level set)
+Estado interno del modelo; quemado donde φ &lt; 0. No se muestra al usuario.
+Tipo de dato: float32; unidades del motor: dimensionless; values in [-1,1]."><b>Campo φ (level set)</b><small>−1 a 1 · <code>phi</code></small><span>Estado interno del modelo; quemado donde φ < 0. No se muestra al usuario.</span></div></div><p class="foot">Propuesta para decidir con el equipo de frontend: un mapa de isócronas (tiempo de llegada) con el tipo de fuego y la longitud de llama como capas conmutables es el primer producto legible para INFONA.</p></div></section><section class="slide" id="plataforma" aria-label="Dónde entra la simulación en la plataforma">
+<div class="sl-top"><span class="kicker">Plataforma</span><span class="sl-num">12</span></div>
+<h2>Dónde entra la simulación en la plataforma</h2><p class="en">Platform architecture (team diagram, 2026-10-22)</p><div class="sl-body"><div class="flow"><div class="step" style="--c:var(--s7)"><b>1 · Ingesta</b><span>fuentes externas e internas → PostGIS staging</span></div><div class="step" style="--c:var(--s7)"><b>2 · ETL y control de calidad</b><span>validación, armonización, versionado</span></div><div class="step" style="--c:var(--s1)"><b>3 · PostGIS core / Data Hub</b><span>capas maestras, de referencia y modeladas</span></div><div class="step" style="--c:var(--s4)"><b>4 · Módulos</b><span>monitoreo, combustibles, riesgo, <b>simulación</b></span></div><div class="step" style="--c:var(--s1)"><b>5 · Servicios</b><span>GeoServer (WMS/WFS) y GeoNode (catálogo)</span></div><div class="step" style="--c:var(--s3)"><b>6 · Publicación</b><span>portal institucional: visor, dashboard, reportes</span></div></div><ul class=pts><li>La simulación <b>lee</b> combustibles, dosel, topografía y clima del core, y <b>escribe</b> sus salidas como capas modeladas con metadatos de la corrida.</li><li>El control de códigos de combustible y la alineación de grilla viven en el paso 2 (ETL), antes de que el motor vea los datos.</li><li>INFONA habilita un servidor de desarrollo (fines de octubre / noviembre) para las primeras pruebas; el SIGF institucional estará en diciembre.</li></ul></div></section><section class="slide" id="plan" aria-label="Camino a diciembre">
+<div class="sl-top"><span class="kicker">Plan</span><span class="sl-num">13</span></div>
+<h2>Camino a diciembre</h2><p class="en">Road to the December deliverable</p><div class="sl-body"><ol class="tl"><li style="--c:var(--s1)"><b>Oct–nov 2026</b><span>Servidor de desarrollo de INFONA; ETL de insumos sobre MapBiomas Col. 3, ERA5, ANADEM y ETH.</span></li><li style="--c:var(--s4)"><b>Noviembre</b><span>Primera simulación de punta a punta sobre un evento histórico 2016–2025; capas de salida a PostGIS.</span></li><li style="--c:var(--s2)"><b>1 dic 2026</b><span>Lanzamiento de MapBiomas Fuego Col. 2 (insumo y validación).</span></li><li style="--c:var(--s3)"><b>1.ª semana de dic</b><span><b>Producto 2:</b> primera salida integrada en la plataforma (backend → frontend). Resultados preliminares.</span></li><li style="--c:var(--s2)"><b>Dic 2026 – ene 2027</b><span>Incorporar Fuego Col. 2; análisis de combustibles del equipo; V01 revisada.</span></li><li style="--c:var(--s7)"><b>2027</b><span>Calibración y validación contra cicatrices; V02 de combustibles; uso operativo con EMAs.</span></li></ol></div></section><section class="slide" id="pendientes" aria-label="Riesgos y temas abiertos">
+<div class="sl-top"><span class="kicker">Pendientes</span><span class="sl-num">14</span></div>
+<h2>Riesgos y temas abiertos</h2><p class="en">Open issues that could delay or weaken the first output</p><div class="sl-body"><div class="grid g2"><div class="box" style="--c:var(--s2)"><span class=ic>💧</span><h3>Humedad del combustible</h3><p>Las 6 capas de humedad no tienen producto directo: se derivarán de ERA5 con valores estacionales en la primera versión.</p></div><div class="box" style="--c:var(--s2)"><span class=ic>🌳</span><h3>Estructura del dosel</h3><p>Altura verificada (ETH); cobertura, base y densidad aparente se estimarán. Afecta principalmente la transición a fuego de copa.</p></div><div class="box" style="--c:var(--s4)"><span class=ic>📡</span><h3>Archivo de EMAs</h3><p>Sin historial descargable: se requiere solicitud formal a DMH–DINAC (posible convenio).</p></div><div class="box" style="--c:var(--s2)"><span class=ic>🔁</span><h3>Crosswalk de combustibles</h3><p>Depende de la tabla maestra y del análisis del equipo; se valida con simulaciones contra cicatrices.</p></div><div class="box" style="--c:var(--s4)"><span class=ic>🖥️</span><h3>Infraestructura</h3><p>El SIGF de INFONA estará en diciembre: el despliegue del visor puede correrse.</p></div><div class="box" style="--c:var(--s7)"><span class=ic>✅</span><h3>Validación</h3><p>MapBiomas Fuego Col. 2 llega el 1 de diciembre: la validación formal es de 2027.</p></div></div></div></section><section class="slide" id="pasos" aria-label="Próximos pasos y decisiones">
+<div class="sl-top"><span class="kicker">Próximos pasos</span><span class="sl-num">15</span></div>
+<h2>Próximos pasos y decisiones</h2><p class="en">Next steps and what we need from the team</p><div class="sl-body"><div class="grid g2"><div><h4>Simulación (HENDATA)</h4><ul class=pts><li>Construir la V01 de combustibles sobre MapBiomas Col. 3 con validación de códigos en el ETL.</li><li>Preparar los cubos de entrada en la grilla de 100 m (UTM 21S).</li><li>Correr la primera simulación sobre un evento histórico y cargar las salidas a PostGIS.</li><li>Entregar este flujograma de salidas al equipo de frontend.</li></ul></div><div><h4>Decisiones para el equipo</h4><ul class=pts><li>¿Qué salida mostrar primero en el visor? (propuesta: isócronas + tipo de fuego).</li><li>Evento histórico de prueba para diciembre.</li><li>Esquema de tablas en PostGIS para capas modeladas y metadatos de corrida.</li><li>Solicitud formal del archivo de EMAs a DMH–DINAC.</li></ul></div></div></div></section></div><div class="pbar"></div><div class="pnav" role="toolbar" aria-label="Navegación de la presentación"><button type="button" id="pprev" aria-label="Lámina anterior">←</button><span class="cnt"></span><button type="button" id="pnext" aria-label="Lámina siguiente">→</button><button type="button" id="pexit" aria-label="Salir de la presentación">Salir</button></div><script>
+(function(){
+  var S=[].slice.call(document.querySelectorAll('.slide')), i=0, b=document.body, bar=document.querySelector('.pbar'),
+      cnt=document.querySelector('.pnav .cnt');
+  function show(k){ i=Math.max(0,Math.min(S.length-1,k)); S.forEach(function(s,j){s.classList.toggle('on',j===i);});
+    S[i].scrollTop=0; cnt.textContent=(i+1)+' / '+S.length; bar.style.width=((i+1)/S.length*100)+'%';
+    try{history.replaceState(null,'','#'+S[i].id);}catch(e){} }
+  function start(){ var h=location.hash.slice(1), k=S.findIndex(function(s){return s.id===h;});
+    b.classList.add('present'); show(k<0?0:k);
+    try{ if(document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(function(){}); }catch(e){} }
+  function stop(){ b.classList.remove('present'); S.forEach(function(s){s.classList.remove('on');});
+    try{ if(document.fullscreenElement) document.exitFullscreen(); }catch(e){} S[i].scrollIntoView(); }
+  document.getElementById('present').addEventListener('click',start);
+  document.getElementById('pprev').addEventListener('click',function(){show(i-1);});
+  document.getElementById('pnext').addEventListener('click',function(){show(i+1);});
+  document.getElementById('pexit').addEventListener('click',stop);
+  document.addEventListener('fullscreenchange',function(){ if(!document.fullscreenElement && b.classList.contains('present')) stop(); });
+  document.addEventListener('keydown',function(e){
+    if(e.target.closest('input,textarea,select')) return;
+    if(!b.classList.contains('present')){ if(e.key==='p'||e.key==='P'){ start(); } return; }
+    if(['ArrowRight','PageDown',' ','Enter'].indexOf(e.key)>=0){ e.preventDefault(); show(i+1); }
+    else if(['ArrowLeft','PageUp','Backspace'].indexOf(e.key)>=0){ e.preventDefault(); show(i-1); }
+    else if(e.key==='Home'){ show(0); } else if(e.key==='End'){ show(S.length-1); }
+    else if(e.key==='Escape'){ stop(); }
+  });
+})();
+</script>
+<footer class="site"><h3>Sources</h3><ul><li>Producto 1a: Plataforma de Simulación de Incendios y Respuesta Rápida (INFONA/DAI, abril 2026) y presentación del Producto 1b (30 de septiembre de 2026).</li><li>Diagnóstico de fuentes de datos, HENDATA (septiembre 2026): sondeos en vivo de cada fuente y del motor Pyretechnics 2026.8.10.</li><li>DMH–DINAC: API del MCH (registro histórico) y feed de EMAs (tiempo casi real).</li><li>ERA5 (Copernicus Climate Change Service / ECMWF), vía Google ARCO-ERA5; licencia Copernicus.</li><li>MapBiomas Paraguay, Uso y Cobertura Col. 3 y Fuego; Scott &amp; Burgan (2005), FBFM40; ETH Global Canopy Height (Lang et al. 2023); ANADEM.</li><li>Mapa base: OpenFreeMap / OpenStreetMap contributors.</li></ul><div class="faint">Construido 2026-10-22 con simulation/presentation/build_presentation.py</div><div class="brand"><a class="org" href="https://carlobroderick.github.io/Parafire/" target="_blank" rel="noopener"><svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" role="img" aria-label="Parafire"><path fill="currentColor" d="M20 2c1.5 6.2 9.5 10.4 9.5 20.2C29.5 30.4 25.2 36 20 36s-9.5-5.6-9.5-13.8c0-4.6 2.1-8.2 4.6-10.7.2 3.4 1.6 5.6 3.4 6.6C17.6 12.6 18.4 6.8 20 2zm0 20.5c-1.6 2.3-4 3.9-4 6.9 0 2.5 1.8 4.1 4 4.1s4-1.6 4-4.1c0-3-2.4-4.6-4-6.9z"/><rect x="6" y="37" width="28" height="1.6" rx=".8" fill="currentColor"/></svg>
+<span><b>Parafire</b><small>Plataforma de riesgo, simulación y respuesta a incendios</small></span></a><a class="org" href="https://infona.gov.py/" target="_blank" rel="noopener"><span><b>INFONA</b><small>Instituto Forestal Nacional, Paraguay</small></span></a><p class="gh">Parafire on GitHub: <a href="https://github.com/CarloBroderick/Parafire" target="_blank" rel="noopener">github.com/CarloBroderick/Parafire</a> · pages: <a href="https://github.com/CarloBroderick/Parafire" target="_blank" rel="noopener">CarloBroderick/Parafire</a></p></div></footer>
+</div><div id="tip" role="tooltip"></div><script>
+(function(){
+  const tip = document.getElementById('tip');
+  let pinned = null;
+  // plain language / technical is chosen per panel: each chart card (and each note, section intro or page
+  // header) that has a technical version carries its own small switch; text follows its nearest panel
+  const SCOPE = '.card, .note, section.panel, section.sec, header';
+  const scopeOf = el => el.closest(SCOPE);
+  const tech = el => { const s = el && scopeOf(el); return !!s && s.dataset.lang === 'tech'; };
+  function fill(el){ tip.textContent = ''; const parts = el.dataset.tip.split('\n@@tech\n');
+    const txt = (tech(el) && parts[1]) ? parts[1] : parts[0];
+    txt.split('\n').forEach((t, i) => { const n = document.createElement(i ? 'div' : 'b');
+      if(i && t.startsWith('What it suggests: ')){ n.className = 'mean'; }
+      n.textContent = t; tip.appendChild(n); }); }
+  function place(el){ const r = el.getBoundingClientRect(); tip.style.display = 'block';
+    const w = tip.offsetWidth, h = tip.offsetHeight;
+    let x = r.right + 10, y = r.top + r.height / 2 - h / 2;
+    if(x + w > innerWidth - 8) x = r.left - w - 10;
+    if(x < 8){ x = Math.min(Math.max(8, r.left + r.width / 2 - w / 2), innerWidth - w - 8); y = r.bottom + 8;
+      if(y + h > innerHeight - 8) y = r.top - h - 8; }
+    tip.style.left = x + 'px'; tip.style.top = Math.max(8, Math.min(y, innerHeight - h - 8)) + 'px'; }
+  function show(el){ fill(el); place(el); }
+  function hide(){ tip.style.display = 'none'; pinned = null; }
+  document.querySelectorAll('[data-tip]').forEach(el => {
+    if(!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+    el.addEventListener('mouseenter', () => show(el));
+    el.addEventListener('mouseleave', () => { if(pinned !== el) tip.style.display = 'none'; });
+    el.addEventListener('focus', () => show(el));
+    el.addEventListener('blur', () => { if(pinned !== el) tip.style.display = 'none'; });
+    el.addEventListener('click', e => { e.stopPropagation(); if(pinned === el){ hide(); return; } pinned = el; show(el); });
+  });
+  document.addEventListener('click', hide);
+  addEventListener('scroll', () => { if(!pinned) tip.style.display = 'none'; else place(pinned); }, {passive:true});
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') hide(); });
+  // keep SVG chart text the same size on screen when the chart is drawn narrower than its viewBox
+  function fitText(){ document.querySelectorAll('.svgwrap svg').forEach(svg => {
+    const vb = svg.viewBox.baseVal.width, w = svg.getBoundingClientRect().width || vb;
+    svg.style.setProperty('--k', Math.min(1.4, Math.max(1, vb / w)).toFixed(3)); }); }
+  fitText(); addEventListener('resize', fitText);
+  // map panels follow the page's light / dark switch and their own panel's plain / technical switch
+  function syncFrames(){ const r = document.documentElement;
+    document.querySelectorAll('iframe.mapframe').forEach(f => { const msg = {lang: tech(f) ? 'tech' : 'plain'};
+      if(r.dataset.theme) msg.theme = r.dataset.theme;
+      try { f.contentWindow.postMessage(msg, '*'); } catch(e){} }); }
+  function setLang(sc, l){ sc.dataset.lang = l;
+    sc.querySelectorAll('.tech, .plain').forEach(e => { if(scopeOf(e) !== sc) return;
+      const isT = e.classList.contains('tech'), on = isT ? l === 'tech' : l !== 'tech';
+      e.style.display = on ? (isT ? 'revert' : '') : 'none'; });
+    sc.querySelectorAll(':scope .langseg button').forEach(b => { if(scopeOf(b) === sc) b.setAttribute('aria-pressed', String(b.dataset.l === l)); });
+    hide(); syncFrames(); }
+  const scopes = new Set();
+  document.querySelectorAll('.tech').forEach(e => { const s = scopeOf(e); if(s) scopes.add(s); });
+  document.querySelectorAll('[data-tip]').forEach(e => { if(e.dataset.tip.indexOf('\n@@tech\n') >= 0){ const s = scopeOf(e); if(s) scopes.add(s); } });
+  scopes.forEach(sc => {
+    const seg = document.createElement('div'); seg.className = 'langseg'; seg.setAttribute('role', 'group');
+    seg.setAttribute('aria-label', 'Explanations in this panel');
+    [['plain', 'Plain'], ['tech', 'Technical']].forEach(([l, t]) => { const b = document.createElement('button');
+      b.type = 'button'; b.dataset.l = l; b.textContent = t;
+      b.addEventListener('click', e => { e.stopPropagation(); setLang(sc, l); }); seg.appendChild(b); });
+    const btns = sc.matches('header') && sc.querySelector('.btns');
+    if(btns) btns.prepend(seg); else sc.prepend(seg);
+    setLang(sc, 'plain'); });
+  document.querySelectorAll('iframe.mapframe').forEach(f => f.addEventListener('load', syncFrames));
+  const tb = document.getElementById('themebtn');
+  if(tb) tb.addEventListener('click', () => { const r = document.documentElement;
+    const dark = r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    r.dataset.theme = dark ? 'light' : 'dark'; syncFrames(); });
+})();
+</script></body></html>
